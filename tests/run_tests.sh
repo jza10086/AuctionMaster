@@ -21,7 +21,7 @@ run_step() {
   rm -f "$log"
 }
 run_step --headless --editor --import --quit
-for test in model_tests qa_rules ui_flow_tests; do
+for test in model_tests qa_rules ui_flow_tests qa_inventory_privacy qa_inventory_grid; do
   run_step --headless --script "res://tests/${test}.gd"
 done
 run_step --headless --quit-after 20

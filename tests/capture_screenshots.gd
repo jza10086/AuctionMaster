@@ -11,7 +11,6 @@ func capture() -> void:
 	var viewport := SubViewport.new()
 	viewport.size = Vector2i(1800,1125)
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
-	viewport.own_world_3d = true
 	root.add_child(viewport)
 	var main = load("res://scenes/main.tscn").instantiate()
 	viewport.add_child(main)
@@ -40,9 +39,15 @@ func capture() -> void:
 			main.bid_input.text = "7000"
 			main.submit()
 		else: main.advance()
+	main.set_process(false)
+	main.view.advance_reveal(0.85)
+	await RenderingServer.frame_post_draw
+	assert(viewport.get_texture().get_image().save_png(output.path_join("auction-searching.png")) == OK)
+	main.skip_reveal()
+	main.view.select_item(0)
 	main.paused = true
 	main.overlay.hide()
-	await create_timer(1.2).timeout
+	await create_timer(0.2).timeout
 	await RenderingServer.frame_post_draw
 	assert(viewport.get_texture().get_image().save_png(output.path_join("auction-reveal.png")) == OK)
 	print("Captured real game renders at ", output)

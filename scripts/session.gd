@@ -209,6 +209,8 @@ func snapshot(player_id: int = 0) -> Dictionary:
 	if phase == "reveal" or phase == "finished":
 		result.winner = _winner
 		result.price = _price
+		result.items = reveal_items()
+		result.total_value = total_value()
 	return result
 
 func reveal_items() -> Array:
