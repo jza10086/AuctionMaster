@@ -4,13 +4,13 @@ extends Control
 signal selection_changed(item: Dictionary)
 signal reveal_progress(revealed: int, total: int)
 
-const GRID_COLUMNS: int = 10
-const GRID_ROWS: int = 6
-const GRID_SIZE: Vector2 = Vector2(800.0, 480.0)
+const GRID_COLUMNS: int = 12
+const GRID_ROWS: int = 14
+const GRID_SIZE: Vector2 = Vector2(576.0, 672.0)
 const REVEAL_SECONDS: float = 0.68
 const ITEM_SIZES: Dictionary = {
-	"vase": Vector2i(1, 2), "clock": Vector2i(2, 3),
-	"radio": Vector2i(2, 2), "gold": Vector2i(2, 1), "gem": Vector2i(1, 1),
+	"vase": Vector2i(2, 3), "clock": Vector2i(3, 4),
+	"radio": Vector2i(3, 3), "gold": Vector2i(3, 2), "gem": Vector2i(2, 2),
 }
 const TIER_COLORS: Array[Color] = [Color("879892"), Color("729bba"), Color("b19ad2"), Color("d5b978")]
 const ITEM_SHORT_NAMES: Dictionary = {
@@ -192,26 +192,20 @@ func _draw() -> void:
 	var cell: float = grid.size.x / GRID_COLUMNS
 	if cell <= 0.0:
 		return
-	draw_rect(grid, Color("10191c"))
-	for row in range(GRID_ROWS):
-		for column in range(GRID_COLUMNS):
-			var tile: Rect2 = Rect2(grid.position + Vector2(column, row) * cell, Vector2.ONE * cell)
-			draw_rect(tile.grow(-1.0), Color("182225"))
-			# Every unopened slot is exactly alike, independent of the hidden lot.
-			var center: Vector2 = tile.get_center()
-			draw_line(center - Vector2(2.0, 0.0), center + Vector2(2.0, 0.0), Color("293438"), 1.0)
-			draw_line(center - Vector2(0.0, 2.0), center + Vector2(0.0, 2.0), Color("293438"), 1.0)
+	# One translucent inventory surface, shared single-pixel grid lines.
+	# Sealed geometry is constant and never depends on a hidden lot.
+	draw_rect(grid, Color(0.012,0.02,0.025,0.56))
 	for column in range(GRID_COLUMNS + 1):
 		var x: float = grid.position.x + column * cell
-		draw_line(Vector2(x, grid.position.y), Vector2(x, grid.end.y), Color("303b3e"), 1.0)
+		draw_line(Vector2(x, grid.position.y), Vector2(x, grid.end.y), Color(0.67,0.72,0.71,0.17), 1.0)
 	for row in range(GRID_ROWS + 1):
 		var y: float = grid.position.y + row * cell
-		draw_line(Vector2(grid.position.x, y), Vector2(grid.end.x, y), Color("303b3e"), 1.0)
+		draw_line(Vector2(grid.position.x, y), Vector2(grid.end.x, y), Color(0.67,0.72,0.71,0.17), 1.0)
 	if not opened:
 		_draw_sealed(grid)
 		return
 	for index in range(layout.size()):
-		var rect: Rect2 = get_item_rect(index).grow(-3.0)
+		var rect: Rect2 = get_item_rect(index).grow(-1.0)
 		if rect.size.x <= 0.0 or rect.size.y <= 0.0:
 			continue
 		if index >= revealed_count:
@@ -220,75 +214,60 @@ func _draw() -> void:
 			_draw_item(rect, index)
 
 func _draw_sealed(grid: Rect2) -> void:
-	var panel: Rect2 = Rect2(grid.get_center() - Vector2(156.0, 48.0), Vector2(312.0, 96.0))
-	draw_rect(panel, Color("121c20"))
-	draw_rect(panel, Color("566058"), false, 1.0)
-	draw_rect(Rect2(panel.position, Vector2(3.0, panel.size.y)), Color("c4b778"))
-	# Small geometric seal, not a silhouette of the actual inventory.
-	var lock_center: Vector2 = panel.position + Vector2(36.0, 45.0)
-	draw_arc(lock_center - Vector2(0.0, 5.0), 9.0, PI, TAU, 18, Color("c4b778"), 2.0, true)
-	draw_rect(Rect2(lock_center - Vector2(12.0, 5.0), Vector2(24.0, 20.0)), Color("c4b778"), false, 2.0)
-	draw_circle(lock_center + Vector2(0.0, 2.0), 2.0, Color("c4b778"))
-	draw_line(lock_center + Vector2(0.0, 3.0), lock_center + Vector2(0.0, 8.0), Color("c4b778"), 2.0)
-	_draw_text("仓库已封存", panel.position + Vector2(65.0, 39.0), 20, Color("e2e5dc"))
-	_draw_text("完成五轮暗标后开启", panel.position + Vector2(65.0, 64.0), 13, Color("a0aaa8"))
+	# This fixed lock is an overall seal, never an inventory silhouette.
+	var center: Vector2 = grid.get_center()
+	var lock_center: Vector2 = center-Vector2(0.0,26.0)
+	var ink := Color(0.68,0.75,0.70,0.65)
+	draw_arc(lock_center-Vector2(0,7),12,PI,TAU,24,ink,1.5,true)
+	draw_rect(Rect2(lock_center-Vector2(15,7),Vector2(30,26)),ink,false,1.5)
+	draw_circle(lock_center+Vector2(0,3),2,ink)
+	draw_line(lock_center+Vector2(0,4),lock_center+Vector2(0,9),ink,1.5)
+	var title := "仓库已封存"
+	var title_width: float = get_theme_default_font().get_string_size(title,HORIZONTAL_ALIGNMENT_LEFT,-1,17).x
+	_draw_text(title,center+Vector2(-title_width*0.5,32),17,Color("aab7ab"))
 
 func _draw_unknown(rect: Rect2, scanning: bool) -> void:
-	draw_rect(rect, Color("253034"))
-	draw_rect(rect, Color("74817d") if scanning else Color("414e50"), false, 1.0)
+	draw_rect(rect,Color(0.10,0.14,0.145,0.72))
+	draw_rect(rect,Color("74817d") if scanning else Color("414e50"),false,1.0)
 	if scanning:
-		var progress: float = clampf(_reveal_elapsed / REVEAL_SECONDS, 0.0, 1.0)
-		var scan_y: float = rect.position.y + rect.size.y * progress
-		draw_rect(Rect2(rect.position, Vector2(rect.size.x, rect.size.y * progress)), Color(0.57, 0.69, 0.64, 0.055))
-		draw_line(Vector2(rect.position.x, scan_y), Vector2(rect.end.x, scan_y), Color("a8b9a1"), 1.0)
-		_draw_text("检索中", rect.position + Vector2(8.0, rect.size.y - 9.0), 11, Color("b0bcb4"))
-	var font: Font = get_theme_default_font()
-	var question_size: Vector2 = font.get_string_size("?", HORIZONTAL_ALIGNMENT_LEFT, -1.0, 30)
-	_draw_text("?", rect.get_center() + Vector2(-question_size.x * 0.5, 10.0), 30, Color("81908e"))
+		var progress: float = clampf(_reveal_elapsed / REVEAL_SECONDS,0.0,1.0)
+		var scan_y: float = rect.position.y+rect.size.y*progress
+		draw_rect(Rect2(rect.position,Vector2(rect.size.x,rect.size.y*progress)),Color(0.65,0.76,0.54,0.08))
+		draw_line(Vector2(rect.position.x,scan_y),Vector2(rect.end.x,scan_y),Color("b8c996"),1.0)
+		_draw_text("搜索中",rect.position+Vector2(7,17),11,Color("d8dfcd"))
+	var question_size: Vector2 = get_theme_default_font().get_string_size("?",HORIZONTAL_ALIGNMENT_LEFT,-1,24)
+	_draw_text("?",rect.get_center()+Vector2(-question_size.x*0.5,8),24,Color("82918c"))
 
 func _draw_item(rect: Rect2, index: int) -> void:
 	var item: Dictionary = items[index]
-	var value: int = int(item.get("value", 0))
+	var value: int = int(item.get("value",0))
 	var rarity: Color = tier_color(value)
-	var selected: bool = selected_index == index
-	var hovered: bool = _hovered_index == index
-	var background: Color = Color("1b282b").lerp(rarity, 0.10 if selected else 0.055)
-	draw_rect(rect, background)
-	draw_rect(Rect2(rect.position, Vector2(rect.size.x, 3.0)), rarity)
-	draw_rect(rect, rarity.darkened(0.44), false, 1.0)
-	var kind: String = str(item.get("kind", ""))
-	var icon_area: Rect2 = Rect2(rect.position + Vector2(7.0, 8.0), rect.size - Vector2(14.0, 36.0))
-	if _textures.has(kind) and icon_area.size.x > 0.0 and icon_area.size.y > 0.0:
+	var selected: bool = selected_index==index
+	var hovered: bool = _hovered_index==index
+	var tint: Color = Color("182323").lerp(rarity,0.14 if selected else 0.055)
+	tint.a=0.86
+	draw_rect(rect,tint)
+	draw_rect(rect,Color(rarity,0.65),false,1)
+	var kind: String = str(item.get("kind",""))
+	var icon_area: Rect2 = Rect2(rect.position+Vector2(5,21),rect.size-Vector2(10,27))
+	if _textures.has(kind) and icon_area.size.x>0 and icon_area.size.y>0:
 		var texture: Texture2D = _textures[kind]
 		var texture_size: Vector2 = texture.get_size()
-		var scale_factor: float = minf(icon_area.size.x / texture_size.x, icon_area.size.y / texture_size.y)
-		var art_size: Vector2 = texture_size * scale_factor
-		var art_rect: Rect2 = Rect2(icon_area.get_center() - art_size * 0.5, art_size)
-		draw_texture_rect(texture, art_rect, false, Color.WHITE)
+		var scale_factor: float = minf(icon_area.size.x/texture_size.x,icon_area.size.y/texture_size.y)
+		var art_size: Vector2 = texture_size*scale_factor
+		draw_texture_rect(texture,Rect2(icon_area.get_center()-art_size*0.5,art_size),false,Color.WHITE)
 	else:
-		# Neutral fallback for unknown public item kinds or unavailable artwork.
 		var center: Vector2 = icon_area.get_center()
-		var half: Vector2 = Vector2(minf(icon_area.size.x, 40.0), minf(icon_area.size.y, 40.0)) * 0.5
-		draw_rect(Rect2(center - half, half * 2.0), rarity.darkened(0.45), false, 2.0)
-		draw_line(center - half, center + half, rarity.darkened(0.45), 1.0)
-	var name_text: String = str(ITEM_SHORT_NAMES.get(kind, item.get("name", "未知藏品")))
-	var narrow: bool = rect.size.x < 100.0
-	var label_height: float = 30.0 if narrow else 25.0
-	draw_rect(Rect2(Vector2(rect.position.x + 1.0, rect.end.y - label_height), Vector2(rect.size.x - 2.0, label_height - 1.0)), Color(0.035, 0.055, 0.06, 0.72))
-	var name_size: int = 10 if narrow else 11
-	_draw_text(_fit_text(name_text, rect.size.x - 12.0, name_size), Vector2(rect.position.x + 6.0, rect.end.y - (17.0 if narrow else 10.0)), name_size, Color("cbd1c9"))
-	var value_text: String = _format_value(value)
-	var price_size: int = 11 if narrow else 12
-	var price_width: float = get_theme_default_font().get_string_size(value_text, HORIZONTAL_ALIGNMENT_LEFT, -1.0, price_size).x
-	_draw_text(value_text, Vector2(rect.end.x - price_width - 6.0, rect.end.y - (4.0 if narrow else 10.0)), price_size, rarity.lightened(0.13))
-	var flash: float = 1.0 - clampf((_animation_time - _revealed_at[index]) / 0.32, 0.0, 1.0)
-	if flash > 0.0:
-		draw_rect(rect, Color(rarity, flash * 0.14))
+		var half: Vector2 = Vector2(minf(icon_area.size.x,40),minf(icon_area.size.y,40))*0.5
+		draw_rect(Rect2(center-half,half*2),rarity.darkened(0.45),false,2)
+	var name_text: String = str(ITEM_SHORT_NAMES.get(kind,item.get("name","未知藏品")))
+	_draw_text(_fit_text(name_text,rect.size.x-12,11),rect.position+Vector2(6,16),11,Color("d9dfd4"))
+	var flash: float = 1-clampf((_animation_time-_revealed_at[index])/0.32,0,1)
+	if flash>0: draw_rect(rect,Color(rarity,flash*0.14))
 	if selected or hovered:
-		var border: Color = Color("e8eee1") if selected else Color("a2b6aa")
-		draw_rect(rect.grow(1.0), border, false, 1.0)
-		if selected:
-			_draw_selection_corners(rect.grow(1.0), border)
+		var border: Color = Color("e3ecce") if selected else Color("a2b6aa")
+		draw_rect(rect,border,false,1)
+		if selected: _draw_selection_corners(rect,border)
 
 func _draw_selection_corners(rect: Rect2, color: Color) -> void:
 	var length: float = 9.0
