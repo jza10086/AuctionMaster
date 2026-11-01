@@ -1,0 +1,607 @@
+{
+  "tool": "Built-in imagegen",
+  "style": "Original realistic inventory objects; transparent alpha; no external cast shadows",
+  "postprocess": "Pillow: discard alpha below 4/255; crop to visible alpha; resize to max 768 px with Lanczos; add 6% transparent padding; clear RGB of fully transparent pixels. No recoloring or painted shadows.",
+  "items": [
+    {
+      "id": "vase",
+      "file": "vase.png",
+      "prompt": "Use case: product-mockup. Create ONE production game inventory icon: 青玉瓷瓶, a tall antique Chinese celadon porcelain vase, narrow neck, rounded elegant body, subtle cobalt blue floral decoration. Realistic high-end PBR collectible loot icon, believable ceramic glaze with fine crazing and delicate wear, detailed but legible at small sizes. Visual direction: realistic inventory objects seen in auction and extraction games such as BidKing, Delta Force and Escape from Tarkov, entirely original object, not a copied asset. Slight three-quarter product view, full object centered, 10% empty padding, square canvas. Soft even neutral lighting solely to reveal material; NO cast shadow, NO drop shadow, NO ground shadow, NO contact shadow beneath object, NO ground, NO surface, NO reflection outside object. True transparent alpha background, absolutely no backdrop or checkerboard pixels. No text, no labels, no logo, no border, no UI, no hands, no other objects. Not cartoon, not vector art. Make the silhouette crisp, use genuine material detail rather than heavy lighting contrast.",
+      "generated_source": "exec-58f99bc6-fcd0-42c0-8237-07a681b8aafe.png"
+    },
+    {
+      "id": "clock",
+      "file": "clock.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Subject: 古董座钟: an ornate antique wooden mantel clock with brass fittings, cream clock face, black hands, small pendulum, dark polished walnut grain. Face may have small traditional hour numerals, no brand.",
+      "generated_source": "exec-bd11b697-cafa-4070-b310-4322e0979ba0.png"
+    },
+    {
+      "id": "seal",
+      "file": "seal.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: 黄铜印章: a small antique Chinese brass seal stamp, square solid base and sculpted rounded finial handle, aged brass patina; the engraved underside is not visible.",
+      "generated_source": "exec-a13bdc2c-3a99-4393-a0a7-7f7c518bab7e.png"
+    },
+    {
+      "id": "compass",
+      "file": "compass.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: 航海罗盘: an antique brass pocket maritime compass with glass cover, aged cream dial, red north needle, knurled brass rim and little hanging loop, no separate case.",
+      "generated_source": "exec-ddaed0c0-c83b-493c-8ea1-e6c51d7d29a5.png"
+    },
+    {
+      "id": "scroll",
+      "file": "scroll.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: 山水画卷: an unrolled horizontal antique Chinese landscape scroll, cream rice paper, ink mountains, restrained blue-green landscape washes, wooden scroll rods at both ends, no calligraphy or inscriptions.",
+      "generated_source": "exec-25abd639-8861-40b1-a325-ac0f304fc926.png"
+    },
+    {
+      "id": "radio",
+      "file": "radio.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Subject: 老式收音机: a vintage olive-green portable transistor radio with dark perforated speaker grille, analog frequency scale, two round knobs, carry handle and a modest extended antenna. No brand.",
+      "generated_source": "exec-7e374ea6-13d6-4271-9b54-96e9187716f0.png"
+    },
+    {
+      "id": "camera",
+      "file": "camera.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: 数码相机: a black compact mirrorless digital camera with one short lens attached, rubber grip, machined metal controls and realistic lens glass, no brand names.",
+      "generated_source": "exec-7e89f03f-7137-4e1a-abb8-fe2ee36c42e2.png"
+    },
+    {
+      "id": "console",
+      "file": "console.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: 掌上游戏机: a handheld gaming console with a rectangular dark inactive glass screen, small D-pad and buttons integrated on both sides, matte charcoal housing, no logos.",
+      "generated_source": "exec-d0ddea49-e056-46a1-8598-ffec0c1d787c.png"
+    },
+    {
+      "id": "laptop",
+      "file": "laptop.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: 轻薄笔记本: an open thin silver aluminum laptop, dark inactive screen and realistic keyboard, lid open approximately 105 degrees, three-quarter view, full laptop visible, no brands.",
+      "generated_source": "exec-07149894-0b5e-48fb-b717-fe1eec90a248.png"
+    },
+    {
+      "id": "headphones",
+      "file": "headphones.png",
+      "prompt": "Photorealistic product CUTOUT PNG, a single isolated physical object, true transparent background with zero alpha everywhere beyond the object silhouette. Sharp well-defined edge. No glow or soft edge cloud. No ground, no shadows cast outside the object, no surface reflection, no background, no checkerboard. Soft neutral even illumination; realistic material textures like a detailed extraction-game inventory asset. Full object centered with generous margin. No logos, no added text, no UI. Subject: One pair of realistic over-ear headphones, black leather ear pads, matte metal adjustable headband, slightly used, entire object.",
+      "generated_source": "exec-14cc9d1e-8429-464d-95cc-74b1ba1f8772.png"
+    },
+    {
+      "id": "gold",
+      "file": "gold.png",
+      "prompt": "Edit this gold-bar inventory icon. Preserve the realistic three gold bars and their geometry, metal detail, and composition. Remove ALL golden glow, halo, vignette and shadow outside their exact physical silhouettes, including the broad amber aura. Transparent alpha background everywhere outside the bars. No floor, no cast/drop/contact shadow, no bloom. Keep natural metal highlights strictly within the gold surfaces. Full clean cutout with crisp anti-aliased edges.",
+      "generated_source": "exec-93c7769d-4287-4fae-b02c-962c020002e3.png"
+    },
+    {
+      "id": "gem",
+      "file": "gem.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Subject: 紫晶原石: a single natural purple amethyst crystal cluster with translucent violet facets on a small integrated mineral base, no separate stand.",
+      "generated_source": "exec-25330fe3-86ad-4f70-9ebe-104836830a2d.png"
+    },
+    {
+      "id": "necklace",
+      "file": "necklace.png",
+      "prompt": "Photorealistic product CUTOUT PNG, a single isolated physical object, true transparent background with zero alpha everywhere beyond the object silhouette. Sharp well-defined edge. No glow or soft edge cloud. No ground, no shadows cast outside the object, no surface reflection, no background, no checkerboard. Soft neutral even illumination; realistic material textures like a detailed extraction-game inventory asset. Full object centered with generous margin. No logos, no added text, no UI. Subject: One realistic pearl necklace arranged as an oval loop, lustrous ivory pearls with a small gold clasp. No jewelry display stand.",
+      "generated_source": "exec-2e522da5-604a-4a54-a919-2c10bfee43ed.png"
+    },
+    {
+      "id": "ring",
+      "file": "ring.png",
+      "prompt": "Photorealistic product CUTOUT PNG, a single isolated physical object, true transparent background with zero alpha everywhere beyond the object silhouette. Sharp well-defined edge. No glow or soft edge cloud. No ground, no shadows cast outside the object, no surface reflection, no background, no checkerboard. Soft neutral even illumination; realistic material textures like a detailed extraction-game inventory asset. Full object centered with generous margin. No logos, no added text, no UI. Subject: One realistic silver ring with a small clear gemstone, fine polished silver and subtle wear, lying at a three-quarter angle. No box or display stand.",
+      "generated_source": "exec-b622c95f-bcd9-4afe-adbc-de341b3d2c97.png"
+    },
+    {
+      "id": "watch",
+      "file": "watch.png",
+      "prompt": "Photorealistic product CUTOUT PNG, a single isolated physical object, true transparent background with zero alpha everywhere beyond the object silhouette. Sharp well-defined edge. No glow or soft edge cloud. No ground, no shadows cast outside the object, no surface reflection, no background, no checkerboard. Soft neutral even illumination; realistic material textures like a detailed extraction-game inventory asset. Full object centered with generous margin. No logos, no added text, no UI. Subject: One realistic mechanical wristwatch with a brass-toned case, ivory analog dial, brown leather strap fully visible, no brand. Strap open, vertically arranged.",
+      "generated_source": "exec-ae0f26c6-80ae-43e4-b196-77878d3ea967.png"
+    },
+    {
+      "id": "guitar",
+      "file": "guitar.png",
+      "prompt": "Photorealistic product CUTOUT PNG, a single isolated physical object, true transparent background with zero alpha everywhere beyond the object silhouette. Sharp well-defined edge. No glow or soft edge cloud. No ground, no shadows cast outside the object, no surface reflection, no background, no checkerboard. Soft neutral even illumination; realistic material textures like a detailed extraction-game inventory asset. Full object centered with generous margin. No logos, no added text, no UI. Subject: One realistic full size acoustic guitar, warm spruce soundboard, dark wood sides, six strings and all tuning pegs visible, upright full silhouette.",
+      "generated_source": "exec-a473d1be-f941-4688-bcba-d9aa9a35d891.png"
+    },
+    {
+      "id": "trumpet",
+      "file": "trumpet.png",
+      "prompt": "Photorealistic product CUTOUT PNG, a single isolated physical object, true transparent background with zero alpha everywhere beyond the object silhouette. Sharp well-defined edge. No glow or soft edge cloud. No ground, no shadows cast outside the object, no surface reflection, no background, no checkerboard. Soft neutral even illumination; realistic material textures like a detailed extraction-game inventory asset. Full object centered with generous margin. No logos, no added text, no UI. Subject: One realistic brass trumpet, complete instrument including three valves and flared bell, horizontal three-quarter view, small aged patina.",
+      "generated_source": "exec-64c17b6e-e6ca-4dae-970c-f1172999d011.png"
+    },
+    {
+      "id": "vinyl",
+      "file": "vinyl.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A single vintage black vinyl record, cream paper center label without text, fine concentric grooves, slight angled face-on view.",
+      "generated_source": "exec-bf09e26e-d9d9-45eb-8c2f-9ddf8566693a.png"
+    },
+    {
+      "id": "music_box",
+      "file": "music_box.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A small antique wooden music box with a hinged lid open to reveal the brass cylinder musical mechanism. Walnut grain, brass hinges. No dancer or figure.",
+      "generated_source": "exec-9bc5766d-4682-411d-a98a-4643e5a5a38c.png"
+    },
+    {
+      "id": "synth",
+      "file": "synth.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A compact electronic synthesizer keyboard with two octaves of piano keys, black case, several rotary knobs and a small unlit display, elevated three-quarter view.",
+      "generated_source": "exec-fff72f30-f7e2-4203-9e83-295211abffe4.png"
+    },
+    {
+      "id": "drill",
+      "file": "drill.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic used cordless power drill with a black and muted ochre plastic body, short metal drill bit and battery fitted, full tool.",
+      "generated_source": "exec-e19c458a-7def-48aa-9a83-0b40ee56d580.png"
+    },
+    {
+      "id": "wrench",
+      "file": "wrench.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A single steel adjustable wrench, worn brushed metal, open adjustable jaw, upright angled diagonally, entire tool visible.",
+      "generated_source": "exec-70e295ae-0c34-4960-9dc9-e0bb0ca65b11.png"
+    },
+    {
+      "id": "microscope",
+      "file": "microscope.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A classic optical laboratory microscope with one eyepiece, three-objective turret, stage, focus knobs and integrated base, light ivory enamel and black metal.",
+      "generated_source": "exec-94bc6b27-b367-4e6f-83f6-c80c946d31b2.png"
+    },
+    {
+      "id": "toolbox",
+      "file": "toolbox.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A closed red painted metal toolbox with a handle and two brass latches, moderate worn paint at corners, rectangular practical form.",
+      "generated_source": "exec-ff9aa5b2-4133-46e4-b156-d22c12ecd2ea.png"
+    },
+    {
+      "id": "caliper",
+      "file": "caliper.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One stainless steel vernier caliper with real graduated measuring scale, slightly open measuring jaws, landscape horizontal layout.",
+      "generated_source": "exec-ba39a85c-bf88-4bac-ba7a-340ba76c342a.png"
+    },
+    {
+      "id": "tent",
+      "file": "tent.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic pitched two-person hiking dome tent with muted forest green ripstop fabric, aluminum poles and a closed entrance flap, full tent, no pegs or ropes extending far outside.",
+      "generated_source": "exec-41cc0af8-15e2-4395-b125-e2cbcbd40adf.png"
+    },
+    {
+      "id": "lantern",
+      "file": "lantern.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic vintage camping lantern with dark metal protective frame, brass fittings and glass chamber, unlit, complete handle, no emitted light.",
+      "generated_source": "exec-878756e1-59ac-4be8-a8ac-6f447a96d937.png"
+    },
+    {
+      "id": "binoculars",
+      "file": "binoculars.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic pair of compact binoculars with olive rubber armor, metal hinge, glass lenses, no strap.",
+      "generated_source": "exec-e9e3e0bf-503c-4792-aa97-d12560c63086.png"
+    },
+    {
+      "id": "backpack",
+      "file": "backpack.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic olive canvas hiking backpack, full bag with shoulder straps tucked neatly, buckles, pockets and light fabric wear.",
+      "generated_source": "exec-f8afdb3d-8759-45a8-b406-3def6dd6f3ef.png"
+    },
+    {
+      "id": "fishing_rod",
+      "file": "fishing_rod.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic fishing rod and attached spinning reel, whole rod visible, vertical orientation, carbon-fiber shaft and cork handle, no loose line trailing outside.",
+      "generated_source": "exec-08155fca-76c3-4bb5-93d9-a921055dfcf3.png"
+    },
+    {
+      "id": "robot",
+      "file": "robot.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic vintage tin toy robot, hand-sized collectible, worn teal and red painted metal, jointed arms and legs, boxy head, no brand.",
+      "generated_source": "exec-a3036c23-c40a-43d4-94a2-de5caecca20f.png"
+    },
+    {
+      "id": "train",
+      "file": "train.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic collectible miniature black steam locomotive, brass fittings, intricate wheels and connecting rods, only engine, no track or platform.",
+      "generated_source": "exec-26b21b7a-09dd-4a04-9a4f-9e4b63919266.png"
+    },
+    {
+      "id": "bear",
+      "file": "bear.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic brown vintage teddy bear, seated, soft plush fur, stitched paws and small ribbon, full object.",
+      "generated_source": "exec-a96519de-9b92-4fab-8399-f8cd5cef3f3e.png"
+    },
+    {
+      "id": "cube",
+      "file": "cube.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic scrambled six-color twisty puzzle cube, worn colored plastic squares, three faces visible, no brand.",
+      "generated_source": "exec-ad5d4184-bf72-49d2-8c96-962e1167fa45.png"
+    },
+    {
+      "id": "rocket",
+      "file": "rocket.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic collectible miniature white and red space rocket model, vertical upright, rocket body and fins complete, no launch pad, stand, smoke or flame.",
+      "generated_source": "exec-030d5fa0-331c-42bd-a073-929d48e1a067.png"
+    },
+    {
+      "id": "painting",
+      "file": "painting.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic framed coastal oil painting, rectangular aged gilded wooden frame, original seascape with textured brush strokes, complete painting viewed slightly from an angle, no easel.",
+      "generated_source": "exec-7a3ad3df-e0cb-4c78-b1d3-32f27eff5698.png"
+    },
+    {
+      "id": "sculpture",
+      "file": "sculpture.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic antique bronze classical bust sculpture on its small integral base, verdigris patina and worn bronze highlights, no separate plinth.",
+      "generated_source": "exec-6b996fa4-7c7a-4ad3-a892-7afd0e526e9c.png"
+    },
+    {
+      "id": "tea_set",
+      "file": "tea_set.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic antique painted porcelain tea set: one teapot and two cups, grouped closely, pale celadon glaze and restrained floral motifs, no tray or table.",
+      "generated_source": "exec-b15971f9-c48f-481a-b38d-d59be0d07805.png"
+    },
+    {
+      "id": "stamps",
+      "file": "stamps.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic open collectible postage stamp album with aged cream pages and multiple colorful generic old illustrated stamps, detailed paper texture, no identifiable real stamp or brand.",
+      "generated_source": "exec-17ec401b-d9a9-4204-b922-216c8af5cb0c.png"
+    },
+    {
+      "id": "globe",
+      "file": "globe.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: A realistic antique desktop globe with brass meridian and small integral base, muted old map paper and patinated metal, entire globe and base.",
+      "generated_source": "exec-cca49070-ff91-4471-92c3-d1e6721be7f3.png"
+    },
+    {
+      "id": "usb_drive",
+      "file": "usb_drive.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One small silver metal USB flash drive with exposed USB connector, machined metal case, no brand.",
+      "generated_source": "exec-ccdd58b6-6116-40cc-ba5f-193a313cb541.png"
+    },
+    {
+      "id": "flashlight",
+      "file": "flashlight.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One compact black tactical flashlight, textured cylindrical aluminum body, unlit lens, no emitted beam, no weapons.",
+      "generated_source": "exec-82b979fd-1149-47e3-ba10-700433236bd7.png"
+    },
+    {
+      "id": "battery",
+      "file": "battery.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One rectangular rechargeable lithium-ion battery pack with metal contacts, dark gray casing, no brand or text.",
+      "generated_source": "exec-36515666-f62f-45f0-a429-2f492fdc3dfe.png"
+    },
+    {
+      "id": "ssd",
+      "file": "ssd.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One small M.2 solid-state storage circuit board with black memory chips and gold edge contacts, no labels, realistic PCB.",
+      "generated_source": "exec-ac0b467f-da96-457b-b6c5-6921809f0c30.png"
+    },
+    {
+      "id": "cpu",
+      "file": "cpu.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One modern premium desktop computer processor, square silver heat spreader on green substrate, subtle etched grid, no lettering.",
+      "generated_source": "exec-4326baf0-7404-4ced-99d1-728a8a733426.png"
+    },
+    {
+      "id": "secure_chip",
+      "file": "secure_chip.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One ultra-rare advanced encryption microchip, tiny square gold ceramic package, exposed iridescent silicon die in the center, dense fine gold pins, realistic high-tech collectible, no glowing light.",
+      "generated_source": "exec-d1244658-1d06-4d60-810f-b037a79f2533.png"
+    },
+    {
+      "id": "classified_drive",
+      "file": "classified_drive.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One compact top-secret data storage cartridge, narrow black machined metal housing with a red tamper seal strip and gold connector edge, no legible words, realistic precision hardware.",
+      "generated_source": "exec-2af1595f-7e27-4d97-b27d-041948845f2a.png"
+    },
+    {
+      "id": "pink_diamond",
+      "file": "pink_diamond.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One exceptionally large flawless rose-pink pear-cut diamond, original collectible gem, believable refraction and precisely cut facets, no setting or stand, no external sparkle effects.",
+      "generated_source": "exec-faaf88ec-49ca-4c39-b526-5c803e12ad96.png"
+    },
+    {
+      "id": "blue_diamond",
+      "file": "blue_diamond.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One exceptionally large flawless deep ocean-blue cushion-cut diamond, original collectible gem, believable refraction and precisely cut facets, no jewelry setting, no external sparkle effects.",
+      "generated_source": "exec-72df2a52-ae25-4f05-ae48-a739e2cfbe7f.png"
+    },
+    {
+      "id": "ruby",
+      "file": "ruby.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One rare vivid pigeon-blood red oval-cut ruby, realistic polished facets and subtle internal inclusions, no ring setting or stand, no glow.",
+      "generated_source": "exec-4bcf2982-cded-46e3-8ebf-fbbad1d0e1ee.png"
+    },
+    {
+      "id": "emerald",
+      "file": "emerald.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One vivid deep green emerald-cut emerald gemstone, rectangular step-cut facets, natural fine inclusions, no setting or stand.",
+      "generated_source": "exec-d4c56c55-b493-437b-8941-83d0beffdc36.png"
+    },
+    {
+      "id": "jade_pendant",
+      "file": "jade_pendant.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One small antique creamy white mutton-fat jade pendant carved with delicate cloud motifs, elongated oval, small hole at top, no cord, translucent polished stone.",
+      "generated_source": "exec-8b2ca288-8aea-4334-8a91-3f1833492a09.png"
+    },
+    {
+      "id": "pocket_watch",
+      "file": "pocket_watch.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One antique gold pocket watch with an open ornate enamel hunter case, small white analog face and blue hands, tiny hanging bow, no loose chain.",
+      "generated_source": "exec-47804c14-94fb-4e3b-9357-8815473418d5.png"
+    },
+    {
+      "id": "ancient_coin",
+      "file": "ancient_coin.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One antique gold coin with an original classical relief portrait and worn rim, slightly angled to show thickness, no readable lettering.",
+      "generated_source": "exec-8f119725-2292-4405-abc0-0249a0f525e2.png"
+    },
+    {
+      "id": "stamp_single",
+      "file": "stamp_single.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One single rare antique postage stamp, cream perforated paper edge and a finely engraved magenta sailing ship motif, generic original design without readable text.",
+      "generated_source": "exec-a461bb51-4b9c-4af9-851a-1df5e1c0510d.png"
+    },
+    {
+      "id": "data_tape",
+      "file": "data_tape.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One rare scientific magnetic data tape cartridge, rectangular black and ivory housing, visible reel window and small dark red seal, no writing.",
+      "generated_source": "exec-9f555a76-560a-4cc3-8139-acf051abade0.png"
+    },
+    {
+      "id": "camera_lens",
+      "file": "camera_lens.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One detached premium photographic prime lens, black metal barrel, focus ring, glass front element visible, no camera or lens cap, no brand.",
+      "generated_source": "exec-8c3ed114-63a0-4401-aa49-ae8333a7b7f1.png"
+    },
+    {
+      "id": "walkie_talkie",
+      "file": "walkie_talkie.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One compact olive-green portable two-way radio, short antenna, push buttons, speaker slots and belt clip, full item, no branding.",
+      "generated_source": "exec-c26e3fef-c354-452f-b131-bcd0a1bf24ee.png"
+    },
+    {
+      "id": "multitool",
+      "file": "multitool.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One partially unfolded stainless-steel multitool pliers, plier jaws open and handles spread slightly, no knife blades extended.",
+      "generated_source": "exec-42e0b4cf-90e1-493c-ad8f-877af577e8af.png"
+    },
+    {
+      "id": "perfume",
+      "file": "perfume.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One small square crystal perfume bottle with pale amber liquid and faceted stopper, realistic refraction, no label, no atomized mist.",
+      "generated_source": "exec-20d07f62-d49f-46d4-83cc-639aca1f2785.png"
+    },
+    {
+      "id": "silver_coin",
+      "file": "silver_coin.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One collectible silver coin with an original botanical relief, silver luster and milled edge, no readable inscriptions.",
+      "generated_source": "exec-ac4503bd-e7df-4491-b4c3-af6414ff8cbb.png"
+    },
+    {
+      "id": "floppy_disk",
+      "file": "floppy_disk.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One old black 3.5-inch floppy disk with metal shutter and blank faded cream label, original unbranded object.",
+      "generated_source": "exec-96e5b51f-f585-4a4f-bac4-9db53b7ad68c.png"
+    },
+    {
+      "id": "playing_cards",
+      "file": "playing_cards.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One small worn deck of playing cards in a plain aged paper tuck box, a few traditional playing card corners visible, no brand.",
+      "generated_source": "exec-af80bb3f-9440-43b1-88cb-c755884d305f.png"
+    },
+    {
+      "id": "matchbox",
+      "file": "matchbox.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One compact waterproof matchbox slightly open with several wood matches inside, worn olive metal case, no fire, no writing.",
+      "generated_source": "exec-1c9f4552-dadc-4663-bc5e-61eb6fc27183.png"
+    },
+    {
+      "id": "piano",
+      "file": "piano.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One full concert grand piano, black polished lacquer, lid raised, golden strings visible, keyboard and all three legs included. No bench or room. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-554c0292-1b5f-43fa-9e1c-ea5562caecb7.png"
+    },
+    {
+      "id": "arcade_cabinet",
+      "file": "arcade_cabinet.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One full vintage upright arcade machine cabinet, worn dark red sides, joystick and buttons, CRT screen switched off, generic unbranded graphics, complete base. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-dc25e78c-6e8c-40c7-8806-a63f816f197e.png"
+    },
+    {
+      "id": "fridge",
+      "file": "fridge.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One full-size double-door refrigerator, brushed silver metal, closed doors and handles, no brand, no kitchen. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-1ac405bc-5993-43ff-932c-09c51f7fa9f2.png"
+    },
+    {
+      "id": "motorcycle",
+      "file": "motorcycle.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One classic cruiser motorcycle, complete side three-quarter view, muted black body, chrome engine and round headlight, no rider, no brand, no smoke. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-0f2a0137-8f0a-43eb-9138-1fbadfa3b1d1.png"
+    },
+    {
+      "id": "telescope",
+      "file": "telescope.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One large astronomical refractor telescope on a sturdy tripod, aged ivory tube, black fittings, brass adjustment knobs, full tripod included, no sky or ground. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-ff3d0ac5-305a-444e-965f-ee0c71eb801c.png"
+    },
+    {
+      "id": "gramophone",
+      "file": "gramophone.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One antique wooden gramophone with a large polished brass horn, square walnut cabinet, crank handle and black record on turntable, whole object. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-07c4f95a-d6a8-4317-9631-3794f8661669.png"
+    },
+    {
+      "id": "diving_helmet",
+      "file": "diving_helmet.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One antique brass and copper deep-sea diving helmet with circular glass ports and bolted neck ring, patina and aged metal, no suit or stand. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-c36c4060-0362-4d20-8448-25a461caff2d.png"
+    },
+    {
+      "id": "safe",
+      "file": "safe.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One heavy vintage steel safe, closed door, mechanical combination dial and three-spoke handle, worn charcoal paint, no contents or room. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-44b78b45-c982-475b-ae47-a82fe9fd5dc9.png"
+    },
+    {
+      "id": "jukebox",
+      "file": "jukebox.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One luxury vintage jukebox, tall arched cabinet, walnut veneer, ornate brass trim, red and cream decorative panels and glass song-selection window, switched off, no emitted light or neon glow. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-d475708e-45cf-4594-a10a-9e477bd0f403.png"
+    },
+    {
+      "id": "server_rack",
+      "file": "server_rack.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One tall black server rack cabinet filled with realistic server modules, front view slightly angled, vents and handles, indicators unlit, no dangling cables. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-ee44eed4-c513-46b9-9757-5279c0e0f6ae.png"
+    },
+    {
+      "id": "vintage_car",
+      "file": "vintage_car.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One complete collectible classic 1930s luxury roadster, dark emerald green body, long hood, chrome details, cream seats, no recognizable brand, no driver, no pavement. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-36e813c6-c8fc-4e1e-b228-88572f940c43.png"
+    },
+    {
+      "id": "robot_arm",
+      "file": "robot_arm.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One industrial robotic manipulator arm on its compact integrated mounting base, orange painted articulated metal sections, realistic joints and black gripper, no workspace. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-8c2a2bf1-70c3-45fc-a95e-b024853ce332.png"
+    },
+    {
+      "id": "fossil_skeleton",
+      "file": "fossil_skeleton.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One complete museum-quality small theropod dinosaur fossil skeleton, brown mineralized bones, horizontal tail, supported by minimal integral metal supports, no floor or large display plinth. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-e8c6ae3b-09a1-4ef6-9315-b0cf2ff697f6.png"
+    },
+    {
+      "id": "harp",
+      "file": "harp.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One full-size ornate concert harp, golden carved column, curved neck, many fine strings, dark wooden soundboard and integral feet, whole object. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-bef22464-d5f6-4e61-b5e1-1da8ad514c9b.png"
+    },
+    {
+      "id": "printing_press",
+      "file": "printing_press.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One antique mechanical letterpress printing machine, large cast-iron frame, flywheel, rollers, brass adjustment knobs and worn dark paint, complete integrated feet, no workshop. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-4fd1aa43-aa94-47da-af6f-a0a0a68db1ef.png"
+    },
+    {
+      "id": "grandfather_clock",
+      "file": "grandfather_clock.png",
+      "prompt": "Create ONE production game inventory item icon. Photorealistic high-end PBR collectible loot asset, realistic materials and fine wear, neutral natural colors, clearly readable silhouette. Original asset in the realistic inventory-art direction of BidKing / Delta Force / Escape from Tarkov; not cartoon or vector art. Full object, centered, slight elevated three-quarter product view, generous empty padding, all extremities visible. Soft balanced studio illumination only for material form. TRUE TRANSPARENT ALPHA background. Absolutely NO cast/drop/contact/ground shadow, no dark puddle beneath, no surface, floor, backdrop, pedestal, external reflection, checkerboard pattern, text overlay, labels, logos, borders, UI or hands. Only the requested item. Important: NO glow, halo, bloom, vignette, haze or colored spill outside the object's physical silhouette. Clean alpha all around. Subject: One tall carved wooden grandfather clock, walnut cabinet, glass door showing brass pendulum and weights, ornate analog dial, complete feet and top, no room. Keep the ENTIRE large object inside frame with clear transparent padding.",
+      "generated_source": "exec-979afa95-9ccf-4d5b-bd0b-69c6ceb1a4a5.png"
+    },
+    {
+      "id": "rusty_nails",
+      "file": "rusty_nails.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One small open battered cardboard box holding a handful of rusty iron nails, nails contained inside box.",
+      "generated_source": "exec-c2c9a605-92fe-496a-91cb-a1743cb2f996.png"
+    },
+    {
+      "id": "tape_roll",
+      "file": "tape_roll.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One partially used roll of gray cloth duct tape, rough cardboard inner core.",
+      "generated_source": "exec-7c9dcaaf-6232-4f66-b013-6e2262ca36d4.png"
+    },
+    {
+      "id": "soap",
+      "file": "soap.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One rectangular pale yellow laundry soap bar with worn rounded edges, no writing or wrapping.",
+      "generated_source": "exec-50a99f2a-1b43-460d-a902-dfff56e37fc7.png"
+    },
+    {
+      "id": "work_gloves",
+      "file": "work_gloves.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One pair of used beige cotton work gloves with blue rubber palms neatly overlapped.",
+      "generated_source": "exec-bbb12d2b-5aa5-4142-b8f7-af30eb28f776.png"
+    },
+    {
+      "id": "screwdriver",
+      "file": "screwdriver.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One worn flat-head screwdriver, red translucent plastic handle and steel shaft, upright diagonal composition.",
+      "generated_source": "exec-0c3f5a30-594a-4137-85b6-05fecf1ca28d.png"
+    },
+    {
+      "id": "ceramic_mug",
+      "file": "ceramic_mug.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One plain white enamel camping mug with navy rim, chipped edge, empty.",
+      "generated_source": "exec-e2c81d60-a5d5-42f0-9402-2c60d85e1dae.png"
+    },
+    {
+      "id": "cloth_rag",
+      "file": "cloth_rag.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One folded old gray cotton cleaning rag, frayed edges, realistic woven cloth.",
+      "generated_source": "exec-10606340-acbf-41b9-a6ac-9a873ff4c19e.png"
+    },
+    {
+      "id": "plastic_bottle",
+      "file": "plastic_bottle.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One cheap scratched opaque olive green plastic water canteen with a screw cap, no strap.",
+      "generated_source": "exec-a57ad4a0-df4a-492e-9121-fe36c96f7f55.png"
+    },
+    {
+      "id": "padlock",
+      "file": "padlock.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One small brass padlock with a closed silver steel shackle, worn brushed metal.",
+      "generated_source": "exec-416a4a35-0da5-4538-a001-28285697345b.png"
+    },
+    {
+      "id": "measuring_tape",
+      "file": "measuring_tape.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One compact yellow and black retractable steel measuring tape case, only the small metal hook visible at the slot.",
+      "generated_source": "exec-f0ecaa29-0aa8-4d53-98b3-d0dc958c300e.png"
+    },
+    {
+      "id": "copper_wire",
+      "file": "copper_wire.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One short coil of reddish bare copper wire neatly wound, rough recycled utilitarian material.",
+      "generated_source": "exec-b8dee3e8-71c9-4ae2-8642-599425016dbe.png"
+    },
+    {
+      "id": "charger",
+      "file": "charger.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One ordinary white USB wall charger adapter with two metal prongs, slightly scuffed plastic, no cable.",
+      "generated_source": "exec-53623a84-593a-4684-972d-aa4769c58340.png"
+    },
+    {
+      "id": "keyboard",
+      "file": "keyboard.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One used beige full size computer keyboard, aged cream plastic and gray keycaps, no cable trailing off frame, no logos.",
+      "generated_source": "exec-b6f3fae9-8978-4537-bfcb-f3a8979c9d6f.png"
+    },
+    {
+      "id": "calculator",
+      "file": "calculator.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One inexpensive black pocket calculator, small LCD switched off, gray and blue rubber buttons.",
+      "generated_source": "exec-48491488-4b17-4466-b6e8-d9c09c59a683.png"
+    },
+    {
+      "id": "harmonica",
+      "file": "harmonica.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One small ten-hole harmonica, worn chrome covers and dark comb, no logos or case.",
+      "generated_source": "exec-240dabb0-83bf-401e-8d95-0c8f867d08d0.png"
+    },
+    {
+      "id": "toy_car",
+      "file": "toy_car.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One inexpensive red die-cast toy hatchback car with chipped paint, black plastic wheels, no logos.",
+      "generated_source": "exec-9fea0545-9bc5-4b57-8ed7-9aa4573a454c.png"
+    },
+    {
+      "id": "memory_card",
+      "file": "memory_card.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One black full-sized SD memory card, gold contacts visible, small plain blue label without text.",
+      "generated_source": "exec-0b69611a-1121-423e-a8fd-85fe0680a791.png"
+    },
+    {
+      "id": "digital_thermometer",
+      "file": "digital_thermometer.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One compact handheld digital temperature meter, dark gray housing, small blank LCD and short metal probe.",
+      "generated_source": "exec-bf76bcf4-e2b8-4eab-a703-b84f16ba7d9e.png"
+    },
+    {
+      "id": "portable_scale",
+      "file": "portable_scale.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One compact rectangular digital pocket weighing scale, brushed stainless steel weighing plate, black plastic case, blank LCD, no lid.",
+      "generated_source": "exec-f3a0c913-ebc9-46a6-95ba-cfc81808900e.png"
+    },
+    {
+      "id": "soldering_iron",
+      "file": "soldering_iron.png",
+      "prompt": "Create ONE original photorealistic PBR game inventory loot icon. Modest inexpensive used everyday object, realistic materials and mild wear, neutral natural colors, readable silhouette, slight elevated three-quarter product view. Full object centered with generous transparent padding, every extremity visible. TRUE TRANSPARENT ALPHA BACKGROUND. Absolutely NO cast, drop, contact or ground shadow; no surface, floor, backdrop, pedestal, glow, halo, bloom, vignette, checkerboard, UI, text overlay, logo or watermark. Soft balanced lighting for material form only, clean alpha outside the physical object. Subject: One adjustable temperature soldering iron, blue rubber handle, steel tip and short cord neatly coiled beside it, all inside frame.",
+      "generated_source": "exec-fa255845-f1ec-4ffd-af6a-03f73f4c7f18.png"
+    }
+  ]
+}

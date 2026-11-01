@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2ruu1poo6n7m"
-path="res://.godot/imported/vase.svg-1a35f948536d29f93ee0e5d768026cce.ctex"
+uid="uid://2l78874go76k"
+path="res://.godot/imported/vase.svg-b51a74fa89e4e0abdc698285d95f5ef1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/items/vase.svg"
-dest_files=["res://.godot/imported/vase.svg-1a35f948536d29f93ee0e5d768026cce.ctex"]
+source_file="res://games/minigame/godot_party_default_auction_master/assets/items/vase.svg"
+dest_files=["res://.godot/imported/vase.svg-b51a74fa89e4e0abdc698285d95f5ef1.ctex"]
 
 [params]
 

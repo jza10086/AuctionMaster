@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjlh2v6w0xjrg"
-path="res://.godot/imported/clock.svg-10ee53b2ee0359ed16147494576d751f.ctex"
+uid="uid://dxffcofc1gjts"
+path="res://.godot/imported/clock.svg-2535ffb71b884bebd9bfe7db74bac3a8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/items/clock.svg"
-dest_files=["res://.godot/imported/clock.svg-10ee53b2ee0359ed16147494576d751f.ctex"]
+source_file="res://games/minigame/godot_party_default_auction_master/assets/items/clock.svg"
+dest_files=["res://.godot/imported/clock.svg-2535ffb71b884bebd9bfe7db74bac3a8.ctex"]
 
 [params]
 

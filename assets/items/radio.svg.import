@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba0fvd5060or5"
-path="res://.godot/imported/radio.svg-c5f6b28e9331b3d645f1e347e395c93f.ctex"
+uid="uid://ck33qvhy65itj"
+path="res://.godot/imported/radio.svg-362f7f5c1cab684d4dc2798f11451897.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/items/radio.svg"
-dest_files=["res://.godot/imported/radio.svg-c5f6b28e9331b3d645f1e347e395c93f.ctex"]
+source_file="res://games/minigame/godot_party_default_auction_master/assets/items/radio.svg"
+dest_files=["res://.godot/imported/radio.svg-362f7f5c1cab684d4dc2798f11451897.ctex"]
 
 [params]
 

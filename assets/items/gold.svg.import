@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bn0px68ntnow6"
-path="res://.godot/imported/gold.svg-c9f44886c5f453ea1ff628e07322bfb9.ctex"
+uid="uid://c45vgejuefv4m"
+path="res://.godot/imported/gold.svg-4959bb42a2b8952d4d4375b868a99531.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/items/gold.svg"
-dest_files=["res://.godot/imported/gold.svg-c9f44886c5f453ea1ff628e07322bfb9.ctex"]
+source_file="res://games/minigame/godot_party_default_auction_master/assets/items/gold.svg"
+dest_files=["res://.godot/imported/gold.svg-4959bb42a2b8952d4d4375b868a99531.ctex"]
 
 [params]
 
