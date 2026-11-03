@@ -21,7 +21,7 @@ var private_revision: int = -1
 
 func build_game() -> void:
 	heading.text = "秘仓竞拍 · 密封报价"
-	footer.text = "每仓 5 轮，仅第 5 轮成交 · 同价按公开优先顺序 · 0 金币表示放弃"
+	footer.text = "第 5 轮成交 · 0 金币：放弃"
 	var center: CenterContainer = CenterContainer.new()
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	stage.add_child(center)
@@ -47,6 +47,18 @@ func build_game() -> void:
 	submit = button(sidebar, "确认密封报价", func() -> void: _act("bid"))
 	appraisal = button(sidebar, "私密鉴定（每仓一次）", func() -> void: _act("appraise"))
 	button(sidebar, "物资图鉴 / 羁绊规则", _open_catalog)
+	compose_fullscreen_hud()
+	var actions: HBoxContainer = HBoxContainer.new()
+	$OverlayHUD.add_child(actions)
+	actions.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	actions.offset_left = 28
+	actions.offset_top = -88
+	actions.offset_bottom = -28
+	actions.add_theme_constant_override("separation", 12)
+	bid.reparent(actions)
+	bid.custom_minimum_size.x = 180
+	submit.reparent(actions)
+	appraisal.reparent(actions)
 
 func start_game() -> void:
 	if not api.is_host():
@@ -60,7 +72,7 @@ func start_game() -> void:
 	session.start()
 
 func _act(kind: String) -> void:
-	if not private_view.is_empty():
+	if not api.input.input_blocked and not private_view.is_empty():
 		send_action({"kind": kind, "amount": int(bid.value), "warehouse": private_view.warehouse, "round": private_view.round})
 
 func handle_action(id: String, data: Dictionary) -> void:
