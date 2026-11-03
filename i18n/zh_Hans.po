@@ -1,0 +1,23 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: zh_Hans\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "2–8 人真人密封竞拍；每仓 5 轮，仅最终轮成交，结算按最终金币排名。"
+msgstr "2–8 人真人密封竞拍；每仓 5 轮，仅最终轮成交，结算按最终金币排名。"
+
+msgid "GodotPartyDefault · 秘仓竞拍"
+msgstr "GodotPartyDefault · 秘仓竞拍"
+
+msgid "仓库数量"
+msgstr "仓库数量"
+
+msgid "初始金币"
+msgstr "初始金币"
+
+msgid "每轮竞价秒数"
+msgstr "每轮竞价秒数"
+
+msgid "游戏规则"
+msgstr "游戏规则"
