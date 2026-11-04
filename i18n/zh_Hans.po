@@ -21,3 +21,15 @@ msgstr "每轮竞价秒数"
 
 msgid "游戏规则"
 msgstr "游戏规则"
+
+msgid "hud.item"
+msgstr "{quality} · {width} × {height} 格\n{value} 金币\n{tags}"
+
+msgid "hud.valuation"
+msgstr "基础 {base}  +  羁绊 {bonus}  =  总值 {total}"
+
+msgid "hud.clock"
+msgstr "仓库 {current} / {total} · 第 {round} / 5 轮 · 剩余 {time} 秒 · {phase}"
+
+msgid "hud.player"
+msgstr "{player}  {balance}{bid}"

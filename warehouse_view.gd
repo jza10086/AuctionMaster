@@ -24,7 +24,6 @@ var _hovered_index: int = -1
 var _textures: Dictionary = {}
 
 func _ready() -> void:
-	custom_minimum_size = GRID_SIZE
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	focus_mode = Control.FOCUS_ALL
 	mouse_exited.connect(_on_mouse_exited)

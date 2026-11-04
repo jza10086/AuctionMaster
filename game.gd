@@ -1,64 +1,31 @@
 extends "res://games/protocols/godot_party_default_protocol/ranked_round.gd"
 ## Sealed auction. The random inventory and private appraisals never enter public snapshots.
 const Session: Script = preload("res://games/minigame/godot_party_default_auction_master/session.gd")
-const Warehouse: Script = preload("res://games/minigame/godot_party_default_auction_master/warehouse_view.gd")
+const CatalogItem: PackedScene = preload("res://games/minigame/godot_party_default_auction_master/catalog_item.tscn")
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
-var item_details: Label
-var valuation: Label
-var encyclopedia: AcceptDialog
+@onready var item_details: Label = %ItemDetails
+@onready var valuation: Label = %Valuation
+@onready var encyclopedia: AcceptDialog = %Encyclopedia
 var session: RefCounted = Session.new()
-var warehouse_view: Control
+@onready var warehouse_view: Control = %Warehouse
 var private_view: Dictionary = {}
-var bid: SpinBox
-var submit: Button
-var appraisal: Button
-var private_label: Label
-var clues: Label
+@onready var bid: SpinBox = %Bid
+@onready var submit: Button = %Submit
+@onready var appraisal: Button = %Appraise
+@onready var private_label: Label = %PrivateNote
+@onready var clues: Label = %Clues
 var transition: float = 0.0
 var previous_phase: String = ""
 var public_revision: int = 0
 var private_revision: int = -1
 
 func build_game() -> void:
-	heading.text = "秘仓竞拍 · 密封报价"
-	footer.text = "第 5 轮成交 · 0 金币：放弃"
-	var center: CenterContainer = CenterContainer.new()
-	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	stage.add_child(center)
-	warehouse_view = Warehouse.new()
-	var inventory: VBoxContainer = VBoxContainer.new()
-	center.add_child(inventory)
-	valuation = label(inventory, "封仓期间不显示物资、tag 或羁绊", 20)
-	valuation.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	inventory.add_child(warehouse_view)
-	item_details = label(inventory, "开仓后点击物资查看品质、占格和增值", 18)
-	item_details.custom_minimum_size = Vector2(576, 64)
-	item_details.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	warehouse_view.selection_changed.connect(_show_item)
-	clues = label(sidebar, "", 20)
-	clues.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	clues.custom_minimum_size.x = 330
-	private_label = label(sidebar, "鉴定信息仅自己可见", 20)
-	private_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	bid = SpinBox.new()
-	bid.step = 50
-	bid.custom_minimum_size.y = 48
-	sidebar.add_child(bid)
-	submit = button(sidebar, "确认密封报价", func() -> void: _act("bid"))
-	appraisal = button(sidebar, "私密鉴定（每仓一次）", func() -> void: _act("appraise"))
-	button(sidebar, "物资图鉴 / 羁绊规则", _open_catalog)
-	compose_fullscreen_hud()
-	var actions: HBoxContainer = HBoxContainer.new()
-	$OverlayHUD.add_child(actions)
-	actions.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
-	actions.offset_left = 28
-	actions.offset_top = -88
-	actions.offset_bottom = -28
-	actions.add_theme_constant_override("separation", 12)
-	bid.reparent(actions)
-	bid.custom_minimum_size.x = 180
-	submit.reparent(actions)
-	appraisal.reparent(actions)
+	submit.pressed.connect(func() -> void: _act("bid"))
+	appraisal.pressed.connect(func() -> void: _act("appraise"))
+	%OpenCatalog.pressed.connect(_open_catalog)
+	%CatalogRules.text = Catalog.RULE_TEXT
+	clues.text = ""
 
 func start_game() -> void:
 	if not api.is_host():
@@ -142,15 +109,13 @@ func render_game() -> void:
 	warehouse_view.set_snapshot(view)
 	warehouse_view.advance_reveal(maxf(0.0, float(view.get("reveal_elapsed", 0.0)) - warehouse_view._animation_time))
 	if view.phase in ["reveal", "finished"]:
-		valuation.text = "基础 %d  +  羁绊 %d  =  总值 %d" % [view.base_value, view.bonus_value, view.total_value]
+		valuation.text = api.i18n.text(&"hud.valuation", {"base": view.base_value, "bonus": view.bonus_value, "total": view.total_value})
 	else:
 		valuation.text = "封仓期间不显示物资、tag 或羁绊"
-	status.text = "仓库 %d / %d · 第 %d / 5 轮 · 剩余 %d 秒 · %s" % [int(view.warehouse) + 1, view.warehouses_total, view.round, ceili(view.time), {"bidding": "密封报价", "round_result": "本轮报价公布", "reveal": "开仓揭晓", "finished": "竞拍结束"}.get(view.phase, "等待")]
-	var lines: PackedStringArray = []
+	status.text = api.i18n.text(&"hud.clock", {"current": int(view.warehouse) + 1, "total": view.warehouses_total, "round": view.round, "time": ceili(view.time), "phase": {"bidding": "密封报价", "round_result": "本轮报价公布", "reveal": "开仓揭晓", "finished": "竞拍结束"}.get(view.phase, "等待")})
 	for index: int in players.size():
 		var revealed_bid: String = " · 报价 %d" % int(view.round_bids[index]) if view.round_bids.size() == players.size() else (" · 已锁定" if view.locked[index] else " · 思考中")
-		lines.append("%s  %d%s" % [players[index].name, view.balances[index], revealed_bid])
-	standings.text = "\n".join(lines)
+		update_standing(players[index].player_id, api.i18n.text(&"hud.player", {"player": players[index].name, "balance": view.balances[index], "bid": revealed_bid}))
 	var priority_names: PackedStringArray = []
 	for seat: int in view.priority:
 		priority_names.append(players[seat].name)
@@ -185,57 +150,27 @@ func _show_item(item: Dictionary) -> void:
 
 ## The catalogue contains public definitions only, never the current sealed inventory.
 func _open_catalog() -> void:
-	if is_instance_valid(encyclopedia):
+	var grid: GridContainer = %CatalogGrid
+	if grid.get_child_count() > 0:
 		encyclopedia.popup_centered(Vector2i(1120, 800))
 		return
-	encyclopedia = AcceptDialog.new()
-	encyclopedia.title = "秘仓竞拍 · 100 种物资图鉴"
-	encyclopedia.ok_button_text = "关闭"
-	encyclopedia.min_size = Vector2i(800, 600)
-	add_child(encyclopedia)
-	var content: VBoxContainer = VBoxContainer.new()
-	encyclopedia.add_child(content)
-	var rule: Label = label(content, Catalog.RULE_TEXT, 20)
-	rule.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	rule.custom_minimum_size = Vector2(1050, 70)
-	var scroll: ScrollContainer = ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(1050, 580)
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	content.add_child(scroll)
-	var grid: GridContainer = GridContainer.new()
-	grid.columns = 4
-	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	grid.add_theme_constant_override("h_separation", 18)
-	grid.add_theme_constant_override("v_separation", 24)
-	scroll.add_child(grid)
 	for item: Dictionary in Catalog.new().items:
-		var card: VBoxContainer = VBoxContainer.new()
-		card.custom_minimum_size.x = 242
-		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var card: VBoxContainer = CatalogItem.instantiate()
 		grid.add_child(card)
-		var icon: TextureRect = TextureRect.new()
-		icon.texture = load("res://games/minigame/godot_party_default_auction_master/assets/items/realistic/%s.png" % item.kind)
-		icon.custom_minimum_size = Vector2(120, 120)
-		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		card.add_child(icon)
-		var title: Label = label(card, item.name, 22)
-		title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		card.get_node("Icon").texture = load("res://games/minigame/godot_party_default_auction_master/assets/items/realistic/%s.png" % item.kind)
+		var title: Label = card.get_node("Title")
+		title.text = item.name
 		title.add_theme_color_override("font_color", Catalog.QUALITY_COLORS[int(item.quality)])
 		if int(item.quality) == 6:
-			var stripe: HBoxContainer = HBoxContainer.new()
-			stripe.add_theme_constant_override("separation", 0)
-			card.add_child(stripe)
+			var stripe: HBoxContainer = card.get_node("Stripe")
+			stripe.show()
 			for tint: Color in Catalog.RAINBOW_COLORS:
 				var band: ColorRect = ColorRect.new()
 				band.color = tint
 				band.custom_minimum_size.y = 3
 				band.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 				stripe.add_child(band)
-		var info: Label = label(card, "%s · %d × %d 格\n%d 金币\n%s" % [
-			Catalog.QUALITY_NAMES[int(item.quality)] + "（" + Catalog.QUALITY_COLOR_NAMES[int(item.quality)] + "）", item.size[0], item.size[1], item.value, " / ".join(item.tags) + ("\n高密度珍品" if item.get("compact_premium", false) else "")], 16)
-		info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		var info: Label = card.get_node("Info")
+		info.text = api.i18n.text(&"hud.item", {"quality": Catalog.QUALITY_NAMES[int(item.quality)] + "（" + Catalog.QUALITY_COLOR_NAMES[int(item.quality)] + "）", "width": item.size[0], "height": item.size[1], "value": item.value, "tags": " / ".join(item.tags) + ("\n高密度珍品" if item.get("compact_premium", false) else "")})
 	encyclopedia.popup_centered(Vector2i(1120, 800))
 
