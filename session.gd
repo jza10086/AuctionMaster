@@ -15,7 +15,10 @@ var _lots: Array = []
 var _bids: Array = [0, 0, 0, 0]
 var _locked: Array = [false, false, false, false]
 var _history: Array = []
-var _bounds: Array = [Catalog.MIN_LOT_VALUE, Catalog.MAX_LOT_VALUE]
+var _eligible: Array[bool] = []
+var _withdrawn: Array[bool] = []
+var _minimum_bid: int = 1
+var _outcome: String = ""
 var _clues: Array = []
 var _skill_used: Array = [false, false, false, false]
 var _skill_bounds: Array = [[], [], [], []]
@@ -24,7 +27,6 @@ var _winner: int = -1
 var _price: int = 0
 var _settled: bool = false
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
-var _clue_rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var _skill_seed: int = 0
 
 func start(seed_value: int = -1) -> void:
@@ -32,11 +34,12 @@ func start(seed_value: int = -1) -> void:
 		_rng.randomize()
 	else:
 		_rng.seed = seed_value
-	_clue_rng.seed = _rng.seed ^ 0x631B2
 	_skill_seed = _rng.seed ^ 0x947F3
 	balances = []
 	balances.resize(names.size())
 	balances.fill(rules.initialcoins)
+	_withdrawn.resize(names.size())
+	_withdrawn.fill(false)
 	_lots.clear()
 	_appraisals.clear()
 	for _index: Variant in range(rules.warehouses):
@@ -85,8 +88,12 @@ func _hidden_total() -> int:
 func _begin_warehouse() -> void:
 	round = 1
 	_history = []
-	_bounds = [Catalog.MIN_LOT_VALUE, Catalog.MAX_LOT_VALUE]
-	_clues = ["仓库封存完整，含同仓羁绊的估值范围为 2,000—120,000 金币。"]
+	_eligible.resize(names.size())
+	for seat: int in names.size():
+		_eligible[seat] = not _withdrawn[seat]
+	_minimum_bid = 1
+	_outcome = ""
+	_clues = []
 	_skill_used = []
 	for seat: int in names.size():
 		_skill_used.append(false)
@@ -105,37 +112,105 @@ func _begin_round() -> void:
 	phase = "bidding"
 	time = rules.round_seconds
 	_bids = []
-	for seat: int in names.size():
-		_bids.append(0)
 	_locked = []
 	for seat: int in names.size():
-		_locked.append(false)
-	if round > 1:
-		var actual: int = _hidden_total()
-		var widths: Array = [70000, 32000, 12000, 5000]
-		var width: int = int(widths[mini(round - 2, widths.size() - 1)])
-		_bounds = _uncertain_interval(actual, _bounds, width, _clue_rng)
-		_clues.append("第 %d 轮公开鉴定：总值在 %s—%s 金币之间。" % [round, _bounds[0], _bounds[1]])
+		_bids.append(0)
+		_locked.append(not _eligible[seat] or _withdrawn[seat])
+	if round <= Rules.ROUNDS:
+		_add_public_clue()
+
+## Public evidence describes the sealed lot without exposing exact prices or inventory.
+func _add_public_clue() -> void:
+	var lot: Array = _lots[warehouse]
+	match round:
+		1:
+			_clues.append("第 1 轮线索：本仓共有 %d 件物资。" % lot.size())
+		2:
+			var cells: int = 0
+			for item: Dictionary in lot:
+				cells += int(item.size[0]) * int(item.size[1])
+			_clues.append("第 2 轮线索：物资合计占用 %d 格。" % cells)
+		3:
+			var rare_count: int = 0
+			for item: Dictionary in lot:
+				if int(item.quality) >= 4:
+					rare_count += 1
+			_clues.append("第 3 轮线索：典藏（金）及以上品质共 %d 件。" % rare_count)
+		4:
+			var strongest: Dictionary = _appraisals[warehouse].tags[0]
+			for group: Dictionary in _appraisals[warehouse].tags:
+				if int(group.count) > int(strongest.count):
+					strongest = group
+			_clues.append("第 4 轮羁绊线索：%s %d 件，对应物资增值 %d%%。" % [strongest.tag, strongest.count, strongest.percent])
+		5:
+			var quality_counts: Array[int] = []
+			quality_counts.resize(Catalog.QUALITY_NAMES.size())
+			quality_counts.fill(0)
+			for item: Dictionary in lot:
+				quality_counts[int(item.quality)] += 1
+			var parts: PackedStringArray = []
+			for quality: int in quality_counts.size():
+				if quality_counts[quality] > 0:
+					parts.append("%s %d 件" % [Catalog.QUALITY_NAMES[quality], quality_counts[quality]])
+			_clues.append("第 5 轮线索：" + " / ".join(parts))
+
 func submit_bid(player_id: int, amount: int, expected_warehouse: int, expected_round: int) -> bool:
 	if phase != "bidding" or expected_warehouse != warehouse or expected_round != round:
 		return false
 	if player_id < 0 or player_id >= names.size() or _locked[player_id]:
 		return false
-	if amount < 0 or amount > int(balances[player_id]):
+	if not _eligible[player_id] or _withdrawn[player_id]:
+		return false
+	if amount < 0 or amount > int(balances[player_id]) or (amount > 0 and amount < _minimum_bid):
 		return false
 	_bids[player_id] = amount
 	_locked[player_id] = true
 	if not _locked.has(false):
-		_history.append({"round": round, "bids": _bids.duplicate()})
-		phase = "round_result"
-		time = 0.0
-		if round == rules.rounds:
-			_settle()
-			phase = "reveal"
+		_resolve_round()
 	return true
+
+## Compare sealed bids once everyone is locked. No money moves before a sale.
+func _resolve_round() -> void:
+	_history.append({"round": round, "bids": _bids.duplicate()})
+	phase = "round_result"
+	time = 0.0
+	var highest: int = 0
+	var second: int = 0
+	var leaders: Array[int] = []
+	for seat: int in names.size():
+		if not _eligible[seat] or _withdrawn[seat]:
+			continue
+		var amount: int = int(_bids[seat])
+		if amount > highest:
+			second = highest
+			highest = amount
+			leaders.assign([seat])
+		elif amount == highest and amount > 0:
+			second = highest
+			leaders.append(seat)
+		elif amount > second:
+			second = amount
+	if round < Rules.ROUNDS:
+		# A solo practice run has no second bidder and deliberately shows all five clues.
+		if names.size() > 1 and leaders.size() == 1 and highest * 100 >= second * Rules.EARLY_WIN_PERCENT[round - 1]:
+			_settle(leaders[0], highest, "early")
+		return
+	if leaders.is_empty():
+		_settle(-1, 0, "unsold")
+	elif leaders.size() == 1:
+		_settle(leaders[0], highest, "overtime" if round > Rules.ROUNDS else "final")
+	else:
+		_eligible.fill(false)
+		for seat: int in leaders:
+			_eligible[seat] = true
+		_minimum_bid = highest + 1
+		_outcome = "tie"
 
 func tick(delta: float) -> void:
 	if phase != "bidding":
+		return
+	if not _locked.has(false):
+		_resolve_round()
 		return
 	time = maxf(0.0, time - maxf(delta, 0.0))
 	if time <= 0.0:
@@ -146,14 +221,18 @@ func expire_round() -> void:
 		if phase == "bidding" and not _locked[seat]:
 			submit_bid(seat, 0, warehouse, round)
 
+## Disconnected seats cannot bid, win or return in later warehouses.
+func withdraw_player(seat: int) -> void:
+	_withdrawn[seat] = true
+	_eligible[seat] = false
+	if phase == "bidding":
+		_bids[seat] = 0
+		_locked[seat] = true
+
 func advance() -> void:
 	if phase == "round_result":
-		if round < rules.rounds:
-			round += 1
-			_begin_round()
-		else:
-			_settle()
-			phase = "reveal"
+		round += 1
+		_begin_round()
 	elif phase == "reveal":
 		if warehouse + 1 < rules.warehouses:
 			warehouse += 1
@@ -161,29 +240,21 @@ func advance() -> void:
 		else:
 			phase = "finished"
 
-func priority_order() -> Array:
-	var order: Array = []
-	for offset: Variant in range(names.size()):
-		order.append((warehouse + offset) % names.size())
-	return order
-
-func _settle() -> void:
+func _settle(winner: int, price: int, outcome: String) -> void:
 	if _settled:
 		return
 	_settled = true
-	_winner = -1
-	_price = 0
-	for player_id: Variant in priority_order():
-		if int(_bids[player_id]) > _price:
-			_price = int(_bids[player_id])
-			_winner = player_id
+	_winner = winner
+	_price = price
+	_outcome = outcome
 	if _winner >= 0:
 		balances[_winner] = int(balances[_winner]) - _price + _hidden_total()
+	phase = "reveal"
 
 func use_skill(player_id: int) -> String:
 	if player_id < 0 or player_id >= names.size():
 		return ""
-	if phase != "bidding" or _skill_used[player_id]:
+	if phase != "bidding" or _skill_used[player_id] or not _eligible[player_id] or _withdrawn[player_id]:
 		return _skill_text[player_id]
 	_skill_used[player_id] = true
 	var actual: int = _hidden_total()
@@ -191,7 +262,7 @@ func use_skill(player_id: int) -> String:
 	# evidence, opponents' decisions, or another player's private appraisal.
 	var private_rng: Variant = RandomNumberGenerator.new()
 	private_rng.seed = _skill_seed ^ ((warehouse + 1) * 73856093) ^ ((player_id + 1) * 19349663)
-	_skill_bounds[player_id] = _uncertain_interval(actual, _bounds, 900, private_rng)
+	_skill_bounds[player_id] = _uncertain_interval(actual, [Catalog.MIN_LOT_VALUE, Catalog.MAX_LOT_VALUE], 900, private_rng)
 	_skill_text[player_id] = "私密鉴定：本仓总值在 %d—%d 金币之间。" % [_skill_bounds[player_id][0], _skill_bounds[player_id][1]]
 	return _skill_text[player_id]
 
@@ -206,20 +277,19 @@ func _uncertain_interval(actual: int, previous: Array, requested_width: int, rng
 
 func snapshot(player_id: int = 0) -> Dictionary:
 	var valid: bool = player_id >= 0 and player_id < names.size()
-	var visible_bounds: Array = _bounds.duplicate()
-	if valid and not _skill_bounds[player_id].is_empty():
-		visible_bounds = [maxi(int(_bounds[0]), int(_skill_bounds[player_id][0])), mini(int(_bounds[1]), int(_skill_bounds[player_id][1]))]
 	var result: Dictionary = {
 		"phase": phase, "warehouse": warehouse, "round": round,
-		"warehouses_total": rules.warehouses, "rounds_total": rules.rounds,
+		"warehouses_total": rules.warehouses, "rounds_total": Rules.ROUNDS,
 		"balances": balances.duplicate(), "names": names.duplicate(),
-		"clues": _clues.duplicate(), "bounds": visible_bounds,
-		"public_bounds": _bounds.duplicate(), "history": _history.duplicate(true),
+		"clues": _clues.duplicate(), "history": _history.duplicate(true),
 		"time": time, "ownbid": _bids[player_id] if valid else 0,
 		"bidlocked": _locked[player_id] if valid else true,
 		"skilltext": _skill_text[player_id] if valid else "",
-		"skill_available": valid and phase == "bidding" and not _skill_used[player_id],
-		"priority": priority_order(), "round_bids": [], "winner": -1,
+		"skill_available": valid and phase == "bidding" and _eligible[player_id] and not _withdrawn[player_id] and not _skill_used[player_id],
+		"eligible": _eligible.duplicate(), "withdrawn": _withdrawn.duplicate(),
+		"minimum_bid": _minimum_bid, "outcome": _outcome,
+		"early_percent": Rules.EARLY_WIN_PERCENT[round - 1] if round < Rules.ROUNDS and names.size() > 1 else 0,
+		"round_bids": [], "winner": -1,
 		"price": 0, "rankings": rankings(),
 	}
 	if phase == "round_result" or phase == "reveal" or phase == "finished":

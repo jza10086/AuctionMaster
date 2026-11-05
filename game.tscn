@@ -1,73 +1,90 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://oqk2l8und8i6"]
 
-[ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/game.gd" id="1"]
-
+[ext_resource type="Script" uid="uid://dpkh8dcfwyo" path="res://games/minigame/godot_party_default_auction_master/game.gd" id="1"]
 [ext_resource type="PackedScene" path="res://games/protocols/godot_party_default_protocol/ranked_round.tscn" id="round"]
+[ext_resource type="Script" uid="uid://b2cvkqbwm85jy" path="res://games/minigame/godot_party_default_auction_master/warehouse_view.gd" id="warehouse"]
 
-[ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/warehouse_view.gd" id="warehouse"]
+[sub_resource type="StyleBoxFlat" id="CatalogPanel"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+bg_color = Color(0.04, 0.08, 0.12, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
-[node name="Game" instance=ExtResource("round")]
+[node name="Game" unique_id=2091912236 instance=ExtResource("round")]
 layout_mode = 3
 anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="Heading" parent="OverlayHUD/Standard/Counters" index="0"]
-text = "秘仓竞拍 · 密封报价"
-
-[node name="Footer" parent="OverlayHUD/Standard" index="1"]
-text = "第 5 轮成交 · 0 金币：放弃\nEsc：菜单"
-
-[node name="Center" type="CenterContainer" parent="GameCanvas/Stage"]
+[node name="Center" type="CenterContainer" parent="GameCanvas/Stage" index="0" unique_id=1536478288]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="Inventory" type="VBoxContainer" parent="GameCanvas/Stage/Center"]
+[node name="Inventory" type="VBoxContainer" parent="GameCanvas/Stage/Center" index="0" unique_id=1333565004]
+layout_mode = 2
 mouse_filter = 2
 
-[node name="Valuation" type="Label" parent="GameCanvas/Stage/Center/Inventory"]
+[node name="Valuation" type="Label" parent="GameCanvas/Stage/Center/Inventory" index="0" unique_id=74371396]
 unique_name_in_owner = true
-text = "封仓期间不显示物资、tag 或羁绊"
-autowrap_mode = 3
+layout_mode = 2
 theme_override_font_sizes/font_size = 20
+text = "封仓中：依据公开线索与私密鉴定估价"
 horizontal_alignment = 1
+autowrap_mode = 3
 
-[node name="Warehouse" type="Control" parent="GameCanvas/Stage/Center/Inventory"]
+[node name="Warehouse" type="Control" parent="GameCanvas/Stage/Center/Inventory" index="1" unique_id=460051687]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(576,672)
+custom_minimum_size = Vector2(576, 672)
+layout_mode = 2
 script = ExtResource("warehouse")
 
-[node name="ItemDetails" type="Label" parent="GameCanvas/Stage/Center/Inventory"]
+[node name="ItemDetails" type="Label" parent="GameCanvas/Stage/Center/Inventory" index="2" unique_id=1194176764]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(576, 64)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "开仓后点击物资查看品质、占格和增值"
 autowrap_mode = 3
-theme_override_font_sizes/font_size = 20
-custom_minimum_size = Vector2(576,64)
 
-[node name="Clues" type="Label" parent="OverlayHUD/Standard/Details/SidebarScroll/Sidebar"]
+[node name="Heading" parent="OverlayHUD/Standard/Counters" index="0"]
+layout_mode = 2
+text = "秘仓竞拍 · 密封报价"
+
+[node name="Footer" parent="OverlayHUD/Standard" index="1"]
+text = "前四轮可提前成交 · 第五轮同价加拍
+0 金币：本轮放弃 · Esc：菜单"
+
+[node name="Clues" type="Label" parent="OverlayHUD/Standard/Details/SidebarScroll/Sidebar" index="1" unique_id=961793443]
 unique_name_in_owner = true
-text = "同价优先：小林 → 小叶"
+custom_minimum_size = Vector2(330, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "逐轮获取物资与羁绊线索"
 autowrap_mode = 3
-theme_override_font_sizes/font_size = 20
-custom_minimum_size = Vector2(330,0)
 
-[node name="PrivateNote" type="Label" parent="OverlayHUD/Standard/Details/SidebarScroll/Sidebar"]
+[node name="PrivateNote" type="Label" parent="OverlayHUD/Standard/Details/SidebarScroll/Sidebar" index="2" unique_id=356831037]
 unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "鉴定信息仅自己可见"
 autowrap_mode = 3
-theme_override_font_sizes/font_size = 20
 
-
-[node name="OpenCatalog" type="Button" parent="OverlayHUD/Standard/Details/SidebarScroll/Sidebar"]
+[node name="OpenCatalog" type="Button" parent="OverlayHUD/Standard/Details/SidebarScroll/Sidebar" index="3" unique_id=595846745]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
 text = "物资图鉴 / 羁绊规则"
-custom_minimum_size = Vector2(0,48)
 
-[node name="Actions" type="HBoxContainer" parent="OverlayHUD/Standard"]
+[node name="Actions" type="HBoxContainer" parent="OverlayHUD/Standard" index="4" unique_id=176071221]
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 28.0
@@ -75,46 +92,51 @@ offset_top = -88.0
 offset_bottom = -28.0
 theme_override_constants/separation = 12
 
-[node name="Bid" type="SpinBox" parent="OverlayHUD/Standard/Actions"]
+[node name="Bid" type="SpinBox" parent="OverlayHUD/Standard/Actions" index="0" unique_id=784868354]
 unique_name_in_owner = true
-step = 50.0
-custom_minimum_size = Vector2(180,48)
+custom_minimum_size = Vector2(180, 48)
+layout_mode = 2
 
-[node name="Submit" type="Button" parent="OverlayHUD/Standard/Actions"]
+[node name="Submit" type="Button" parent="OverlayHUD/Standard/Actions" index="1" unique_id=1172442213]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
 text = "确认密封报价"
-custom_minimum_size = Vector2(0,48)
 
-[node name="Appraise" type="Button" parent="OverlayHUD/Standard/Actions"]
+[node name="Appraise" type="Button" parent="OverlayHUD/Standard/Actions" index="2" unique_id=411356680]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
 text = "私密鉴定（每仓一次）"
-custom_minimum_size = Vector2(0,48)
 
-[node name="Encyclopedia" type="AcceptDialog" parent="."]
+[node name="Encyclopedia" type="AcceptDialog" parent="." index="2" unique_id=275228206]
 unique_name_in_owner = true
-visible = false
 title = "秘仓竞拍 · 100 种物资图鉴"
+theme_override_styles/panel = SubResource("CatalogPanel")
+size = Vector2i(800, 600)
+min_size = Vector2i(800, 600)
 ok_button_text = "关闭"
-min_size = Vector2i(800,600)
 
-[node name="Content" type="VBoxContainer" parent="Encyclopedia"]
+[node name="Content" type="VBoxContainer" parent="Encyclopedia" unique_id=159466049]
 
-
-[node name="CatalogRules" type="Label" parent="Encyclopedia/Content"]
+[node name="CatalogRules" type="Label" parent="Encyclopedia/Content" index="0" unique_id=160524285]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(1050, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "图鉴列出公开的品质、占格与羁绊规则。"
 autowrap_mode = 3
-theme_override_font_sizes/font_size = 20
-custom_minimum_size = Vector2(1050,70)
 
-[node name="Scroll" type="ScrollContainer" parent="Encyclopedia/Content"]
-custom_minimum_size = Vector2(1050,580)
+[node name="Scroll" type="ScrollContainer" parent="Encyclopedia/Content" index="1" unique_id=932846453]
+custom_minimum_size = Vector2(1050, 580)
+layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="CatalogGrid" type="GridContainer" parent="Encyclopedia/Content/Scroll"]
+[node name="CatalogGrid" type="GridContainer" parent="Encyclopedia/Content/Scroll" index="0" unique_id=1255803556]
 unique_name_in_owner = true
-columns = 4
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 18
 theme_override_constants/v_separation = 24
+columns = 4

@@ -7,6 +7,7 @@
   "kind": "minigame",
   "entry": "game.tscn",
   "player_counts": [
+    1,
     2,
     3,
     4,
@@ -47,7 +48,7 @@
       "audience": "instance"
     }
   },
-  "introduction": "2–8 人真人密封竞拍；每仓 5 轮，仅最终轮成交，结算按最终金币排名。",
+  "introduction": "1–8 人暗标竞拍，单人可测试；前四轮可提前成交，第五轮同价加拍，鉴定与同仓羁绊决定估值。",
   "localization": {
     "supported_locales": [
       "zh_Hans"

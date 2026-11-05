@@ -24,7 +24,7 @@ func build_game() -> void:
 	submit.pressed.connect(func() -> void: _act("bid"))
 	appraisal.pressed.connect(func() -> void: _act("appraise"))
 	%OpenCatalog.pressed.connect(_open_catalog)
-	%CatalogRules.text = Catalog.RULE_TEXT
+	%CatalogRules.text = api.i18n.text(&"rules.auction") + "\n" + Catalog.RULE_TEXT
 	clues.text = ""
 
 func start_game() -> void:
@@ -61,15 +61,13 @@ func seat_of(id: String) -> int:
 func tick_game(delta: float) -> void:
 	if not api.is_host():
 		return
-	if players.size() - disconnected.size() < 2:
+	# Only a round that started solo uses the single-player testing threshold.
+	var minimum_players: int = 1 if players.size() == 1 else 2
+	if players.size() - disconnected.size() < minimum_players:
 		finish_rows([], [], "cancelled")
 		return
 	for id: String in disconnected:
-		var seat: int = seat_of(id)
-		if session.phase == "bidding":
-			session._bids[seat] = 0
-			if not session._locked[seat]:
-				session.submit_bid(seat, 0, session.warehouse, session.round)
+		session.withdraw_player(seat_of(id))
 	session.tick(delta)
 	if previous_phase != session.phase:
 		previous_phase = session.phase
@@ -111,32 +109,52 @@ func render_game() -> void:
 	if view.phase in ["reveal", "finished"]:
 		valuation.text = api.i18n.text(&"hud.valuation", {"base": view.base_value, "bonus": view.bonus_value, "total": view.total_value})
 	else:
-		valuation.text = "封仓期间不显示物资、tag 或羁绊"
-	status.text = api.i18n.text(&"hud.clock", {"current": int(view.warehouse) + 1, "total": view.warehouses_total, "round": view.round, "time": ceili(view.time), "phase": {"bidding": "密封报价", "round_result": "本轮报价公布", "reveal": "开仓揭晓", "finished": "竞拍结束"}.get(view.phase, "等待")})
+		valuation.text = api.i18n.text(&"hud.sealed")
+	var round_caption: String = api.i18n.text(&"hud.overtime", {"number": int(view.round) - int(view.rounds_total)}) if int(view.round) > int(view.rounds_total) else api.i18n.text(&"hud.regular_round", {"number": view.round, "total": view.rounds_total})
+	status.text = api.i18n.text(&"hud.clock", {"current": int(view.warehouse) + 1, "total": view.warehouses_total, "round": round_caption, "time": ceili(view.time), "phase": {"bidding": "密封报价", "round_result": "本轮报价公布", "reveal": "开仓揭晓", "finished": "竞拍结束"}.get(view.phase, "等待")})
+	if players.size() == 1:
+		status.text = api.i18n.text(&"hud.solo") + " · " + status.text
 	for index: int in players.size():
 		var revealed_bid: String = " · 报价 %d" % int(view.round_bids[index]) if view.round_bids.size() == players.size() else (" · 已锁定" if view.locked[index] else " · 思考中")
+		if view.withdrawn[index]:
+			revealed_bid += api.i18n.text(&"hud.withdrawn")
+		elif int(view.round) > int(view.rounds_total) and not view.eligible[index]:
+			revealed_bid = api.i18n.text(&"hud.watching")
 		update_standing(players[index].player_id, api.i18n.text(&"hud.player", {"player": players[index].name, "balance": view.balances[index], "bid": revealed_bid}))
-	var priority_names: PackedStringArray = []
-	for seat: int in view.priority:
-		priority_names.append(players[seat].name)
-	clues.text = "\n".join(view.clues) + "\n同价优先：" + " → ".join(priority_names)
+	clues.text = "\n".join(view.clues)
+	if view.phase in ["bidding", "round_result"] and (int(view.round) > int(view.rounds_total) or view.outcome == "tie"):
+		var contender_names: PackedStringArray = []
+		for seat: int in players.size():
+			if view.eligible[seat]:
+				contender_names.append(players[seat].name)
+		clues.text += "\n" + api.i18n.text(&"hud.contenders", {"players": "、".join(contender_names), "minimum": view.minimum_bid})
+	if view.phase in ["reveal", "finished"]:
+		footer.text = api.i18n.text(&"hud.reveal_rule")
+	elif int(view.early_percent) > 0:
+		footer.text = api.i18n.text(&"hud.early_rule", {"percent": view.early_percent})
+	elif int(view.round) > int(view.rounds_total):
+		footer.text = api.i18n.text(&"hud.overtime_rule", {"minimum": view.minimum_bid})
+	else:
+		footer.text = api.i18n.text(&"hud.final_rule")
 	if view.phase in ["reveal", "finished"]:
 		clues.text += "\n" + ("流拍" if int(view.winner) < 0 else "成交：%s · 支付 %d\n仓库总值：%d" % [players[int(view.winner)].name, view.price, view.total_value])
+		if int(view.winner) >= 0:
+			clues.text += "\n" + api.i18n.text(&"hud.sale_profit", {"reason": api.i18n.text(StringName("outcome." + str(view.outcome))), "profit": int(view.total_value) - int(view.price)})
 		var tag_lines: PackedStringArray = []
 		for group: Dictionary in view.get("tag_groups", []):
 			tag_lines.append("%s %d 件 · %s" % [group.tag, group.count, "+%d%%" % group.percent if group.percent > 0 else "未激活"])
 		clues.text += "\n同仓羁绊（只给对应物资增值）\n" + " / ".join(tag_lines)
 	var can_bid: bool = not local_id.is_empty() and not private_view.is_empty() and private_view.phase == "bidding" and not private_view.bidlocked
-	submit.disabled = not can_bid
+	if not local_id.is_empty() and not private_view.is_empty():
+		bid.max_value = private_view.balances[seat_of(local_id)]
+	var valid_amount: bool = int(bid.value) == 0 or int(bid.value) >= int(private_view.get("minimum_bid", 1))
+	submit.disabled = not can_bid or not valid_amount
 	bid.editable = can_bid
 	appraisal.disabled = local_id.is_empty() or not private_view.get("skill_available", false)
 	private_label.text = private_view.get("skilltext", "") if not local_id.is_empty() else "观战中（不显示私密鉴定）"
-	if not local_id.is_empty() and not private_view.is_empty():
-		bid.max_value = private_view.balances[seat_of(local_id)]
 
 func player_left(id: String) -> void:
-	if session.phase == "bidding":
-		session._bids[seat_of(id)] = 0
+	session.withdraw_player(seat_of(id))
 
 func _show_item(item: Dictionary) -> void:
 	if item_details == null:
@@ -173,4 +191,3 @@ func _open_catalog() -> void:
 		var info: Label = card.get_node("Info")
 		info.text = api.i18n.text(&"hud.item", {"quality": Catalog.QUALITY_NAMES[int(item.quality)] + "（" + Catalog.QUALITY_COLOR_NAMES[int(item.quality)] + "）", "width": item.size[0], "height": item.size[1], "value": item.value, "tags": " / ".join(item.tags) + ("\n高密度珍品" if item.get("compact_premium", false) else "")})
 	encyclopedia.popup_centered(Vector2i(1120, 800))
-
