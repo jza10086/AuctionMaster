@@ -3,7 +3,7 @@
   "core_api_major": 4,
   "package_version": "1.0.0",
   "id": "godot_party_default_auction_master",
-  "name": "GodotPartyDefault · 秘仓竞拍",
+  "name": "GodotPartyDefault · 竞拍大师",
   "kind": "minigame",
   "entry": "game.tscn",
   "player_counts": [

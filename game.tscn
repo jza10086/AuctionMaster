@@ -56,7 +56,7 @@ autowrap_mode = 3
 
 [node name="Heading" parent="OverlayHUD/Standard/Counters" index="0"]
 layout_mode = 2
-text = "秘仓竞拍 · 密封报价"
+text = "竞拍大师 · 密封报价"
 
 [node name="Footer" parent="OverlayHUD/Standard" index="1"]
 text = "前四轮可提前成交 · 第五轮同价加拍
@@ -111,7 +111,7 @@ text = "私密鉴定（每仓一次）"
 
 [node name="Encyclopedia" type="AcceptDialog" parent="." index="2" unique_id=275228206]
 unique_name_in_owner = true
-title = "秘仓竞拍 · 100 种物资图鉴"
+title = "竞拍大师 · 100 种物资图鉴"
 theme_override_styles/panel = SubResource("CatalogPanel")
 size = Vector2i(800, 600)
 min_size = Vector2i(800, 600)

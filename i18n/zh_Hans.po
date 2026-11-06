@@ -10,8 +10,8 @@ msgstr "1–8 人暗标竞拍，单人可测试；前四轮可提前成交，第
 msgid "hud.solo"
 msgstr "单人竞拍测试"
 
-msgid "GodotPartyDefault · 秘仓竞拍"
-msgstr "GodotPartyDefault · 秘仓竞拍"
+msgid "GodotPartyDefault · 竞拍大师"
+msgstr "GodotPartyDefault · 竞拍大师"
 
 msgid "仓库数量"
 msgstr "仓库数量"
