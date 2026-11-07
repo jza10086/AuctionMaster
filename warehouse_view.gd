@@ -9,6 +9,7 @@ const GRID_ROWS: int = 14
 const GRID_SIZE: Vector2 = Vector2(576.0, 672.0)
 const REVEAL_SECONDS: float = 0.68
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
+const TEXT: Translation = preload("res://games/minigame/godot_party_default_auction_master/i18n/zh_Hans.po")
 # Public, read-only-by-convention presentation state for integration and QA.
 var items: Array = []
 var layout: Array[Rect2i] = []
@@ -76,6 +77,10 @@ func _pack_items() -> void:
 	_revealed_at.resize(items.size())
 	_revealed_at.fill(-100.0)
 
+## Synchronize the host clock without exposing animation internals. Repeated/older clocks do not rewind.
+func set_reveal_elapsed(elapsed_seconds: float) -> void:
+	advance_reveal(maxf(0.0, elapsed_seconds - _animation_time))
+
 func advance_reveal(delta: float) -> void:
 	if not opened or delta <= 0.0:
 		return
@@ -97,7 +102,7 @@ func skip_reveal() -> void:
 	if not opened:
 		return
 	var changed: bool = revealed_count != items.size()
-	for index: Variant in range(revealed_count, items.size()):
+	for index: int in range(revealed_count, items.size()):
 		_revealed_at[index] = _animation_time - 1.0
 	revealed_count = items.size()
 	_reveal_elapsed = 0.0
@@ -145,16 +150,16 @@ func _draw() -> void:
 	# One translucent inventory surface, shared single-pixel grid lines.
 	# Sealed geometry is constant and never depends on a hidden lot.
 	draw_rect(grid, Color(0.012,0.02,0.025,0.56))
-	for column: Variant in range(GRID_COLUMNS + 1):
+	for column: int in range(GRID_COLUMNS + 1):
 		var x: float = grid.position.x + column * cell
 		draw_line(Vector2(x, grid.position.y), Vector2(x, grid.end.y), Color(0.67,0.72,0.71,0.17), 1.0)
-	for row: Variant in range(GRID_ROWS + 1):
+	for row: int in range(GRID_ROWS + 1):
 		var y: float = grid.position.y + row * cell
 		draw_line(Vector2(grid.position.x, y), Vector2(grid.end.x, y), Color(0.67,0.72,0.71,0.17), 1.0)
 	if not opened:
 		_draw_sealed(grid)
 		return
-	for index: Variant in range(layout.size()):
+	for index: int in range(layout.size()):
 		var rect: Rect2 = get_item_rect(index).grow(-1.0)
 		if rect.size.x <= 0.0 or rect.size.y <= 0.0:
 			continue
@@ -167,12 +172,12 @@ func _draw_sealed(grid: Rect2) -> void:
 	# This fixed lock is an overall seal, never an inventory silhouette.
 	var center: Vector2 = grid.get_center()
 	var lock_center: Vector2 = center-Vector2(0.0,26.0)
-	var ink: Variant = Color(0.68,0.75,0.70,0.65)
+	var ink: Color = Color(0.68,0.75,0.70,0.65)
 	draw_arc(lock_center-Vector2(0,7),12,PI,TAU,24,ink,1.5,true)
 	draw_rect(Rect2(lock_center-Vector2(15,7),Vector2(30,26)),ink,false,1.5)
 	draw_circle(lock_center+Vector2(0,3),2,ink)
 	draw_line(lock_center+Vector2(0,4),lock_center+Vector2(0,9),ink,1.5)
-	var title: Variant = "仓库已封存"
+	var title: String = TEXT.get_message(&"warehouse.sealed")
 	var title_width: float = get_theme_default_font().get_string_size(title,HORIZONTAL_ALIGNMENT_LEFT,-1,17).x
 	_draw_text(title,center+Vector2(-title_width*0.5,32),17,Color("aab7ab"))
 
@@ -184,7 +189,7 @@ func _draw_unknown(rect: Rect2, scanning: bool) -> void:
 		var scan_y: float = rect.position.y+rect.size.y*progress
 		draw_rect(Rect2(rect.position,Vector2(rect.size.x,rect.size.y*progress)),Color(0.65,0.76,0.54,0.08))
 		draw_line(Vector2(rect.position.x,scan_y),Vector2(rect.end.x,scan_y),Color("b8c996"),1.0)
-		_draw_text("搜索中",rect.position+Vector2(7,17),11,Color("d8dfcd"))
+		_draw_text(TEXT.get_message(&"warehouse.scanning"),rect.position+Vector2(7,17),11,Color("d8dfcd"))
 	var question_size: Vector2 = get_theme_default_font().get_string_size("?",HORIZONTAL_ALIGNMENT_LEFT,-1,24)
 	_draw_text("?",rect.get_center()+Vector2(-question_size.x*0.5,8),24,Color("82918c"))
 
@@ -213,7 +218,7 @@ func _draw_item(rect: Rect2, index: int) -> void:
 		var center: Vector2 = icon_area.get_center()
 		var half: Vector2 = Vector2(minf(icon_area.size.x,40),minf(icon_area.size.y,40))*0.5
 		draw_rect(Rect2(center-half,half*2),rarity.darkened(0.45),false,2)
-	var name_text: String = str(item.get("name","未知藏品"))
+	var name_text: String = item.name
 	if not compact:
 		_draw_text(_fit_text(name_text,rect.size.x-12,11),rect.position+Vector2(6,16),11,Color("d9dfd4"))
 	var flash: float = 1-clampf((_animation_time-_revealed_at[index])/0.32,0,1)
@@ -225,7 +230,7 @@ func _draw_item(rect: Rect2, index: int) -> void:
 
 func _draw_selection_corners(rect: Rect2, color: Color) -> void:
 	var length: float = 9.0
-	for corner: Variant in [rect.position, Vector2(rect.end.x, rect.position.y), Vector2(rect.position.x, rect.end.y), rect.end]:
+	for corner: Vector2 in [rect.position, Vector2(rect.end.x, rect.position.y), Vector2(rect.position.x, rect.end.y), rect.end]:
 		var horizontal: float = 1.0 if corner.x == rect.position.x else -1.0
 		var vertical: float = 1.0 if corner.y == rect.position.y else -1.0
 		draw_line(corner, corner + Vector2(length * horizontal, 0.0), color, 2.0)
@@ -245,7 +250,7 @@ func _fit_text(text: String, max_width: float, font_size: int) -> String:
 func _format_value(value: int) -> String:
 	var text: String = str(value)
 	var result: String = ""
-	for index: Variant in range(text.length()):
+	for index: int in range(text.length()):
 		if index > 0 and (text.length() - index) % 3 == 0:
 			result += ","
 		result += text[index]
@@ -254,7 +259,7 @@ func _format_value(value: int) -> String:
 func _index_at(point: Vector2) -> int:
 	if not opened:
 		return -1
-	for index: Variant in range(revealed_count):
+	for index: int in range(revealed_count):
 		if get_item_rect(index).has_point(point):
 			return index
 	return -1
@@ -308,4 +313,4 @@ func _get_tooltip(at_position: Vector2) -> String:
 	if index < 0:
 		return ""
 	var item: Dictionary = items[index]
-	return "%s · %s（%s）\n%d × %d 格 · 基础 %d 金币\n%s" % [item.name, Catalog.QUALITY_NAMES[int(item.quality)], Catalog.QUALITY_COLOR_NAMES[int(item.quality)], item.size[0], item.size[1], item.value, " / ".join(item.tags)]
+	return TEXT.get_message(&"warehouse.tooltip").format({"name": item.name, "quality": Catalog.QUALITY_NAMES[int(item.quality)], "color": Catalog.QUALITY_COLOR_NAMES[int(item.quality)], "width": item.size[0], "height": item.size[1], "value": item.value, "tags": " / ".join(item.tags)})

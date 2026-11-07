@@ -10,6 +10,114 @@ msgstr "1–8 人暗标竞拍，单人可测试；前四轮可提前成交，第
 msgid "hud.solo"
 msgstr "单人竞拍测试"
 
+msgid "phase.bidding"
+msgstr "密封报价"
+
+msgid "phase.round_result"
+msgstr "本轮报价公布"
+
+msgid "phase.reveal"
+msgstr "开仓揭晓"
+
+msgid "phase.finished"
+msgstr "竞拍结束"
+
+msgid "hud.solo_status"
+msgstr "{mode} · {status}"
+
+msgid "hud.bid_revealed"
+msgstr " · 报价 {amount}"
+
+msgid "hud.bid_locked"
+msgstr " · 已锁定"
+
+msgid "hud.bid_thinking"
+msgstr " · 思考中"
+
+msgid "hud.unsold"
+msgstr "流拍"
+
+msgid "hud.sale"
+msgstr "成交：{player} · 支付 {price}\n仓库总值：{total}"
+
+msgid "hud.synergy_group"
+msgstr "{tag} {count} 件 · {bonus}"
+
+msgid "hud.synergy_bonus"
+msgstr "+{percent}%"
+
+msgid "hud.synergy_inactive"
+msgstr "未激活"
+
+msgid "hud.synergies"
+msgstr "同仓羁绊（只给对应物资增值）\n{groups}"
+
+msgid "hud.spectating"
+msgstr "观战中（不显示私密鉴定）"
+
+msgid "hud.item_hint"
+msgstr "开仓后点击物资查看品质、占格和增值"
+
+msgid "hud.item_details"
+msgstr "{name} · {quality} · {width} × {height} 格\n{tags}\n基础 {base} + 羁绊 {bonus}（+{percent}%）= {total} 金币"
+
+msgid "hud.quality"
+msgstr "{name}（{color}）"
+
+msgid "hud.premium_tags"
+msgstr "{tags} · 高密度珍品"
+
+msgid "hud.catalog_premium_tags"
+msgstr "{tags}\n高密度珍品"
+
+msgid "result.coins"
+msgstr "最终金币"
+
+msgid "hud.catalog_button"
+msgstr "物资图鉴 / 羁绊规则"
+
+msgid "hud.submit"
+msgstr "确认密封报价"
+
+msgid "hud.appraise"
+msgstr "私密鉴定（每仓一次）"
+
+msgid "catalog.title"
+msgstr "竞拍大师 · 100 种物资图鉴"
+
+msgid "catalog.close"
+msgstr "关闭"
+
+msgid "clue.count"
+msgstr "第 1 轮线索：本仓共有 {count} 件物资。"
+
+msgid "clue.cells"
+msgstr "第 2 轮线索：物资合计占用 {cells} 格。"
+
+msgid "clue.rare"
+msgstr "第 3 轮线索：典藏（金）及以上品质共 {count} 件。"
+
+msgid "clue.synergy"
+msgstr "第 4 轮羁绊线索：{tag} {count} 件，对应物资增值 {percent}%。"
+
+msgid "clue.quality_count"
+msgstr "{quality} {count} 件"
+
+msgid "clue.qualities"
+msgstr "第 5 轮线索：{qualities}"
+
+msgid "skill.appraisal"
+msgstr "私密鉴定：本仓总值在 {lower}—{upper} 金币之间。"
+
+msgid "warehouse.sealed"
+msgstr "仓库已封存"
+
+msgid "warehouse.scanning"
+msgstr "搜索中"
+
+msgid "warehouse.tooltip"
+msgstr "{name} · {quality}（{color}）\n{width} × {height} 格 · 基础 {value} 金币\n{tags}"
+
 msgid "GodotPartyDefault · 竞拍大师"
 msgstr "GodotPartyDefault · 竞拍大师"
 

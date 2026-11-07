@@ -1,13 +1,14 @@
 extends "res://games/protocols/godot_party_default_protocol/ranked_round.gd"
 ## Sealed auction. The random inventory and private appraisals never enter public snapshots.
+const WarehouseView: Script = preload("res://games/minigame/godot_party_default_auction_master/warehouse_view.gd")
 const Session: Script = preload("res://games/minigame/godot_party_default_auction_master/session.gd")
 const CatalogItem: PackedScene = preload("res://games/minigame/godot_party_default_auction_master/catalog_item.tscn")
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
 @onready var item_details: Label = %ItemDetails
 @onready var valuation: Label = %Valuation
 @onready var encyclopedia: AcceptDialog = %Encyclopedia
-var session: RefCounted = Session.new()
-@onready var warehouse_view: Control = %Warehouse
+var session: Session = Session.new()
+@onready var warehouse_view: WarehouseView = %Warehouse
 var private_view: Dictionary = {}
 @onready var bid: SpinBox = %Bid
 @onready var submit: Button = %Submit
@@ -26,6 +27,12 @@ func build_game() -> void:
 	%OpenCatalog.pressed.connect(_open_catalog)
 	%CatalogRules.text = api.i18n.text(&"rules.auction") + "\n" + Catalog.RULE_TEXT
 	clues.text = ""
+	%OpenCatalog.text = api.i18n.text(&"hud.catalog_button")
+	submit.text = api.i18n.text(&"hud.submit")
+	appraisal.text = api.i18n.text(&"hud.appraise")
+	encyclopedia.title = api.i18n.text(&"catalog.title")
+	encyclopedia.ok_button_text = api.i18n.text(&"catalog.close")
+	_show_item({})
 
 func start_game() -> void:
 	if not api.is_host():
@@ -80,18 +87,39 @@ func tick_game(delta: float) -> void:
 		var scores: Dictionary = {}
 		for index: int in players.size():
 			scores[players[index].player_id] = session.balances[index]
-		finish_scores(scores, {}, [{"key": "score", "title": "最终金币", "format": "integer"}])
+		finish_scores(scores, {}, [{"key": "score", "title": api.i18n.text(&"result.coins"), "format": "integer"}])
 
-func make_snapshot() -> Dictionary:
+## Private deliveries must succeed before the corresponding public state is broadcast.
+## A failed send cancels this round; no partial publication is retried.
+func publish() -> void:
+	if not running or not api.is_host():
+		return
 	public_revision += 1
 	for player: Dictionary in api.get_players():
 		if player.connected:
 			var snap: Dictionary = session.snapshot(seat_of(player.player_id))
 			snap["revision"] = public_revision
-			api.net.send_to_player(player.player_id, &"private_view", snap)
+			var error: Error = api.net.send_to_player(player.player_id, &"private_view", snap)
+			if error != OK:
+				_fail_publication("private_view/" + player.player_id, error)
+				return
+	var public_view: Dictionary = make_snapshot()
+	public_view["_sequence"] = int(elapsed * 1000000)
+	var error: Error = api.net.broadcast_stream(&"state", public_view)
+	if error != OK:
+		_fail_publication("state", error)
+
+func _fail_publication(stream: String, error: Error) -> void:
+	party_stop(&"snapshot_failed")
+	var message: String = "Auction snapshot %s: %s" % [stream, error_string(error)]
+	var failure_error: Error = api.fail("snapshot_failed", message)
+	if failure_error != OK:
+		push_error("%s; failure report: %s" % [message, error_string(failure_error)])
+
+func make_snapshot() -> Dictionary:
 	var public_view: Dictionary = session.snapshot(-1)
 	public_view["reveal_elapsed"] = transition if session.phase == "reveal" else 0.0
-	public_view["locked"] = session._locked.duplicate()
+	public_view["locked"] = session.get_locked_bids()
 	return public_view
 
 func receive_private(data: Dictionary) -> void:
@@ -105,17 +133,17 @@ func render_game() -> void:
 	if view.is_empty():
 		return
 	warehouse_view.set_snapshot(view)
-	warehouse_view.advance_reveal(maxf(0.0, float(view.get("reveal_elapsed", 0.0)) - warehouse_view._animation_time))
+	warehouse_view.set_reveal_elapsed(float(view.reveal_elapsed))
 	if view.phase in ["reveal", "finished"]:
 		valuation.text = api.i18n.text(&"hud.valuation", {"base": view.base_value, "bonus": view.bonus_value, "total": view.total_value})
 	else:
 		valuation.text = api.i18n.text(&"hud.sealed")
 	var round_caption: String = api.i18n.text(&"hud.overtime", {"number": int(view.round) - int(view.rounds_total)}) if int(view.round) > int(view.rounds_total) else api.i18n.text(&"hud.regular_round", {"number": view.round, "total": view.rounds_total})
-	status.text = api.i18n.text(&"hud.clock", {"current": int(view.warehouse) + 1, "total": view.warehouses_total, "round": round_caption, "time": ceili(view.time), "phase": {"bidding": "密封报价", "round_result": "本轮报价公布", "reveal": "开仓揭晓", "finished": "竞拍结束"}.get(view.phase, "等待")})
+	status.text = api.i18n.text(&"hud.clock", {"current": int(view.warehouse) + 1, "total": view.warehouses_total, "round": round_caption, "time": ceili(view.time), "phase": api.i18n.text(StringName("phase." + str(view.phase)))})
 	if players.size() == 1:
-		status.text = api.i18n.text(&"hud.solo") + " · " + status.text
+		status.text = api.i18n.text(&"hud.solo_status", {"mode": api.i18n.text(&"hud.solo"), "status": status.text})
 	for index: int in players.size():
-		var revealed_bid: String = " · 报价 %d" % int(view.round_bids[index]) if view.round_bids.size() == players.size() else (" · 已锁定" if view.locked[index] else " · 思考中")
+		var revealed_bid: String = api.i18n.text(&"hud.bid_revealed", {"amount": view.round_bids[index]}) if view.round_bids.size() == players.size() else api.i18n.text(&"hud.bid_locked" if view.locked[index] else &"hud.bid_thinking")
 		if view.withdrawn[index]:
 			revealed_bid += api.i18n.text(&"hud.withdrawn")
 		elif int(view.round) > int(view.rounds_total) and not view.eligible[index]:
@@ -137,13 +165,14 @@ func render_game() -> void:
 	else:
 		footer.text = api.i18n.text(&"hud.final_rule")
 	if view.phase in ["reveal", "finished"]:
-		clues.text += "\n" + ("流拍" if int(view.winner) < 0 else "成交：%s · 支付 %d\n仓库总值：%d" % [players[int(view.winner)].name, view.price, view.total_value])
+		clues.text += "\n" + (api.i18n.text(&"hud.unsold") if int(view.winner) < 0 else api.i18n.text(&"hud.sale", {"player": players[int(view.winner)].name, "price": view.price, "total": view.total_value}))
 		if int(view.winner) >= 0:
 			clues.text += "\n" + api.i18n.text(&"hud.sale_profit", {"reason": api.i18n.text(StringName("outcome." + str(view.outcome))), "profit": int(view.total_value) - int(view.price)})
 		var tag_lines: PackedStringArray = []
-		for group: Dictionary in view.get("tag_groups", []):
-			tag_lines.append("%s %d 件 · %s" % [group.tag, group.count, "+%d%%" % group.percent if group.percent > 0 else "未激活"])
-		clues.text += "\n同仓羁绊（只给对应物资增值）\n" + " / ".join(tag_lines)
+		for group: Dictionary in view.tag_groups:
+			var bonus: String = api.i18n.text(&"hud.synergy_bonus", {"percent": group.percent}) if group.percent > 0 else api.i18n.text(&"hud.synergy_inactive")
+			tag_lines.append(api.i18n.text(&"hud.synergy_group", {"tag": group.tag, "count": group.count, "bonus": bonus}))
+		clues.text += "\n" + api.i18n.text(&"hud.synergies", {"groups": " / ".join(tag_lines)})
 	var can_bid: bool = not local_id.is_empty() and not private_view.is_empty() and private_view.phase == "bidding" and not private_view.bidlocked
 	if not local_id.is_empty() and not private_view.is_empty():
 		bid.max_value = private_view.balances[seat_of(local_id)]
@@ -151,7 +180,7 @@ func render_game() -> void:
 	submit.disabled = not can_bid or not valid_amount
 	bid.editable = can_bid
 	appraisal.disabled = local_id.is_empty() or not private_view.get("skill_available", false)
-	private_label.text = private_view.get("skilltext", "") if not local_id.is_empty() else "观战中（不显示私密鉴定）"
+	private_label.text = private_view.get("skilltext", "") if not local_id.is_empty() else api.i18n.text(&"hud.spectating")
 
 func player_left(id: String) -> void:
 	session.withdraw_player(seat_of(id))
@@ -160,11 +189,21 @@ func _show_item(item: Dictionary) -> void:
 	if item_details == null:
 		return
 	if item.is_empty():
-		item_details.text = "开仓后点击物资查看品质、占格和增值"
+		item_details.text = api.i18n.text(&"hud.item_hint")
 		return
-	item_details.text = "%s · %s · %d × %d 格\n%s\n基础 %d + 羁绊 %d（+%d%%）= %d 金币" % [
-		item.name, Catalog.QUALITY_NAMES[int(item.quality)] + "（" + Catalog.QUALITY_COLOR_NAMES[int(item.quality)] + "）", item.size[0], item.size[1],
-		" / ".join(item.tags) + (" · 高密度珍品" if item.get("compact_premium", false) else ""), item.value, item.bonus_value, item.bonus_percent, item.effective_value]
+	item_details.text = api.i18n.text(&"hud.item_details", {
+		"name": item.name, "quality": _quality_caption(int(item.quality)),
+		"width": item.size[0], "height": item.size[1],
+		"tags": _tag_caption(item, &"hud.premium_tags"),
+		"base": item.value, "bonus": item.bonus_value, "percent": item.bonus_percent, "total": item.effective_value,
+	})
+
+func _quality_caption(quality: int) -> String:
+	return api.i18n.text(&"hud.quality", {"name": Catalog.QUALITY_NAMES[quality], "color": Catalog.QUALITY_COLOR_NAMES[quality]})
+
+func _tag_caption(item: Dictionary, premium_key: StringName) -> String:
+	var tags: String = " / ".join(item.tags)
+	return api.i18n.text(premium_key, {"tags": tags}) if item.get("compact_premium", false) else tags
 
 ## The catalogue contains public definitions only, never the current sealed inventory.
 func _open_catalog() -> void:
@@ -179,15 +218,7 @@ func _open_catalog() -> void:
 		var title: Label = card.get_node("Title")
 		title.text = item.name
 		title.add_theme_color_override("font_color", Catalog.QUALITY_COLORS[int(item.quality)])
-		if int(item.quality) == 6:
-			var stripe: HBoxContainer = card.get_node("Stripe")
-			stripe.show()
-			for tint: Color in Catalog.RAINBOW_COLORS:
-				var band: ColorRect = ColorRect.new()
-				band.color = tint
-				band.custom_minimum_size.y = 3
-				band.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-				stripe.add_child(band)
+		card.get_node("Stripe").visible = int(item.quality) == 6
 		var info: Label = card.get_node("Info")
-		info.text = api.i18n.text(&"hud.item", {"quality": Catalog.QUALITY_NAMES[int(item.quality)] + "（" + Catalog.QUALITY_COLOR_NAMES[int(item.quality)] + "）", "width": item.size[0], "height": item.size[1], "value": item.value, "tags": " / ".join(item.tags) + ("\n高密度珍品" if item.get("compact_premium", false) else "")})
+		info.text = api.i18n.text(&"hud.item", {"quality": _quality_caption(int(item.quality)), "width": item.size[0], "height": item.size[1], "value": item.value, "tags": _tag_caption(item, &"hud.catalog_premium_tags")})
 	encyclopedia.popup_centered(Vector2i(1120, 800))

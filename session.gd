@@ -1,10 +1,12 @@
 extends RefCounted
 ## Host-owned sealed auction. Only recipient-filtered snapshot() may cross the network boundary.
-const Rules: Variant = preload("res://games/minigame/godot_party_default_auction_master/rules.gd")
+const Rules: Script = preload("res://games/minigame/godot_party_default_auction_master/rules.gd")
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
-var catalog: Resource = Catalog.new()
+var catalog: Catalog = Catalog.new()
 var _appraisals: Array[Dictionary] = []
-var rules: Variant = Rules.new()
+var rules: Rules = Rules.new()
+## Existing wire fields carry Chinese text; use the package default without changing their format.
+const TEXT: Translation = preload("res://games/minigame/godot_party_default_auction_master/i18n/zh_Hans.po")
 var phase: String = "finished"
 var warehouse: int = 0
 var round: int = 1
@@ -13,7 +15,7 @@ var names: Array = []
 var time: float = 0.0
 var _lots: Array = []
 var _bids: Array = [0, 0, 0, 0]
-var _locked: Array = [false, false, false, false]
+var _locked: Array[bool] = [false, false, false, false]
 var _history: Array = []
 var _eligible: Array[bool] = []
 var _withdrawn: Array[bool] = []
@@ -42,7 +44,7 @@ func start(seed_value: int = -1) -> void:
 	_withdrawn.fill(false)
 	_lots.clear()
 	_appraisals.clear()
-	for _index: Variant in range(rules.warehouses):
+	for _index: int in range(rules.warehouses):
 		var lot: Array = _generate_lot()
 		_lots.append(lot)
 		_appraisals.append(Catalog.evaluate(lot))
@@ -124,24 +126,24 @@ func _add_public_clue() -> void:
 	var lot: Array = _lots[warehouse]
 	match round:
 		1:
-			_clues.append("第 1 轮线索：本仓共有 %d 件物资。" % lot.size())
+			_clues.append(TEXT.get_message(&"clue.count").format({"count": lot.size()}))
 		2:
 			var cells: int = 0
 			for item: Dictionary in lot:
 				cells += int(item.size[0]) * int(item.size[1])
-			_clues.append("第 2 轮线索：物资合计占用 %d 格。" % cells)
+			_clues.append(TEXT.get_message(&"clue.cells").format({"cells": cells}))
 		3:
 			var rare_count: int = 0
 			for item: Dictionary in lot:
 				if int(item.quality) >= 4:
 					rare_count += 1
-			_clues.append("第 3 轮线索：典藏（金）及以上品质共 %d 件。" % rare_count)
+			_clues.append(TEXT.get_message(&"clue.rare").format({"count": rare_count}))
 		4:
 			var strongest: Dictionary = _appraisals[warehouse].tags[0]
 			for group: Dictionary in _appraisals[warehouse].tags:
 				if int(group.count) > int(strongest.count):
 					strongest = group
-			_clues.append("第 4 轮羁绊线索：%s %d 件，对应物资增值 %d%%。" % [strongest.tag, strongest.count, strongest.percent])
+			_clues.append(TEXT.get_message(&"clue.synergy").format({"tag": strongest.tag, "count": strongest.count, "percent": strongest.percent}))
 		5:
 			var quality_counts: Array[int] = []
 			quality_counts.resize(Catalog.QUALITY_NAMES.size())
@@ -151,8 +153,8 @@ func _add_public_clue() -> void:
 			var parts: PackedStringArray = []
 			for quality: int in quality_counts.size():
 				if quality_counts[quality] > 0:
-					parts.append("%s %d 件" % [Catalog.QUALITY_NAMES[quality], quality_counts[quality]])
-			_clues.append("第 5 轮线索：" + " / ".join(parts))
+					parts.append(TEXT.get_message(&"clue.quality_count").format({"quality": Catalog.QUALITY_NAMES[quality], "count": quality_counts[quality]}))
+			_clues.append(TEXT.get_message(&"clue.qualities").format({"qualities": " / ".join(parts)}))
 
 func submit_bid(player_id: int, amount: int, expected_warehouse: int, expected_round: int) -> bool:
 	if phase != "bidding" or expected_warehouse != warehouse or expected_round != round:
@@ -260,10 +262,10 @@ func use_skill(player_id: int) -> String:
 	var actual: int = _hidden_total()
 	# A player/warehouse-specific stream: using the skill cannot alter public
 	# evidence, opponents' decisions, or another player's private appraisal.
-	var private_rng: Variant = RandomNumberGenerator.new()
+	var private_rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	private_rng.seed = _skill_seed ^ ((warehouse + 1) * 73856093) ^ ((player_id + 1) * 19349663)
 	_skill_bounds[player_id] = _uncertain_interval(actual, [Catalog.MIN_LOT_VALUE, Catalog.MAX_LOT_VALUE], 900, private_rng)
-	_skill_text[player_id] = "私密鉴定：本仓总值在 %d—%d 金币之间。" % [_skill_bounds[player_id][0], _skill_bounds[player_id][1]]
+	_skill_text[player_id] = TEXT.get_message(&"skill.appraisal").format({"lower": _skill_bounds[player_id][0], "upper": _skill_bounds[player_id][1]})
 	return _skill_text[player_id]
 
 ## Pick a random truthful window inside the preceding window. Its midpoint
@@ -274,6 +276,10 @@ func _uncertain_interval(actual: int, previous: Array, requested_width: int, rng
 	var highest: int = mini(actual, int(previous[1]) - width)
 	var lower: int = rng.randi_range(lowest, highest)
 	return [lower, lower + width]
+
+## Public bid readiness, copied so presentation cannot alter the host round.
+func get_locked_bids() -> Array[bool]:
+	return _locked.duplicate()
 
 func snapshot(player_id: int = 0) -> Dictionary:
 	var valid: bool = player_id >= 0 and player_id < names.size()
@@ -316,9 +322,9 @@ func total_value() -> int:
 
 func rankings() -> Array:
 	var result: Array = []
-	for player_id: Variant in range(balances.size()):
+	for player_id: int in range(balances.size()):
 		var rank: int = 1
-		for other: Variant in balances:
+		for other: int in balances:
 			if int(other) > int(balances[player_id]):
 				rank += 1
 		result.append({"player_id": player_id, "name": names[player_id], "balance": balances[player_id], "rank": rank})

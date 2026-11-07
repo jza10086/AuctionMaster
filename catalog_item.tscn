@@ -20,6 +20,42 @@ theme_override_font_sizes/font_size = 22
 visible = false
 theme_override_constants/separation = 0
 
+[node name="Band1" type="ColorRect" parent="Stripe"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+color = Color(0.9803922, 0.5215686, 0.5215686, 1)
+
+[node name="Band2" type="ColorRect" parent="Stripe"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+color = Color(0.9529412, 0.7960784, 0.4196078, 1)
+
+[node name="Band3" type="ColorRect" parent="Stripe"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+color = Color(0.5568627, 0.8627451, 0.6509804, 1)
+
+[node name="Band4" type="ColorRect" parent="Stripe"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+color = Color(0.4901961, 0.8039216, 0.9568627, 1)
+
+[node name="Band5" type="ColorRect" parent="Stripe"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+color = Color(0.7333333, 0.6313725, 0.9803922, 1)
+
+
 [node name="Info" type="Label" parent="."]
 unique_name_in_owner = true
 text = "普通 · 2 × 2 格\n1,250 金币"
