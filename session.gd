@@ -1,125 +1,109 @@
 extends RefCounted
-## Host-owned sealed auction. Only recipient-filtered snapshot() may cross the network boundary.
+## Host-owned auction. Recipient snapshots contain only that player's discovered fields.
 const Rules: Script = preload("res://games/minigame/godot_party_default_auction_master/rules.gd")
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
-var catalog: Catalog = Catalog.new()
-var _appraisals: Array[Dictionary] = []
-var rules: Rules = Rules.new()
-## Existing wire fields carry Chinese text; use the package default without changing their format.
 const TEXT: Translation = preload("res://games/minigame/godot_party_default_auction_master/i18n/zh_Hans.po")
+const ASSISTS: Array[String] = ["full", "outline", "quality", "tags"]
+const ASSIST_COUNTS: Array[int] = [1, 3, 2, 4]
+var rules: Rules = Rules.new()
+var catalog: Catalog = Catalog.new()
+var names: Array[String] = []
+var balances: Array[int] = []
 var phase: String = "finished"
 var warehouse: int = 0
 var round: int = 1
-var balances: Array = []
-var names: Array = []
 var time: float = 0.0
-var _lots: Array = []
-var _bids: Array = [0, 0, 0, 0]
-var _locked: Array[bool] = [false, false, false, false]
-var _history: Array = []
-var _eligible: Array[bool] = []
+var _lots: Array[Array] = []
+var _appraisals: Array[Dictionary] = []
+var _layouts: Array[Array] = []
+var _bids: Array[int] = []
+var _locked: Array[bool] = []
+var _bid_order: Array[int] = []
+var _submission_count: int = 0
 var _withdrawn: Array[bool] = []
-var _minimum_bid: int = 1
-var _outcome: String = ""
-var _clues: Array = []
-var _skill_used: Array = [false, false, false, false]
-var _skill_bounds: Array = [[], [], [], []]
-var _skill_text: Array = ["", "", "", ""]
+var _assists: Array[String] = []
+var _intel: Array[Dictionary] = []
+var _history: Array[Dictionary] = []
+var _clues: Array[String] = []
+var _payouts: Array[int] = []
 var _winner: int = -1
 var _price: int = 0
+var _outcome: String = ""
 var _settled: bool = false
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
-var _skill_seed: int = 0
+var _assist_seed: int = 0
 
 func start(seed_value: int = -1) -> void:
 	if seed_value < 0:
 		_rng.randomize()
 	else:
 		_rng.seed = seed_value
-	_skill_seed = _rng.seed ^ 0x947F3
-	balances = []
+	_assist_seed = _rng.seed ^ 0x947F3
 	balances.resize(names.size())
 	balances.fill(rules.initialcoins)
 	_withdrawn.resize(names.size())
 	_withdrawn.fill(false)
 	_lots.clear()
 	_appraisals.clear()
-	for _index: int in range(rules.warehouses):
+	_layouts.clear()
+	_history.clear()
+	for index: int in rules.warehouses:
 		var lot: Array = _generate_lot()
 		_lots.append(lot)
 		_appraisals.append(Catalog.evaluate(lot))
+		_layouts.append(Catalog.pack(lot))
 	warehouse = 0
 	_begin_warehouse()
 
-## Theme-biased lots create set decisions, while bounded rejection keeps appraisal ranges truthful.
+## Select quality first, so a weight is independent of how many catalogue entries share it.
 func _generate_lot() -> Array:
-	for attempt: int in 128:
-		var theme_tag: String = Catalog.TAGS[_rng.randi_range(0, Catalog.TAGS.size() - 1)]
-		var themed: Array[Dictionary] = []
-		for item: Dictionary in catalog.items:
-			if theme_tag in item.tags:
-				themed.append(item)
-		var lot: Array = []
-		for index: int in _rng.randi_range(6, 9):
-			var candidates: Array[Dictionary] = themed if index < 3 or _rng.randf() < 0.35 else catalog.items
-			lot.append(_draw_item(candidates))
-		var total: int = int(Catalog.evaluate(lot).total_value)
-		if total >= Catalog.MIN_LOT_VALUE and total <= Catalog.MAX_LOT_VALUE and not Catalog.pack(lot).is_empty():
-			return lot
-	# Deterministic, valid six-piece fallback; no unbounded generation loop.
-	var fallback: Array = []
-	for index: int in 6:
-		fallback.append(catalog.items[5 if index < 3 else 17].duplicate(true))
-	return fallback
-
-func _draw_item(candidates: Array[Dictionary]) -> Dictionary:
-	var weights: Array[int] = Catalog.QUALITY_WEIGHTS
-	var total: int = 0
-	for item: Dictionary in candidates:
-		total += weights[int(item.quality)]
-	var ticket: int = _rng.randi_range(0, total - 1)
-	for item: Dictionary in candidates:
-		ticket -= weights[int(item.quality)]
-		if ticket < 0:
-			return item.duplicate(true)
-	return candidates.back().duplicate(true)
+	var groups: Array[Array] = []
+	var total_weight: int = 0
+	for quality: int in rules.quality_weights.size():
+		groups.append([])
+		total_weight += rules.quality_weights[quality]
+	for item: Dictionary in catalog.items:
+		groups[int(item.quality)].append(item)
+	var lot: Array = []
+	for index: int in _rng.randi_range(rules.item_counts[0], rules.item_counts[1]):
+		var ticket: int = _rng.randi_range(0, total_weight - 1)
+		for quality: int in rules.quality_weights.size():
+			ticket -= rules.quality_weights[quality]
+			if ticket < 0:
+				var choices: Array = groups[quality]
+				lot.append(choices[_rng.randi_range(0, choices.size() - 1)].duplicate(true))
+				break
+	return lot
 
 func _hidden_total() -> int:
 	return int(_appraisals[warehouse].total_value)
 
 func _begin_warehouse() -> void:
 	round = 1
-	_history = []
-	_eligible.resize(names.size())
+	_clues.clear()
+	_intel.clear()
 	for seat: int in names.size():
-		_eligible[seat] = not _withdrawn[seat]
-	_minimum_bid = 1
-	_outcome = ""
-	_clues = []
-	_skill_used = []
-	for seat: int in names.size():
-		_skill_used.append(false)
-	_skill_bounds = []
-	for seat: int in names.size():
-		_skill_bounds.append([])
-	_skill_text = []
-	for seat: int in names.size():
-		_skill_text.append("")
+		_intel.append({})
+	_payouts.resize(names.size())
+	_payouts.fill(0)
 	_winner = -1
 	_price = 0
+	_outcome = ""
 	_settled = false
 	_begin_round()
 
 func _begin_round() -> void:
 	phase = "bidding"
 	time = rules.round_seconds
-	_bids = []
-	_locked = []
-	for seat: int in names.size():
-		_bids.append(0)
-		_locked.append(not _eligible[seat] or _withdrawn[seat])
-	if round <= Rules.ROUNDS:
-		_add_public_clue()
+	_submission_count = 0
+	_bids.resize(names.size())
+	_bids.fill(0)
+	_bid_order.resize(names.size())
+	_bid_order.fill(-1)
+	_locked = _withdrawn.duplicate()
+	_assists.resize(names.size())
+	_assists.fill("")
+	_add_public_clue()
 
 ## Public evidence describes the sealed lot without exposing exact prices or inventory.
 func _add_public_clue() -> void:
@@ -156,33 +140,38 @@ func _add_public_clue() -> void:
 					parts.append(TEXT.get_message(&"clue.quality_count").format({"quality": Catalog.QUALITY_NAMES[quality], "count": quality_counts[quality]}))
 			_clues.append(TEXT.get_message(&"clue.qualities").format({"qualities": " / ".join(parts)}))
 
-func submit_bid(player_id: int, amount: int, expected_warehouse: int, expected_round: int) -> bool:
+
+func submit_bid(seat: int, amount: int, expected_warehouse: int, expected_round: int) -> bool:
 	if phase != "bidding" or expected_warehouse != warehouse or expected_round != round:
 		return false
-	if player_id < 0 or player_id >= names.size() or _locked[player_id]:
+	if seat < 0 or seat >= names.size() or _locked[seat] or _withdrawn[seat]:
 		return false
-	if not _eligible[player_id] or _withdrawn[player_id]:
+	if amount < 0 or amount > balances[seat] or amount % Rules.BID_UNIT != 0:
 		return false
-	if amount < 0 or amount > int(balances[player_id]) or (amount > 0 and amount < _minimum_bid):
-		return false
-	_bids[player_id] = amount
-	_locked[player_id] = true
+	_bids[seat] = amount
+	_locked[seat] = true
+	_bid_order[seat] = _submission_count
+	_submission_count += 1
 	if not _locked.has(false):
-		_resolve_round()
+		_begin_pending()
 	return true
 
-## Compare sealed bids once everyone is locked. No money moves before a sale.
+func _begin_pending() -> void:
+	phase = "pending"
+	time = Rules.REVEAL_DELAY
+
+## Both bids and settlement remain secret until the two-second lock window has elapsed.
 func _resolve_round() -> void:
-	_history.append({"round": round, "bids": _bids.duplicate()})
+	_history.append({"warehouse": warehouse, "round": round, "bids": _bids.duplicate(), "assists": _assists.duplicate()})
 	phase = "round_result"
-	time = 0.0
+	time = 3.0
 	var highest: int = 0
 	var second: int = 0
 	var leaders: Array[int] = []
 	for seat: int in names.size():
-		if not _eligible[seat] or _withdrawn[seat]:
+		if _withdrawn[seat]:
 			continue
-		var amount: int = int(_bids[seat])
+		var amount: int = _bids[seat]
 		if amount > highest:
 			second = highest
 			highest = amount
@@ -192,42 +181,43 @@ func _resolve_round() -> void:
 			leaders.append(seat)
 		elif amount > second:
 			second = amount
-	if round < Rules.ROUNDS:
-		# A solo practice run has no second bidder and deliberately shows all five clues.
+	if round < rules.rounds:
 		if names.size() > 1 and leaders.size() == 1 and highest * 100 >= second * Rules.EARLY_WIN_PERCENT[round - 1]:
 			_settle(leaders[0], highest, "early")
 		return
 	if leaders.is_empty():
 		_settle(-1, 0, "unsold")
-	elif leaders.size() == 1:
-		_settle(leaders[0], highest, "overtime" if round > Rules.ROUNDS else "final")
 	else:
-		_eligible.fill(false)
+		var winner: int = leaders[0]
 		for seat: int in leaders:
-			_eligible[seat] = true
-		_minimum_bid = highest + 1
-		_outcome = "tie"
+			if _bid_order[seat] < _bid_order[winner]:
+				winner = seat
+		_settle(winner, highest, "first" if leaders.size() > 1 else "final")
 
 func tick(delta: float) -> void:
-	if phase != "bidding":
+	if phase == "finished":
 		return
-	if not _locked.has(false):
-		_resolve_round()
+	if phase == "bidding" and not _locked.has(false):
+		_begin_pending()
 		return
 	time = maxf(0.0, time - maxf(delta, 0.0))
-	if time <= 0.0:
-		expire_round()
+	if time > 0.0:
+		return
+	match phase:
+		"bidding": expire_round()
+		"pending": _resolve_round()
+		"round_result", "reveal": advance()
 
 func expire_round() -> void:
+	if phase != "bidding":
+		return
 	for seat: int in names.size():
-		if phase == "bidding" and not _locked[seat]:
+		if not _locked[seat]:
 			submit_bid(seat, 0, warehouse, round)
 
-## Disconnected seats cannot bid, win or return in later warehouses.
 func withdraw_player(seat: int) -> void:
 	_withdrawn[seat] = true
-	_eligible[seat] = false
-	if phase == "bidding":
+	if phase in ["bidding", "pending"]:
 		_bids[seat] = 0
 		_locked[seat] = true
 
@@ -241,6 +231,7 @@ func advance() -> void:
 			_begin_warehouse()
 		else:
 			phase = "finished"
+			time = 0.0
 
 func _settle(winner: int, price: int, outcome: String) -> void:
 	if _settled:
@@ -249,76 +240,100 @@ func _settle(winner: int, price: int, outcome: String) -> void:
 	_winner = winner
 	_price = price
 	_outcome = outcome
-	if _winner >= 0:
-		balances[_winner] = int(balances[_winner]) - _price + _hidden_total()
+	if winner >= 0:
+		var profit: int = _hidden_total() - price
+		balances[winner] += profit
+		if profit < 0:
+			_distribute_loss(-profit)
 	phase = "reveal"
+	time = 15.0
 
-func use_skill(player_id: int) -> String:
-	if player_id < 0 or player_id >= names.size():
-		return ""
-	if phase != "bidding" or _skill_used[player_id] or not _eligible[player_id] or _withdrawn[player_id]:
-		return _skill_text[player_id]
-	_skill_used[player_id] = true
-	var actual: int = _hidden_total()
-	# A player/warehouse-specific stream: using the skill cannot alter public
-	# evidence, opponents' decisions, or another player's private appraisal.
-	var private_rng: RandomNumberGenerator = RandomNumberGenerator.new()
-	private_rng.seed = _skill_seed ^ ((warehouse + 1) * 73856093) ^ ((player_id + 1) * 19349663)
-	_skill_bounds[player_id] = _uncertain_interval(actual, [Catalog.MIN_LOT_VALUE, Catalog.MAX_LOT_VALUE], 900, private_rng)
-	_skill_text[player_id] = TEXT.get_message(&"skill.appraisal").format({"lower": _skill_bounds[player_id][0], "upper": _skill_bounds[player_id][1]})
-	return _skill_text[player_id]
+## Largest remainders conserve the entire loss pool in whole coins; zero bids receive nothing.
+func _distribute_loss(loss: int) -> void:
+	var total_weight: int = 0
+	var recipients: Array[int] = []
+	for seat: int in names.size():
+		if seat != _winner and not _withdrawn[seat] and _bids[seat] > 0:
+			recipients.append(seat)
+			total_weight += _bids[seat]
+	if total_weight == 0:
+		return
+	var remaining: int = loss
+	for seat: int in recipients:
+		_payouts[seat] = int(float(loss * _bids[seat]) / total_weight)
+		remaining -= _payouts[seat]
+	recipients.sort_custom(func(a: int, b: int) -> bool:
+		var left: int = loss * _bids[a] % total_weight
+		var right: int = loss * _bids[b] % total_weight
+		return a < b if left == right else left > right)
+	for index: int in remaining:
+		_payouts[recipients[index]] += 1
+	for seat: int in recipients:
+		balances[seat] += _payouts[seat]
 
-## Pick a random truthful window inside the preceding window. Its midpoint
-## is deliberately not anchored to actual value, so it is only an estimate.
-func _uncertain_interval(actual: int, previous: Array, requested_width: int, rng: RandomNumberGenerator) -> Array:
-	var width: int = mini(requested_width, int(previous[1]) - int(previous[0]))
-	var lowest: int = maxi(int(previous[0]), actual - width)
-	var highest: int = mini(actual, int(previous[1]) - width)
-	var lower: int = rng.randi_range(lowest, highest)
-	return [lower, lower + width]
+## One operation per round. Previously discovered information persists only in this warehouse.
+func use_assist(seat: int, kind: String) -> bool:
+	if phase != "bidding" or seat < 0 or seat >= names.size() or _withdrawn[seat] or not _assists[seat].is_empty() or not kind in ASSISTS:
+		return false
+	_assists[seat] = kind
+	var random: RandomNumberGenerator = RandomNumberGenerator.new()
+	random.seed = _assist_seed ^ ((warehouse + 1) * 73856093) ^ ((seat + 1) * 19349663) ^ (round * 83492791)
+	var candidates: Array[int] = []
+	for index: int in _lots[warehouse].size():
+		var known: Dictionary = _intel[seat].get(index, {})
+		if not known.has("name") and not known.has(kind):
+			candidates.append(index)
+	var count: int = mini(ASSIST_COUNTS[ASSISTS.find(kind)], candidates.size())
+	for draw: int in count:
+		var selected: int = random.randi_range(0, candidates.size() - 1)
+		var index: int = candidates[selected]
+		candidates.remove_at(selected)
+		var item: Dictionary = _lots[warehouse][index]
+		var rect: Rect2i = _layouts[warehouse][index]
+		var record: Dictionary = _intel[seat].get(index, {"index": index, "rect": [rect.position.x, rect.position.y, 1, 1]})
+		record[kind] = true
+		if kind in ["full", "outline"]:
+			record.rect = [rect.position.x, rect.position.y, rect.size.x, rect.size.y]
+		match kind:
+			"full":
+				# Base item data only; undiscovered warehouse synergies stay private.
+				record.merge(item.duplicate(true), true)
+			"quality": record["quality"] = item.quality
+			"tags": record["tags"] = item.tags.duplicate()
+		_intel[seat][index] = record
+	return true
 
-## Public bid readiness, copied so presentation cannot alter the host round.
 func get_locked_bids() -> Array[bool]:
 	return _locked.duplicate()
 
-func snapshot(player_id: int = 0) -> Dictionary:
-	var valid: bool = player_id >= 0 and player_id < names.size()
+func snapshot(seat: int = -1) -> Dictionary:
+	var valid: bool = seat >= 0 and seat < names.size()
 	var result: Dictionary = {
-		"phase": phase, "warehouse": warehouse, "round": round,
-		"warehouses_total": rules.warehouses, "rounds_total": Rules.ROUNDS,
+		"phase": phase, "warehouse": warehouse, "round": round, "time": time,
+		"warehouses_total": rules.warehouses, "rounds_total": rules.rounds,
 		"balances": balances.duplicate(), "names": names.duplicate(),
 		"clues": _clues.duplicate(), "history": _history.duplicate(true),
-		"time": time, "ownbid": _bids[player_id] if valid else 0,
-		"bidlocked": _locked[player_id] if valid else true,
-		"skilltext": _skill_text[player_id] if valid else "",
-		"skill_available": valid and phase == "bidding" and _eligible[player_id] and not _withdrawn[player_id] and not _skill_used[player_id],
-		"eligible": _eligible.duplicate(), "withdrawn": _withdrawn.duplicate(),
-		"minimum_bid": _minimum_bid, "outcome": _outcome,
-		"early_percent": Rules.EARLY_WIN_PERCENT[round - 1] if round < Rules.ROUNDS and names.size() > 1 else 0,
-		"round_bids": [], "winner": -1,
-		"price": 0, "rankings": rankings(),
+		"locked": get_locked_bids(), "withdrawn": _withdrawn.duplicate(),
+		"assists": _assists.duplicate(), "ownbid": _bids[seat] if valid else 0,
+		"bidlocked": _locked[seat] if valid else true,
+		"assist_available": valid and phase == "bidding" and not _withdrawn[seat] and _assists[seat].is_empty(),
+		"intel": _intel[seat].values().duplicate(true) if valid else [],
+		"early_percent": Rules.EARLY_WIN_PERCENT[round - 1] if round < rules.rounds and names.size() > 1 else 0,
+		"outcome": _outcome, "round_bids": [], "winner": -1, "price": 0,
+		"payouts": _payouts.duplicate(), "rankings": rankings(),
+		"reveal_elapsed": 15.0 - time if phase == "reveal" else 0.0,
 	}
-	if phase == "round_result" or phase == "reveal" or phase == "finished":
+	if phase in ["round_result", "reveal", "finished"]:
 		result.round_bids = _bids.duplicate()
-	if phase == "reveal" or phase == "finished":
+	if phase in ["reveal", "finished"]:
 		result.winner = _winner
 		result.price = _price
-		result.items = reveal_items()
-		result.total_value = total_value()
+		result.items = _appraisals[warehouse].items.duplicate(true)
+		result.total_value = _hidden_total()
 		result.base_value = _appraisals[warehouse].base_value
 		result.bonus_value = _appraisals[warehouse].bonus_value
 		result.tag_groups = _appraisals[warehouse].tags.duplicate(true)
 	return result
-
-func reveal_items() -> Array:
-	if (phase != "reveal" and phase != "finished") or _lots.is_empty():
-		return []
-	return _appraisals[warehouse].items.duplicate(true)
-
-func total_value() -> int:
-	if (phase != "reveal" and phase != "finished") or _lots.is_empty():
-		return 0
-	return _hidden_total()
 
 func rankings() -> Array:
 	var result: Array = []

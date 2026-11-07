@@ -1,13 +1,12 @@
 extends Control
-## Public-snapshot-only presentation. The host owns the reveal clock and pause.
-## Nothing is packed, rendered, selectable, or retained before the warehouse opens.
+## Draw public opened lots or recipient-filtered discovery records. Never receives hidden items.
 signal selection_changed(item: Dictionary)
 signal reveal_progress(revealed: int, total: int)
 
 const GRID_COLUMNS: int = 12
 const GRID_ROWS: int = 14
 const GRID_SIZE: Vector2 = Vector2(576.0, 672.0)
-const REVEAL_SECONDS: float = 0.68
+const REVEAL_SECONDS: float = 0.12
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
 const TEXT: Translation = preload("res://games/minigame/godot_party_default_auction_master/i18n/zh_Hans.po")
 # Public, read-only-by-convention presentation state for integration and QA.
@@ -18,6 +17,7 @@ var selected_index: int = -1
 var warehouse: int = -1
 var phase: String = ""
 var opened: bool = false
+var _grid_rows: int = GRID_ROWS
 var _reveal_elapsed: float = 0.0
 var _animation_time: float = 0.0
 var _revealed_at: Array[float] = []
@@ -41,41 +41,38 @@ func _load_item_textures() -> void:
 			if texture != null:
 				_textures[kind] = texture
 
-func set_snapshot(snap: Dictionary) -> void:
-	var next_phase: String = str(snap.get("phase", ""))
-	var next_warehouse: int = int(snap.get("warehouse", -1))
-	var next_opened: bool = next_phase == "reveal" or next_phase == "finished"
-	var public_items: Array = []
-	# Ignore even an accidentally supplied inventory while bidding or between rounds.
-	if next_opened and snap.get("items", []) is Array:
-		for entry: Variant in snap.get("items", []):
-			if entry is Dictionary:
-				public_items.append(entry.duplicate(true))
-	var changed: bool = next_warehouse != warehouse or next_opened != opened or public_items != items
-	warehouse = next_warehouse
-	phase = next_phase
+func set_snapshot(snap: Dictionary, discoveries: Array = []) -> void:
+	var next_opened: bool = snap.phase in ["reveal", "finished"]
+	var visible_items: Array = snap.items.duplicate(true) if next_opened else discoveries.duplicate(true)
+	var changed: bool = int(snap.warehouse) != warehouse or next_opened != opened or visible_items != items
+	warehouse = snap.warehouse
+	phase = snap.phase
 	opened = next_opened
 	if changed:
-		items = public_items
+		items = visible_items
 		layout.clear()
-		revealed_count = 0
 		selected_index = -1
 		_hovered_index = -1
 		_reveal_elapsed = 0.0
 		_animation_time = 0.0
-		_revealed_at.clear()
+		_revealed_at.resize(items.size())
+		_revealed_at.fill(-100.0)
 		if opened:
-			_pack_items()
+			layout = Catalog.pack(items)
+		else:
+			for item: Dictionary in items:
+				var rect: Array = item.rect
+				layout.append(Rect2i(rect[0], rect[1], rect[2], rect[3]))
+		_grid_rows = GRID_ROWS
+		for rect: Rect2i in layout:
+			_grid_rows = maxi(_grid_rows, rect.end.y + 1)
+		custom_minimum_size = Vector2(GRID_SIZE.x, _grid_rows * 48.0)
+		revealed_count = 0 if opened else items.size()
 		selection_changed.emit({})
-		reveal_progress.emit(0, items.size())
+		reveal_progress.emit(revealed_count, items.size())
 	if opened and phase == "finished":
 		skip_reveal()
 	queue_redraw()
-
-func _pack_items() -> void:
-	layout = Catalog.pack(items)
-	_revealed_at.resize(items.size())
-	_revealed_at.fill(-100.0)
 
 ## Synchronize the host clock without exposing animation internals. Repeated/older clocks do not rewind.
 func set_reveal_elapsed(elapsed_seconds: float) -> void:
@@ -116,7 +113,7 @@ func is_reveal_complete() -> bool:
 	return opened and revealed_count == items.size()
 
 func select_item(index: int) -> bool:
-	if not opened or index < 0 or index >= revealed_count or index >= items.size():
+	if index < 0 or index >= revealed_count or index >= items.size():
 		return false
 	if selected_index != index:
 		selected_index = index
@@ -125,22 +122,17 @@ func select_item(index: int) -> bool:
 	return true
 
 func get_selected_item() -> Dictionary:
-	if not opened or selected_index < 0 or selected_index >= revealed_count or selected_index >= items.size():
+	if selected_index < 0 or selected_index >= revealed_count or selected_index >= items.size():
 		return {}
 	return items[selected_index].duplicate(true)
 
 func get_grid_rect() -> Rect2:
-	var available: Vector2 = size if size.x > 0.0 and size.y > 0.0 else GRID_SIZE
-	var cell: float = floorf(minf(available.x / GRID_COLUMNS, available.y / GRID_ROWS))
-	var extent: Vector2 = Vector2(GRID_COLUMNS * cell, GRID_ROWS * cell)
-	return Rect2(((available - extent) * 0.5).floor(), extent)
+	return Rect2(Vector2(maxf(0.0, (size.x - GRID_SIZE.x) * 0.5), 0), Vector2(GRID_SIZE.x, _grid_rows * 48.0))
 
 func get_item_rect(index: int) -> Rect2:
-	if not opened or index < 0 or index >= layout.size():
+	if index < 0 or index >= layout.size():
 		return Rect2()
-	var grid: Rect2 = get_grid_rect()
-	var cell: float = grid.size.x / GRID_COLUMNS
-	return Rect2(grid.position + Vector2(layout[index].position) * cell, Vector2(layout[index].size) * cell)
+	return Rect2(get_grid_rect().position + Vector2(layout[index].position) * 48.0, Vector2(layout[index].size) * 48.0)
 
 func _draw() -> void:
 	var grid: Rect2 = get_grid_rect()
@@ -153,11 +145,11 @@ func _draw() -> void:
 	for column: int in range(GRID_COLUMNS + 1):
 		var x: float = grid.position.x + column * cell
 		draw_line(Vector2(x, grid.position.y), Vector2(x, grid.end.y), Color(0.67,0.72,0.71,0.17), 1.0)
-	for row: int in range(GRID_ROWS + 1):
+	for row: int in range(_grid_rows + 1):
 		var y: float = grid.position.y + row * cell
 		draw_line(Vector2(grid.position.x, y), Vector2(grid.end.x, y), Color(0.67,0.72,0.71,0.17), 1.0)
-	if not opened:
-		_draw_sealed(grid)
+	if not opened and items.is_empty():
+		_draw_sealed(Rect2(grid.position, GRID_SIZE))
 		return
 	for index: int in range(layout.size()):
 		var rect: Rect2 = get_item_rect(index).grow(-1.0)
@@ -165,8 +157,19 @@ func _draw() -> void:
 			continue
 		if index >= revealed_count:
 			_draw_unknown(rect, index == revealed_count)
-		else:
+		elif items[index].has("name"):
 			_draw_item(rect, index)
+		else:
+			_draw_discovery(rect, items[index])
+
+func _draw_discovery(rect: Rect2, item: Dictionary) -> void:
+	var color: Color = Catalog.QUALITY_COLORS[int(item.quality)] if item.has("quality") else Color("91a0ad")
+	draw_rect(rect, Color(color, 0.12))
+	draw_rect(rect, color, false, 2.0)
+	if item.has("quality") and int(item.quality) == 6:
+		_draw_rainbow_frame(rect)
+	var label: String = "TAG" if item.has("tags") else "?"
+	_draw_text(label, rect.position + Vector2(7, 25), 14, color)
 
 func _draw_sealed(grid: Rect2) -> void:
 	# This fixed lock is an overall seal, never an inventory silhouette.
@@ -257,8 +260,6 @@ func _format_value(value: int) -> String:
 	return result
 
 func _index_at(point: Vector2) -> int:
-	if not opened:
-		return -1
 	for index: int in range(revealed_count):
 		if get_item_rect(index).has_point(point):
 			return index
@@ -312,5 +313,16 @@ func _get_tooltip(at_position: Vector2) -> String:
 	var index: int = _index_at(at_position)
 	if index < 0:
 		return ""
-	var item: Dictionary = items[index]
-	return TEXT.get_message(&"warehouse.tooltip").format({"name": item.name, "quality": Catalog.QUALITY_NAMES[int(item.quality)], "color": Catalog.QUALITY_COLOR_NAMES[int(item.quality)], "width": item.size[0], "height": item.size[1], "value": item.value, "tags": " / ".join(item.tags)})
+	return describe_item(items[index])
+
+func describe_item(item: Dictionary) -> String:
+	if item.has("name"):
+		return TEXT.get_message(&"warehouse.tooltip").format({"name": item.name, "quality": Catalog.QUALITY_NAMES[int(item.quality)], "color": Catalog.QUALITY_COLOR_NAMES[int(item.quality)], "width": item.size[0], "height": item.size[1], "value": item.value, "tags": " / ".join(item.tags)})
+	var lines: PackedStringArray = [TEXT.get_message(&"intel.partial")]
+	if item.has("outline"):
+		lines.append(TEXT.get_message(&"intel.outline").format({"width": item.rect[2], "height": item.rect[3]}))
+	if item.has("quality"):
+		lines.append(TEXT.get_message(&"intel.quality").format({"quality": Catalog.QUALITY_NAMES[int(item.quality)]}))
+	if item.has("tags"):
+		lines.append(TEXT.get_message(&"intel.tags").format({"tags": " / ".join(item.tags)}))
+	return "\n".join(lines)

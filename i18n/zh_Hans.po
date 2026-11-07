@@ -4,9 +4,6 @@ msgstr ""
 "Language: zh_Hans\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "1–8 人暗标竞拍，单人可测试；前四轮可提前成交，第五轮同价加拍，鉴定与同仓羁绊决定估值。"
-msgstr "1–8 人暗标竞拍，单人可测试；前四轮可提前成交，第五轮同价加拍，鉴定与同仓羁绊决定估值。"
-
 msgid "hud.solo"
 msgstr "单人竞拍测试"
 
@@ -53,10 +50,10 @@ msgid "hud.synergies"
 msgstr "同仓羁绊（只给对应物资增值）\n{groups}"
 
 msgid "hud.spectating"
-msgstr "观战中（不显示私密鉴定）"
+msgstr "观战中 · 不显示玩家私密探查结果"
 
 msgid "hud.item_hint"
-msgstr "开仓后点击物资查看品质、占格和增值"
+msgstr "悬停或点击已发现物品查看信息 · 滚轮浏览仓库"
 
 msgid "hud.item_details"
 msgstr "{name} · {quality} · {width} × {height} 格\n{tags}\n基础 {base} + 羁绊 {bonus}（+{percent}%）= {total} 金币"
@@ -78,9 +75,6 @@ msgstr "物资图鉴 / 羁绊规则"
 
 msgid "hud.submit"
 msgstr "确认密封报价"
-
-msgid "hud.appraise"
-msgstr "私密鉴定（每仓一次）"
 
 msgid "catalog.title"
 msgstr "竞拍大师 · 100 种物资图鉴"
@@ -105,9 +99,6 @@ msgstr "{quality} {count} 件"
 
 msgid "clue.qualities"
 msgstr "第 5 轮线索：{qualities}"
-
-msgid "skill.appraisal"
-msgstr "私密鉴定：本仓总值在 {lower}—{upper} 金币之间。"
 
 msgid "warehouse.sealed"
 msgstr "仓库已封存"
@@ -148,32 +139,20 @@ msgstr "{player}  {balance}{bid}"
 msgid "hud.regular_round"
 msgstr "第 {number} / {total} 轮"
 
-msgid "hud.overtime"
-msgstr "加拍第 {number} 轮"
-
 msgid "hud.sealed"
-msgstr "封仓中：依据公开线索与私密鉴定估价"
+msgstr "封仓中 · 用辅助操作发现物资"
 
 msgid "hud.withdrawn"
 msgstr " · 已退出"
 
-msgid "hud.watching"
-msgstr " · 本仓观战"
-
 msgid "hud.reveal_rule"
-msgstr "开仓展示后自动继续 · 点击物资查看羁绊增值\n本局不发放亏损补偿 · Esc：菜单"
-
-msgid "hud.contenders"
-msgstr "加拍资格：{players}；最低非零报价 {minimum}，0 或超时退出。"
+msgstr "开仓后自动进入下一仓 · 亏损按其他玩家本轮报价加权分配\nEsc：菜单"
 
 msgid "hud.early_rule"
-msgstr "本轮最高价达到第二名的 {percent}% 可成交；同价不提前成交\n0：本轮放弃 · Esc：菜单"
-
-msgid "hud.overtime_rule"
-msgstr "仅同价者加拍；非零报价至少 {minimum}\n0 / 超时：退出加拍；全员退出则流拍 · Esc：菜单"
+msgstr "唯一最高价达到第二名的 {percent}% 可提前成交\n报价单位 100 · 0 为放弃 · Esc：菜单"
 
 msgid "hud.final_rule"
-msgstr "第 5 轮最高正数报价成交，同价者加拍\n0：本轮放弃；单人测试保留五轮 · Esc：菜单"
+msgstr "最后一轮最高价成交，同价按提交先后；全员 0 则流拍\n报价单位 100 · Esc：菜单"
 
 msgid "hud.sale_profit"
 msgstr "{reason} · 本仓净收益 {profit}（含羁绊增值）"
@@ -182,10 +161,130 @@ msgid "outcome.early"
 msgstr "提前成交"
 
 msgid "outcome.final"
-msgstr "第五轮成交"
-
-msgid "outcome.overtime"
-msgstr "加拍成交"
+msgstr "最终轮成交"
 
 msgid "rules.auction"
-msgstr "前四轮最高价达到第二名的 200% / 160% / 130% / 110% 即成交；第五轮价高者得，同价者加拍。\n加拍非零价必须高于上轮同价；0 或超时退出，全员退出流拍。仅赢家支付并获得含羁绊的仓库价值，无亏损补偿。"
+msgstr "每仓最多 5 轮，默认一局 3 仓。报价以 100 为单位；全员封盘后等待 2 秒，再公开报价并判定。最后一轮前按 200% / 160% / 130% / 110% 提前成交；最终轮同价由先提交者成交。\n每人每轮任选一次辅助操作，即时生效且结果仅本人可见。成交亏损全额按其他在线玩家成交当轮报价加权奖励；赢家不重复扣款，权重全为 0 不分配。"
+
+msgid "phase.pending"
+msgstr "全员封盘 · 2 秒后公布"
+
+msgid "outcome.first"
+msgstr "同价先提交者成交"
+
+msgid "bid.zero"
+msgstr "归零"
+
+msgid "bid.title"
+msgstr "密封报价 · 100 金币起步"
+
+msgid "bid.amount"
+msgstr "{amount} 金币"
+
+msgid "bid.balance"
+msgstr "可用金币  {amount}"
+
+msgid "history.title"
+msgstr "竞拍记录"
+
+msgid "history.current"
+msgstr "{name} · {coins} 金币{state}\n本轮辅助：{assist}"
+
+msgid "history.round"
+msgstr "仓库 {warehouse} · 第 {round} 轮报价"
+
+msgid "history.bid"
+msgstr "{name}：{bid}  /  {assist}"
+
+msgid "assist.title"
+msgstr "辅助操作 · 每轮任选一次"
+
+msgid "assist.full"
+msgstr "发现 1 件物品 · 完整信息"
+
+msgid "assist.outline"
+msgstr "显示 3 件物品 · 轮廓"
+
+msgid "assist.quality"
+msgstr "显示 2 件物品 · 品质"
+
+msgid "assist.tags"
+msgstr "显示 4 件物品 · 羁绊标签"
+
+msgid "assist.short.full"
+msgstr "完整信息 ×1"
+
+msgid "assist.short.outline"
+msgstr "轮廓 ×3"
+
+msgid "assist.short.quality"
+msgstr "品质 ×2"
+
+msgid "assist.short.tags"
+msgstr "标签 ×4"
+
+msgid "assist.none"
+msgstr "未使用"
+
+msgid "assist.hint"
+msgstr "立即生效，仅自己可见；已发现信息本仓保留。"
+
+msgid "intel.partial"
+msgstr "局部探查 · 未知物品"
+
+msgid "intel.outline"
+msgstr "轮廓占格：{width} × {height}"
+
+msgid "intel.quality"
+msgstr "品质：{quality}"
+
+msgid "intel.tags"
+msgstr "羁绊：{tags}"
+
+msgid "sale.payout"
+msgstr "{name} 获得亏损分配 +{amount}"
+
+msgid "每仓最多轮数"
+msgstr "每仓最多轮数"
+
+msgid "所有玩家初始金币"
+msgstr "所有玩家初始金币"
+
+msgid "每仓物品数量范围"
+msgstr "每仓物品数量范围"
+
+msgid "最少物品"
+msgstr "最少物品"
+
+msgid "最多物品"
+msgstr "最多物品"
+
+msgid "物品品质相对权重"
+msgstr "物品品质相对权重"
+
+msgid "先按品质权重抽取，再在该品质物品中等概率抽取；0 表示不出现，至少一档大于 0。"
+msgstr "先按品质权重抽取，再在该品质物品中等概率抽取；0 表示不出现，至少一档大于 0。"
+
+msgid "普通"
+msgstr "普通"
+
+msgid "优良"
+msgstr "优良"
+
+msgid "稀有"
+msgstr "稀有"
+
+msgid "珍贵"
+msgstr "珍贵"
+
+msgid "典藏"
+msgstr "典藏"
+
+msgid "传世"
+msgstr "传世"
+
+msgid "至臻"
+msgstr "至臻"
+
+msgid "1–8 人密封竞拍；每仓最多五轮，辅助探查即时生效，成交亏损按其他玩家报价加权分配。"
+msgstr "1–8 人密封竞拍；每仓最多五轮，辅助探查即时生效，成交亏损按其他玩家报价加权分配。"

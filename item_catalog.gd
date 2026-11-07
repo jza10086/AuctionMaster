@@ -3,12 +3,9 @@ extends Resource
 const QUALITY_NAMES: Array[String] = ["普通", "优良", "稀有", "珍贵", "典藏", "传世", "至臻"]
 const QUALITY_COLORS: Array[Color] = [Color("b4bec6"), Color("79cf8a"), Color("67b9e8"), Color("b799f0"), Color("f0c465"), Color("f27279"), Color("eed4ff")]
 const QUALITY_COLOR_NAMES: Array[String] = ["白/灰", "绿", "蓝", "紫", "金", "红", "彩"]
-const QUALITY_WEIGHTS: Array[int] = [120, 90, 60, 40, 20, 6, 2]
 const RAINBOW_COLORS: Array[Color] = [Color("fa8585"), Color("f3cb6b"), Color("8edca6"), Color("7dcdf4"), Color("bba1fa")]
 const GRID_COLUMNS: int = 12
 const GRID_ROWS: int = 14
-const MIN_LOT_VALUE: int = 2000
-const MAX_LOT_VALUE: int = 120000
 const TAGS: Array[String] = ["电子产品", "古董", "珠宝", "音乐", "工具", "户外装备", "玩具", "艺术品", "收藏品", "精密器械"]
 const RULE_TEXT: String = "同仓同 tag：3 件 +15%，5 件 +30%（取最高档）。多 tag 加成相加，单件最高 +60%。同款按件计数，只增加该 tag 物资的价值；各仓独立，不跨仓累计。"
 @export var items: Array[Dictionary] = [
@@ -1542,12 +1539,15 @@ static func evaluate(lot: Array) -> Dictionary:
 
 
 ## Pack largest footprints first with stable index ties; returned rectangles preserve item order.
-## Host rejects an unplaceable lot before publication. Renderer uses this exact same layout.
+## The vertical capacity grows with the lot; host and renderer use identical placement.
 static func pack(lot: Array) -> Array[Rect2i]:
 	var order: Array[int] = []
 	var result: Array[Rect2i] = []
 	var occupied: Array[bool] = []
-	occupied.resize(GRID_COLUMNS * GRID_ROWS)
+	var rows: int = GRID_ROWS
+	for item: Dictionary in lot:
+		rows += int(item.size[1])
+	occupied.resize(GRID_COLUMNS * rows)
 	occupied.fill(false)
 	for index: int in lot.size():
 		order.append(index)
@@ -1558,10 +1558,10 @@ static func pack(lot: Array) -> Array[Rect2i]:
 		return a < b if area_a == area_b else area_a > area_b)
 	for index: int in order:
 		var footprint: Vector2i = Vector2i(int(lot[index].size[0]), int(lot[index].size[1]))
-		if footprint.x < 1 or footprint.y < 1 or footprint.x > GRID_COLUMNS or footprint.y > GRID_ROWS:
+		if footprint.x < 1 or footprint.y < 1 or footprint.x > GRID_COLUMNS or footprint.y > rows:
 			return []
 		var placed: bool = false
-		for row: int in range(GRID_ROWS - footprint.y + 1):
+		for row: int in range(rows - footprint.y + 1):
 			for column: int in range(GRID_COLUMNS - footprint.x + 1):
 				var candidate: Rect2i = Rect2i(Vector2i(column, row), footprint)
 				var fits: bool = true
@@ -1582,5 +1582,3 @@ static func pack(lot: Array) -> Array[Rect2i]:
 		if not placed:
 			return []
 	return result
-
-

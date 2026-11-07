@@ -48,7 +48,7 @@
       "audience": "instance"
     }
   },
-  "introduction": "1–8 人暗标竞拍，单人可测试；前四轮可提前成交，第五轮同价加拍，鉴定与同仓羁绊决定估值。",
+  "introduction": "1–8 人密封竞拍；每仓最多五轮，辅助探查即时生效，成交亏损按其他玩家报价加权分配。",
   "localization": {
     "supported_locales": [
       "zh_Hans"

@@ -22,92 +22,285 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="Center" type="CenterContainer" parent="GameCanvas/Stage" index="0" unique_id=1536478288]
-layout_mode = 0
+[node name="Board" type="MarginContainer" parent="GameCanvas/Stage" index="0"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 132.0
+offset_right = -28.0
+offset_bottom = -100.0
 mouse_filter = 2
 
-[node name="Inventory" type="VBoxContainer" parent="GameCanvas/Stage/Center" index="0" unique_id=1333565004]
+[node name="Columns" type="HBoxContainer" parent="GameCanvas/Stage/Board"]
 layout_mode = 2
-mouse_filter = 2
+theme_override_constants/separation = 24
 
-[node name="Valuation" type="Label" parent="GameCanvas/Stage/Center/Inventory" index="0" unique_id=74371396]
+[node name="HistoryPanel" type="PanelContainer" parent="GameCanvas/Stage/Board/Columns"]
+custom_minimum_size = Vector2(370, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("CatalogPanel")
+
+[node name="HistoryContent" type="VBoxContainer" parent="GameCanvas/Stage/Board/Columns/HistoryPanel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="HistoryTitle" type="Label" parent="GameCanvas/Stage/Board/Columns/HistoryPanel/HistoryContent"]
 unique_name_in_owner = true
 layout_mode = 2
+text = "竞拍记录"
+theme_override_font_sizes/font_size = 22
+
+[node name="History" type="RichTextLabel" parent="GameCanvas/Stage/Board/Columns/HistoryPanel/HistoryContent"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(322, 0)
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 18
+scroll_following = false
+
+[node name="Inventory" type="VBoxContainer" parent="GameCanvas/Stage/Board/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="Valuation" type="Label" parent="GameCanvas/Stage/Board/Columns/Inventory"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(600, 48)
 theme_override_font_sizes/font_size = 20
-text = "封仓中：依据公开线索与私密鉴定估价"
+text = "封仓中 · 选择辅助操作发现物品"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Warehouse" type="Control" parent="GameCanvas/Stage/Center/Inventory" index="1" unique_id=460051687]
+[node name="WarehouseScroll" type="ScrollContainer" parent="GameCanvas/Stage/Board/Columns/Inventory"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Warehouse" type="Control" parent="GameCanvas/Stage/Board/Columns/Inventory/WarehouseScroll"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(576, 672)
 layout_mode = 2
+size_flags_horizontal = 3
 script = ExtResource("warehouse")
 
-[node name="ItemDetails" type="Label" parent="GameCanvas/Stage/Center/Inventory" index="2" unique_id=1194176764]
+[node name="ItemDetails" type="Label" parent="GameCanvas/Stage/Board/Columns/Inventory"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(576, 64)
+custom_minimum_size = Vector2(600, 90)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 3
+text = "悬停或点击已发现物品查看信息"
+
+[node name="Operations" type="PanelContainer" parent="GameCanvas/Stage/Board/Columns"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("CatalogPanel")
+
+[node name="OperationContent" type="VBoxContainer" parent="GameCanvas/Stage/Board/Columns/Operations"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BidTitle" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "密封报价"
+
+[node name="Balance" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "可用金币"
+
+[node name="Quote" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "0 金币"
+horizontal_alignment = 1
+
+[node name="BidButtons" type="GridContainer" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 6
+
+[node name="Minus100" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/BidButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+size_flags_horizontal = 3
+text = "−100"
+theme_override_font_sizes/font_size = 20
+metadata/delta = -100
+
+[node name="Plus100" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/BidButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+size_flags_horizontal = 3
+text = "+100"
+theme_override_font_sizes/font_size = 20
+metadata/delta = 100
+
+[node name="Minus500" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/BidButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+size_flags_horizontal = 3
+text = "−500"
+theme_override_font_sizes/font_size = 20
+metadata/delta = -500
+
+[node name="Plus500" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/BidButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+size_flags_horizontal = 3
+text = "+500"
+theme_override_font_sizes/font_size = 20
+metadata/delta = 500
+
+[node name="Minus1000" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/BidButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+size_flags_horizontal = 3
+text = "−1000"
+theme_override_font_sizes/font_size = 20
+metadata/delta = -1000
+
+[node name="Plus1000" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/BidButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+size_flags_horizontal = 3
+text = "+1000"
+theme_override_font_sizes/font_size = 20
+metadata/delta = 1000
+
+[node name="Minus5000" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/BidButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+size_flags_horizontal = 3
+text = "−5000"
+theme_override_font_sizes/font_size = 20
+metadata/delta = -5000
+
+[node name="Plus5000" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/BidButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+size_flags_horizontal = 3
+text = "+5000"
+theme_override_font_sizes/font_size = 20
+metadata/delta = 5000
+
+[node name="Minus10000" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/BidButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+size_flags_horizontal = 3
+text = "−10000"
+theme_override_font_sizes/font_size = 20
+metadata/delta = -10000
+
+[node name="Plus10000" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/BidButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+size_flags_horizontal = 3
+text = "+10000"
+theme_override_font_sizes/font_size = 20
+metadata/delta = 10000
+
+[node name="SubmitRow" type="HBoxContainer" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Zero" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/SubmitRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 42)
+theme_override_font_sizes/font_size = 20
+text = "归零"
+
+[node name="Submit" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/SubmitRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 20
+text = "确认密封报价"
+
+[node name="AssistTitle" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "开仓后点击物资查看品质、占格和增值"
+text = "辅助操作 · 每轮任选一次"
+
+[node name="AssistButtons" type="VBoxContainer" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="full" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 38)
+theme_override_font_sizes/font_size = 18
+text = "发现 1 件物品完整信息"
+metadata/assist = "full"
+
+[node name="outline" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 38)
+theme_override_font_sizes/font_size = 18
+text = "显示 3 件物品轮廓"
+metadata/assist = "outline"
+
+[node name="quality" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 38)
+theme_override_font_sizes/font_size = 18
+text = "显示 2 件物品品质"
+metadata/assist = "quality"
+
+[node name="tags" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 38)
+theme_override_font_sizes/font_size = 18
+text = "显示 4 件物品羁绊"
+metadata/assist = "tags"
+
+[node name="PrivateNote" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
 autowrap_mode = 3
 
-[node name="Heading" parent="OverlayHUD/Standard/Counters" index="0"]
+[node name="ClueScroll" type="ScrollContainer" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
 layout_mode = 2
+custom_minimum_size = Vector2(0, 72)
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Clues" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/ClueScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 17
+autowrap_mode = 3
+
+[node name="OpenCatalog" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+theme_override_font_sizes/font_size = 18
+text = "物资图鉴 / 羁绊规则"
+
+[node name="Heading" parent="OverlayHUD/Standard/Counters" index="0"]
 text = "竞拍大师 · 密封报价"
 
 [node name="Footer" parent="OverlayHUD/Standard" index="1"]
-text = "前四轮可提前成交 · 第五轮同价加拍
-0 金币：本轮放弃 · Esc：菜单"
+text = "最小报价单位 100 · Esc：菜单"
 
-[node name="Clues" type="Label" parent="OverlayHUD/Standard/Details/SidebarScroll/Sidebar" index="1" unique_id=961793443]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(330, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "逐轮获取物资与羁绊线索"
-autowrap_mode = 3
-
-[node name="PrivateNote" type="Label" parent="OverlayHUD/Standard/Details/SidebarScroll/Sidebar" index="2" unique_id=356831037]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "鉴定信息仅自己可见"
-autowrap_mode = 3
-
-[node name="OpenCatalog" type="Button" parent="OverlayHUD/Standard/Details/SidebarScroll/Sidebar" index="3" unique_id=595846745]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 48)
-layout_mode = 2
-text = "物资图鉴 / 羁绊规则"
-
-[node name="Actions" type="HBoxContainer" parent="OverlayHUD/Standard" index="4" unique_id=176071221]
-layout_mode = 0
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 28.0
-offset_top = -88.0
-offset_bottom = -28.0
-theme_override_constants/separation = 12
-
-[node name="Bid" type="SpinBox" parent="OverlayHUD/Standard/Actions" index="0" unique_id=784868354]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 48)
-layout_mode = 2
-
-[node name="Submit" type="Button" parent="OverlayHUD/Standard/Actions" index="1" unique_id=1172442213]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 48)
-layout_mode = 2
-text = "确认密封报价"
-
-[node name="Appraise" type="Button" parent="OverlayHUD/Standard/Actions" index="2" unique_id=411356680]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 48)
-layout_mode = 2
-text = "私密鉴定（每仓一次）"
+[node name="ToggleDetails" parent="OverlayHUD/Standard" index="3"]
+visible = false
 
 [node name="Encyclopedia" type="AcceptDialog" parent="." index="2" unique_id=275228206]
 unique_name_in_owner = true
