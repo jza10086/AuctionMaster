@@ -160,11 +160,11 @@ func _begin_pending() -> void:
 	phase = "pending"
 	time = Rules.REVEAL_DELAY
 
-## Both bids and settlement remain secret until the two-second lock window has elapsed.
+## Publish one completed round only after bidding or the three-second lock window ends.
 func _resolve_round() -> void:
 	_history.append({"warehouse": warehouse, "round": round, "bids": _bids.duplicate(), "assists": _assists.duplicate()})
 	phase = "round_result"
-	time = 3.0
+	time = rules.reveal_seconds
 	var highest: int = 0
 	var second: int = 0
 	var leaders: Array[int] = []
@@ -183,16 +183,20 @@ func _resolve_round() -> void:
 			second = amount
 	if round < rules.rounds:
 		if names.size() > 1 and leaders.size() == 1 and highest * 100 >= second * Rules.EARLY_WIN_PERCENT[round - 1]:
-			_settle(leaders[0], highest, "early")
+			_winner = leaders[0]
+			_price = highest
+			_outcome = "early"
 		return
 	if leaders.is_empty():
-		_settle(-1, 0, "unsold")
+		_outcome = "unsold"
 	else:
 		var winner: int = leaders[0]
 		for seat: int in leaders:
 			if _bid_order[seat] < _bid_order[winner]:
 				winner = seat
-		_settle(winner, highest, "first" if leaders.size() > 1 else "final")
+		_winner = winner
+		_price = highest
+		_outcome = "first" if leaders.size() > 1 else "final"
 
 func tick(delta: float) -> void:
 	if phase == "finished":
@@ -214,6 +218,7 @@ func expire_round() -> void:
 	for seat: int in names.size():
 		if not _locked[seat]:
 			submit_bid(seat, 0, warehouse, round)
+	_resolve_round()
 
 func withdraw_player(seat: int) -> void:
 	_withdrawn[seat] = true
@@ -223,8 +228,13 @@ func withdraw_player(seat: int) -> void:
 
 func advance() -> void:
 	if phase == "round_result":
-		round += 1
-		_begin_round()
+		if not _outcome.is_empty():
+			_settle()
+			phase = "reveal"
+			time = 15.0
+		else:
+			round += 1
+			_begin_round()
 	elif phase == "reveal":
 		if warehouse + 1 < rules.warehouses:
 			warehouse += 1
@@ -233,20 +243,16 @@ func advance() -> void:
 			phase = "finished"
 			time = 0.0
 
-func _settle(winner: int, price: int, outcome: String) -> void:
+## Delay balance changes until opening so review snapshots cannot expose the sealed value.
+func _settle() -> void:
 	if _settled:
 		return
 	_settled = true
-	_winner = winner
-	_price = price
-	_outcome = outcome
-	if winner >= 0:
-		var profit: int = _hidden_total() - price
-		balances[winner] += profit
+	if _winner >= 0:
+		var profit: int = _hidden_total() - _price
+		balances[_winner] += profit
 		if profit < 0:
 			_distribute_loss(-profit)
-	phase = "reveal"
-	time = 15.0
 
 ## Largest remainders conserve the entire loss pool in whole coins; zero bids receive nothing.
 func _distribute_loss(loss: int) -> void:
@@ -314,7 +320,7 @@ func snapshot(seat: int = -1) -> Dictionary:
 		"balances": balances.duplicate(), "names": names.duplicate(),
 		"clues": _clues.duplicate(), "history": _history.duplicate(true),
 		"locked": get_locked_bids(), "withdrawn": _withdrawn.duplicate(),
-		"assists": _assists.duplicate(), "ownbid": _bids[seat] if valid else 0,
+		"ownbid": _bids[seat] if valid else 0,
 		"bidlocked": _locked[seat] if valid else true,
 		"assist_available": valid and phase == "bidding" and not _withdrawn[seat] and _assists[seat].is_empty(),
 		"intel": _intel[seat].values().duplicate(true) if valid else [],

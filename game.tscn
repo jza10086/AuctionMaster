@@ -12,6 +12,9 @@ Button/styles/hover = ExtResource("button_frame")
 Button/styles/pressed = ExtResource("button_frame")
 Button/styles/disabled = ExtResource("button_frame")
 Button/styles/focus = ExtResource("button_frame")
+LineEdit/styles/normal = ExtResource("button_frame")
+LineEdit/styles/focus = ExtResource("button_frame")
+LineEdit/styles/read_only = ExtResource("button_frame")
 
 [sub_resource type="StyleBoxFlat" id="CatalogPanel"]
 content_margin_left = 24.0
@@ -109,12 +112,15 @@ theme_override_constants/separation = 8
 
 
 
-[node name="Quote" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+[node name="Quote" type="LineEdit" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "0 金币"
-horizontal_alignment = 1
+text = "0"
+alignment = 1
+max_length = 16
+select_all_on_focus = true
+context_menu_enabled = false
 
 [node name="BidButtons" type="GridContainer" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
 unique_name_in_owner = true
@@ -372,4 +378,4 @@ offset_bottom = 96.0
 mouse_filter = 2
 theme_override_font_sizes/font_size = 28
 vertical_alignment = 1
-text = "剩余金币  0"
+text = "剩余  0"

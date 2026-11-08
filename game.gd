@@ -7,7 +7,7 @@ const Catalog: Script = preload("res://games/minigame/godot_party_default_auctio
 @onready var warehouse_view: WarehouseView = %Warehouse
 @onready var item_details: Label = %ItemDetails
 @onready var submit: Button = %Submit
-@onready var quote: Label = %Quote
+@onready var quote: LineEdit = %Quote
 @onready var balance_label: Label = %Balance
 @onready var player_cards: VBoxContainer = %PlayerCards
 @onready var assist_description: Label = %AssistDescription
@@ -22,9 +22,14 @@ var public_revision: int = 0
 var private_revision: int = -1
 var draft_bid: int = 0
 var draft_round: String = ""
+var quote_valid: bool = true
 
 func build_game() -> void:
 	warehouse_view.selection_changed.connect(_show_item)
+	quote.text_changed.connect(_on_quote_changed)
+	quote.focus_exited.connect(_format_quote)
+	quote.text_submitted.connect(func(_text: String) -> void: _format_quote())
+	quote.tooltip_text = api.i18n.text(&"bid.input_hint")
 	submit.pressed.connect(func() -> void: _act("bid"))
 	for button: Button in bid_buttons.get_children():
 		var delta: int = int(button.get_meta("delta"))
@@ -62,19 +67,48 @@ func _adjust_bid(amount: int) -> void:
 		return
 	var maximum: int = int(private_view.balances[seat_of(local_id)]) / 100 * 100
 	draft_bid = clampi(draft_bid + amount, 0, maximum)
-	quote.text = api.i18n.text(&"bid.amount", {"amount": _format_coins(draft_bid)})
+	_show_quote()
 
 func _reset_bid() -> void:
 	if api.input.input_blocked or not _can_bid():
 		return
 	draft_bid = 0
-	quote.text = api.i18n.text(&"bid.amount", {"amount": _format_coins(draft_bid)})
+	_show_quote()
+
+## Keep incomplete input editable; only valid whole-hundred bids can be confirmed.
+func _on_quote_changed(text: String) -> void:
+	if api.input.input_blocked or not _can_bid():
+		return
+	var digits: String = text.replace(",", "").strip_edges()
+	quote_valid = digits.is_valid_int()
+	if quote_valid:
+		var amount: int = digits.to_int()
+		quote_valid = amount >= 0 and amount % 100 == 0 and amount <= int(private_view.balances[seat_of(local_id)])
+		if quote_valid:
+			draft_bid = amount
+	if quote_valid:
+		quote.remove_theme_color_override("font_color")
+	else:
+		quote.add_theme_color_override("font_color", Color("f06b72"))
+	submit.disabled = not quote_valid
+
+func _format_quote() -> void:
+	if quote_valid:
+		quote.text = _format_coins(draft_bid)
+
+func _show_quote() -> void:
+	quote_valid = true
+	quote.remove_theme_color_override("font_color")
+	_format_quote()
+	submit.disabled = not _can_bid()
 
 func _can_bid() -> bool:
 	return running and not local_id.is_empty() and not private_view.is_empty() and private_view.phase == "bidding" and not private_view.bidlocked
 
 func _act(kind: String, assist: String = "") -> void:
 	if api.input.input_blocked or private_view.is_empty():
+		return
+	if kind == "bid" and (not _can_bid() or not quote_valid):
 		return
 	send_action({"kind": kind, "amount": draft_bid, "assist": assist, "warehouse": private_view.warehouse, "round": private_view.round})
 
@@ -167,15 +201,17 @@ func render_game() -> void:
 	if round_key != draft_round:
 		draft_round = round_key
 		draft_bid = 0
+		_show_quote()
 	if not private_view.is_empty() and private_view.bidlocked:
 		draft_bid = private_view.ownbid
-	quote.text = api.i18n.text(&"bid.amount", {"amount": _format_coins(draft_bid)})
+		_show_quote()
 	balance_label.text = api.i18n.text(&"bid.balance", {"amount": _format_coins(int(snap.balances[seat_of(local_id)]))}) if not local_id.is_empty() else api.i18n.text(&"hud.spectating")
 	var can_bid: bool = _can_bid()
+	quote.editable = can_bid and not api.input.input_blocked
 	for button: Button in bid_buttons.get_children():
 		button.disabled = not can_bid
 	%Zero.disabled = not can_bid
-	submit.disabled = not can_bid
+	submit.disabled = not can_bid or not quote_valid
 	for button: Button in assist_buttons.get_children():
 		button.disabled = not running or local_id.is_empty() or private_view.is_empty() or not private_view.assist_available
 	countdown.text = _format_coins(ceili(snap.time))
@@ -193,7 +229,6 @@ func _render_player_cards(snap: Dictionary) -> void:
 			if record.warehouse == snap.warehouse:
 				amount = _format_coins(int(record.bids[seat]))
 				kinds[int(record.round) - 1] = record.assists[seat]
-		kinds[int(snap.round) - 1] = snap.assists[seat]
 		var colors: Array[Color] = []
 		for kind: String in kinds:
 			colors.append(Color.TRANSPARENT if kind.is_empty() else assist_colors[kind])

@@ -26,7 +26,7 @@ msgid "phase.bidding"
 msgstr "密封报价"
 
 msgid "phase.round_result"
-msgstr "本轮报价公布"
+msgstr "本轮报价与操作揭示"
 
 msgid "phase.reveal"
 msgstr "开仓揭晓"
@@ -68,7 +68,7 @@ msgid "hud.spectating"
 msgstr "观战中 · 不显示玩家私密探查结果"
 
 msgid "hud.item_details"
-msgstr "{name} · {quality} · {width} × {height} 格\n{tags}\n基础 {base} + 羁绊 {bonus}（+{percent}%）= {total} 金币"
+msgstr "{name} · {quality} · {width} × {height} 格\n{tags}\n基础 {base} + 羁绊 {bonus}（+{percent}%）= {total}"
 
 msgid "hud.quality"
 msgstr "{name}（{color}）"
@@ -80,7 +80,7 @@ msgid "hud.catalog_premium_tags"
 msgstr "{tags}\n高密度珍品"
 
 msgid "result.coins"
-msgstr "最终金币"
+msgstr "最终余额"
 
 msgid "hud.catalog_button"
 msgstr "物资图鉴 / 羁绊规则"
@@ -119,7 +119,7 @@ msgid "warehouse.scanning"
 msgstr "搜索中"
 
 msgid "warehouse.tooltip"
-msgstr "{name} · {quality}（{color}）\n{width} × {height} 格 · 基础 {value} 金币\n{tags}"
+msgstr "{name} · {quality}（{color}）\n{width} × {height} 格 · 基础 {value}\n{tags}"
 
 msgid "GodotPartyDefault · 竞拍大师"
 msgstr "GodotPartyDefault · 竞拍大师"
@@ -176,10 +176,10 @@ msgid "outcome.final"
 msgstr "最终轮成交"
 
 msgid "rules.auction"
-msgstr "每仓最多 5 轮，默认一局 3 仓。报价以 100 为单位；全员封盘后等待 2 秒，再公开报价并判定。最后一轮前按 200% / 160% / 130% / 110% 提前成交；最终轮同价由先提交者成交。\n每人每轮任选一次辅助操作，即时生效且结果仅本人可见。成交亏损全额按其他在线玩家成交当轮报价加权奖励；赢家不重复扣款，权重全为 0 不分配。"
+msgstr "每仓最多 5 轮，默认一局 3 仓。报价以 100 为单位；全员封盘后进入 3 秒倒计时；竞价超时则直接揭示。统一公开报价和操作，默认停留 10 秒供核对，再进入下一轮或开仓。最后一轮前按 200% / 160% / 130% / 110% 提前成交；最终轮同价由先提交者成交。\n每人每轮任选一次辅助操作，即时生效且结果仅本人可见。成交亏损全额按其他在线玩家成交当轮报价加权奖励；赢家不重复扣款，权重全为 0 不分配。"
 
 msgid "phase.pending"
-msgstr "全员封盘 · 2 秒后公布"
+msgstr "全员封盘 · 3 秒后公布"
 
 msgid "outcome.first"
 msgstr "同价先提交者成交"
@@ -191,10 +191,10 @@ msgid "bid.title"
 msgstr "密封报价 · 100 金币起步"
 
 msgid "bid.amount"
-msgstr "{amount} 金币"
+msgstr "{amount}"
 
 msgid "bid.balance"
-msgstr "剩余金币  {amount}"
+msgstr "剩余  {amount}"
 
 msgid "history.title"
 msgstr "竞拍记录"
@@ -300,3 +300,9 @@ msgstr "至臻"
 
 msgid "1–8 人密封竞拍；每仓最多五轮，辅助探查即时生效，成交亏损按其他玩家报价加权分配。"
 msgstr "1–8 人密封竞拍；每仓最多五轮，辅助探查即时生效，成交亏损按其他玩家报价加权分配。"
+
+msgid "bid.input_hint"
+msgstr "输入 100 的整数倍，不能超过余额；0 为放弃"
+
+msgid "每轮揭示秒数"
+msgstr "每轮揭示秒数"
