@@ -2,13 +2,10 @@ extends "res://games/protocols/godot_party_default_protocol/ranked_round.gd"
 ## Auction entry owns transport and panels; session owns secrets, rules and settlement.
 const WarehouseView: Script = preload("res://games/minigame/godot_party_default_auction_master/warehouse_view.gd")
 const Session: Script = preload("res://games/minigame/godot_party_default_auction_master/session.gd")
-const CatalogItem: PackedScene = preload("res://games/minigame/godot_party_default_auction_master/catalog_item.tscn")
 const PlayerCard: PackedScene = preload("res://games/minigame/godot_party_default_auction_master/player_card.tscn")
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
 @onready var warehouse_view: WarehouseView = %Warehouse
 @onready var item_details: Label = %ItemDetails
-@onready var valuation: Label = %Valuation
-@onready var encyclopedia: AcceptDialog = %Encyclopedia
 @onready var submit: Button = %Submit
 @onready var quote: Label = %Quote
 @onready var balance_label: Label = %Balance
@@ -30,7 +27,9 @@ func build_game() -> void:
 	warehouse_view.selection_changed.connect(_show_item)
 	submit.pressed.connect(func() -> void: _act("bid"))
 	for button: Button in bid_buttons.get_children():
-		button.pressed.connect(_adjust_bid.bind(int(button.get_meta("delta"))))
+		var delta: int = int(button.get_meta("delta"))
+		button.text = ("+" if delta > 0 else "−") + _format_coins(absi(delta))
+		button.pressed.connect(_adjust_bid.bind(delta))
 	%Zero.pressed.connect(_reset_bid)
 	for button: Button in assist_buttons.get_children():
 		var kind: String = button.get_meta("assist")
@@ -40,15 +39,8 @@ func build_game() -> void:
 		button.focus_entered.connect(_show_assist_description.bind(kind))
 		button.focus_exited.connect(_clear_assist_description)
 		button.pressed.connect(_act.bind("assist", kind))
-	%OpenCatalog.pressed.connect(_open_catalog)
-	%CatalogRules.text = api.i18n.text(&"rules.auction") + "\n" + Catalog.RULE_TEXT
-	%OpenCatalog.text = api.i18n.text(&"hud.catalog_button")
 	%Zero.text = api.i18n.text(&"bid.zero")
-	%AssistTitle.text = api.i18n.text(&"assist.title")
-	%BidTitle.text = api.i18n.text(&"bid.title")
 	submit.text = api.i18n.text(&"hud.submit")
-	encyclopedia.title = api.i18n.text(&"catalog.title")
-	encyclopedia.ok_button_text = api.i18n.text(&"catalog.close")
 	for player: Dictionary in players:
 		player_cards.add_child(PlayerCard.instantiate())
 	_show_item({})
@@ -70,13 +62,13 @@ func _adjust_bid(amount: int) -> void:
 		return
 	var maximum: int = int(private_view.balances[seat_of(local_id)]) / 100 * 100
 	draft_bid = clampi(draft_bid + amount, 0, maximum)
-	quote.text = api.i18n.text(&"bid.amount", {"amount": draft_bid})
+	quote.text = api.i18n.text(&"bid.amount", {"amount": _format_coins(draft_bid)})
 
 func _reset_bid() -> void:
 	if api.input.input_blocked or not _can_bid():
 		return
 	draft_bid = 0
-	quote.text = api.i18n.text(&"bid.amount", {"amount": draft_bid})
+	quote.text = api.i18n.text(&"bid.amount", {"amount": _format_coins(draft_bid)})
 
 func _can_bid() -> bool:
 	return running and not local_id.is_empty() and not private_view.is_empty() and private_view.phase == "bidding" and not private_view.bidlocked
@@ -177,8 +169,8 @@ func render_game() -> void:
 		draft_bid = 0
 	if not private_view.is_empty() and private_view.bidlocked:
 		draft_bid = private_view.ownbid
-	quote.text = api.i18n.text(&"bid.amount", {"amount": draft_bid})
-	balance_label.text = api.i18n.text(&"bid.balance", {"amount": snap.balances[seat_of(local_id)]}) if not local_id.is_empty() else api.i18n.text(&"hud.spectating")
+	quote.text = api.i18n.text(&"bid.amount", {"amount": _format_coins(draft_bid)})
+	balance_label.text = api.i18n.text(&"bid.balance", {"amount": _format_coins(int(snap.balances[seat_of(local_id)]))}) if not local_id.is_empty() else api.i18n.text(&"hud.spectating")
 	var can_bid: bool = _can_bid()
 	for button: Button in bid_buttons.get_children():
 		button.disabled = not can_bid
@@ -186,10 +178,9 @@ func render_game() -> void:
 	submit.disabled = not can_bid
 	for button: Button in assist_buttons.get_children():
 		button.disabled = not running or local_id.is_empty() or private_view.is_empty() or not private_view.assist_available
-	valuation.text = api.i18n.text(&"hud.valuation", {"base": snap.base_value, "bonus": snap.bonus_value, "total": snap.total_value}) if snap.phase in ["reveal", "finished"] else api.i18n.text(&"hud.sealed")
-	countdown.text = str(ceili(snap.time))
+	countdown.text = _format_coins(ceili(snap.time))
 	countdown.add_theme_color_override("font_color", Color("f06b72") if float(snap.time) <= 10.0 else Color("f4f1e8"))
-	round_indicator.text = api.i18n.text(&"hud.round_indicator", {"current": snap.round, "total": snap.rounds_total})
+	round_indicator.text = api.i18n.text(&"hud.round_indicator", {"current": _format_coins(int(snap.round)), "total": _format_coins(int(snap.rounds_total))})
 	_render_player_cards(snap)
 
 func _render_player_cards(snap: Dictionary) -> void:
@@ -209,13 +200,13 @@ func _render_player_cards(snap: Dictionary) -> void:
 		player_cards.get_child(seat).set_view(players[seat].name, amount, colors, snap.withdrawn[seat])
 
 func _format_coins(value: int) -> String:
-	var digits: String = str(value)
+	var digits: String = str(absi(value))
 	var result: String = ""
 	for index: int in digits.length():
 		if index > 0 and (digits.length() - index) % 3 == 0:
 			result += ","
 		result += digits[index]
-	return result
+	return ("−" if value < 0 else "") + result
 
 func _show_assist_description(kind: String) -> void:
 	assist_description.text = api.i18n.text(StringName("assist.description." + kind))
@@ -233,7 +224,7 @@ func _show_item(item: Dictionary) -> void:
 	if item.is_empty():
 		item_details.text = ""
 	elif item.has("effective_value"):
-		item_details.text = api.i18n.text(&"hud.item_details", {"name": item.name, "quality": _quality_caption(int(item.quality)), "width": item.size[0], "height": item.size[1], "tags": _tag_caption(item, &"hud.premium_tags"), "base": item.value, "bonus": item.bonus_value, "percent": item.bonus_percent, "total": item.effective_value})
+		item_details.text = api.i18n.text(&"hud.item_details", {"name": item.name, "quality": _quality_caption(int(item.quality)), "width": item.size[0], "height": item.size[1], "tags": _tag_caption(item, &"hud.premium_tags"), "base": _format_coins(int(item.value)), "bonus": _format_coins(int(item.bonus_value)), "percent": _format_coins(int(item.bonus_percent)), "total": _format_coins(int(item.effective_value))})
 	else:
 		item_details.text = warehouse_view.describe_item(item)
 
@@ -243,21 +234,3 @@ func _quality_caption(quality: int) -> String:
 func _tag_caption(item: Dictionary, premium_key: StringName) -> String:
 	var tags: String = " / ".join(item.tags)
 	return api.i18n.text(premium_key, {"tags": tags}) if item.get("compact_premium", false) else tags
-
-## The catalogue contains public definitions only, never the current sealed inventory.
-func _open_catalog() -> void:
-	var grid: GridContainer = %CatalogGrid
-	if grid.get_child_count() > 0:
-		encyclopedia.popup_centered(Vector2i(1120, 800))
-		return
-	for item: Dictionary in Catalog.new().items:
-		var card: VBoxContainer = CatalogItem.instantiate()
-		grid.add_child(card)
-		card.get_node("Icon").texture = load("res://games/minigame/godot_party_default_auction_master/assets/items/realistic/%s.png" % item.kind)
-		var title: Label = card.get_node("Title")
-		title.text = item.name
-		title.add_theme_color_override("font_color", Catalog.QUALITY_COLORS[int(item.quality)])
-		card.get_node("Stripe").visible = int(item.quality) == 6
-		var info: Label = card.get_node("Info")
-		info.text = api.i18n.text(&"hud.item", {"quality": _quality_caption(int(item.quality)), "width": item.size[0], "height": item.size[1], "value": item.value, "tags": _tag_caption(item, &"hud.catalog_premium_tags")})
-	encyclopedia.popup_centered(Vector2i(1120, 800))

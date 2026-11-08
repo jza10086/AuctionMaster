@@ -86,7 +86,7 @@ msgid "hud.catalog_button"
 msgstr "物资图鉴 / 羁绊规则"
 
 msgid "hud.submit"
-msgstr "确认密封报价"
+msgstr "确认报价"
 
 msgid "catalog.title"
 msgstr "竞拍大师 · 100 种物资图鉴"
@@ -194,7 +194,7 @@ msgid "bid.amount"
 msgstr "{amount} 金币"
 
 msgid "bid.balance"
-msgstr "可用金币  {amount}"
+msgstr "剩余金币  {amount}"
 
 msgid "history.title"
 msgstr "竞拍记录"

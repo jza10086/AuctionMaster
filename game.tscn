@@ -4,6 +4,15 @@
 [ext_resource type="PackedScene" path="res://games/protocols/godot_party_default_protocol/ranked_round.tscn" id="round"]
 [ext_resource type="Script" uid="uid://b2cvkqbwm85jy" path="res://games/minigame/godot_party_default_auction_master/warehouse_view.gd" id="warehouse"]
 
+[ext_resource type="StyleBox" path="res://core/ui/ambient_reveal/theme/frames/focused.tres" id="button_frame"]
+
+[sub_resource type="Theme" id="OperationTheme"]
+Button/styles/normal = ExtResource("button_frame")
+Button/styles/hover = ExtResource("button_frame")
+Button/styles/pressed = ExtResource("button_frame")
+Button/styles/disabled = ExtResource("button_frame")
+Button/styles/focus = ExtResource("button_frame")
+
 [sub_resource type="StyleBoxFlat" id="CatalogPanel"]
 content_margin_left = 24.0
 content_margin_top = 24.0
@@ -65,14 +74,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 12
 
-[node name="Valuation" type="Label" parent="GameCanvas/Stage/Board/Columns/Inventory"]
-unique_name_in_owner = true
-layout_mode = 2
-custom_minimum_size = Vector2(600, 48)
-theme_override_font_sizes/font_size = 20
-text = "封仓中 · 选择辅助操作发现物品"
-horizontal_alignment = 1
-autowrap_mode = 3
 
 [node name="WarehouseScroll" type="ScrollContainer" parent="GameCanvas/Stage/Board/Columns/Inventory"]
 unique_name_in_owner = true
@@ -99,23 +100,14 @@ text = ""
 [node name="Operations" type="PanelContainer" parent="GameCanvas/Stage/Board/Columns"]
 custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
+theme = SubResource("OperationTheme")
 theme_override_styles/panel = SubResource("CatalogPanel")
 
 [node name="OperationContent" type="VBoxContainer" parent="GameCanvas/Stage/Board/Columns/Operations"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="BidTitle" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "密封报价"
 
-[node name="Balance" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "可用金币"
 
 [node name="Quote" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
 unique_name_in_owner = true
@@ -167,7 +159,7 @@ metadata/delta = 500
 layout_mode = 2
 custom_minimum_size = Vector2(0, 36)
 size_flags_horizontal = 3
-text = "−1000"
+text = "−1,000"
 theme_override_font_sizes/font_size = 20
 metadata/delta = -1000
 
@@ -175,7 +167,7 @@ metadata/delta = -1000
 layout_mode = 2
 custom_minimum_size = Vector2(0, 36)
 size_flags_horizontal = 3
-text = "+1000"
+text = "+1,000"
 theme_override_font_sizes/font_size = 20
 metadata/delta = 1000
 
@@ -183,7 +175,7 @@ metadata/delta = 1000
 layout_mode = 2
 custom_minimum_size = Vector2(0, 36)
 size_flags_horizontal = 3
-text = "−5000"
+text = "−5,000"
 theme_override_font_sizes/font_size = 20
 metadata/delta = -5000
 
@@ -191,7 +183,7 @@ metadata/delta = -5000
 layout_mode = 2
 custom_minimum_size = Vector2(0, 36)
 size_flags_horizontal = 3
-text = "+5000"
+text = "+5,000"
 theme_override_font_sizes/font_size = 20
 metadata/delta = 5000
 
@@ -199,7 +191,7 @@ metadata/delta = 5000
 layout_mode = 2
 custom_minimum_size = Vector2(0, 36)
 size_flags_horizontal = 3
-text = "−10000"
+text = "−10,000"
 theme_override_font_sizes/font_size = 20
 metadata/delta = -10000
 
@@ -207,35 +199,9 @@ metadata/delta = -10000
 layout_mode = 2
 custom_minimum_size = Vector2(0, 36)
 size_flags_horizontal = 3
-text = "+10000"
+text = "+10,000"
 theme_override_font_sizes/font_size = 20
 metadata/delta = 10000
-
-[node name="SubmitRow" type="HBoxContainer" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
-layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="Zero" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/SubmitRow"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-custom_minimum_size = Vector2(0, 42)
-theme_override_font_sizes/font_size = 20
-text = "归零"
-
-[node name="Submit" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/SubmitRow"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-theme_override_font_sizes/font_size = 20
-text = "确认密封报价"
-
-[node name="AssistTitle" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "辅助操作 · 每轮任选一次"
 
 [node name="AssistButtons" type="HBoxContainer" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
 unique_name_in_owner = true
@@ -335,12 +301,24 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="OpenCatalog" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+[node name="SubmitRow" type="VBoxContainer" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Zero" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/SubmitRow"]
 unique_name_in_owner = true
 layout_mode = 2
-custom_minimum_size = Vector2(0, 36)
-theme_override_font_sizes/font_size = 18
-text = "物资图鉴 / 羁绊规则"
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 42)
+theme_override_font_sizes/font_size = 20
+text = "归零"
+
+[node name="Submit" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/SubmitRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "确认报价"
 
 [node name="Counters" parent="OverlayHUD/Standard" index="0"]
 visible = false
@@ -384,34 +362,14 @@ horizontal_alignment = 2
 vertical_alignment = 1
 text = "1/5轮"
 
-[node name="Encyclopedia" type="AcceptDialog" parent="." index="2" unique_id=275228206]
+
+[node name="Balance" type="Label" parent="OverlayHUD/Standard"]
 unique_name_in_owner = true
-title = "竞拍大师 · 100 种物资图鉴"
-theme_override_styles/panel = SubResource("CatalogPanel")
-size = Vector2i(800, 600)
-min_size = Vector2i(800, 600)
-ok_button_text = "关闭"
-
-[node name="Content" type="VBoxContainer" parent="Encyclopedia" unique_id=159466049]
-
-[node name="CatalogRules" type="Label" parent="Encyclopedia/Content" index="0" unique_id=160524285]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(1050, 70)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "图鉴列出公开的品质、占格与羁绊规则。"
-autowrap_mode = 3
-
-[node name="Scroll" type="ScrollContainer" parent="Encyclopedia/Content" index="1" unique_id=932846453]
-custom_minimum_size = Vector2(1050, 580)
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="CatalogGrid" type="GridContainer" parent="Encyclopedia/Content/Scroll" index="0" unique_id=1255803556]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/h_separation = 18
-theme_override_constants/v_separation = 24
-columns = 4
+offset_left = 28.0
+offset_right = 398.0
+offset_top = 24.0
+offset_bottom = 96.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 28
+vertical_alignment = 1
+text = "剩余金币  0"

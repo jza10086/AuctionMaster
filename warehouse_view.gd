@@ -6,7 +6,8 @@ signal reveal_progress(revealed: int, total: int)
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
 const GRID_COLUMNS: int = Catalog.GRID_COLUMNS
 const GRID_ROWS: int = Catalog.GRID_ROWS
-const GRID_SIZE: Vector2 = Vector2(GRID_COLUMNS * 48.0, GRID_ROWS * 48.0)
+const CELL_SIZE: float = 60.0
+const GRID_SIZE: Vector2 = Vector2(GRID_COLUMNS * CELL_SIZE, GRID_ROWS * CELL_SIZE)
 const REVEAL_SECONDS: float = 0.12
 const TEXT: Translation = preload("res://games/minigame/godot_party_default_auction_master/i18n/zh_Hans.po")
 # Public, read-only-by-convention presentation state for integration and QA.
@@ -66,7 +67,7 @@ func set_snapshot(snap: Dictionary, discoveries: Array = []) -> void:
 		_grid_rows = GRID_ROWS
 		for rect: Rect2i in layout:
 			_grid_rows = maxi(_grid_rows, rect.end.y + 1)
-		custom_minimum_size = Vector2(GRID_SIZE.x, _grid_rows * 48.0)
+		custom_minimum_size = Vector2(GRID_SIZE.x, _grid_rows * CELL_SIZE)
 		revealed_count = 0 if opened else items.size()
 		selection_changed.emit({})
 		reveal_progress.emit(revealed_count, items.size())
@@ -127,12 +128,12 @@ func get_selected_item() -> Dictionary:
 	return items[selected_index].duplicate(true)
 
 func get_grid_rect() -> Rect2:
-	return Rect2(Vector2(maxf(0.0, (size.x - GRID_SIZE.x) * 0.5), 0), Vector2(GRID_SIZE.x, _grid_rows * 48.0))
+	return Rect2(Vector2(maxf(0.0, (size.x - GRID_SIZE.x) * 0.5), 0), Vector2(GRID_SIZE.x, _grid_rows * CELL_SIZE))
 
 func get_item_rect(index: int) -> Rect2:
 	if index < 0 or index >= layout.size():
 		return Rect2()
-	return Rect2(get_grid_rect().position + Vector2(layout[index].position) * 48.0, Vector2(layout[index].size) * 48.0)
+	return Rect2(get_grid_rect().position + Vector2(layout[index].position) * CELL_SIZE, Vector2(layout[index].size) * CELL_SIZE)
 
 func _draw() -> void:
 	var grid: Rect2 = get_grid_rect()
@@ -317,7 +318,7 @@ func _get_tooltip(at_position: Vector2) -> String:
 
 func describe_item(item: Dictionary) -> String:
 	if item.has("name"):
-		return TEXT.get_message(&"warehouse.tooltip").format({"name": item.name, "quality": Catalog.QUALITY_NAMES[int(item.quality)], "color": Catalog.QUALITY_COLOR_NAMES[int(item.quality)], "width": item.size[0], "height": item.size[1], "value": item.value, "tags": " / ".join(item.tags)})
+		return TEXT.get_message(&"warehouse.tooltip").format({"name": item.name, "quality": Catalog.QUALITY_NAMES[int(item.quality)], "color": Catalog.QUALITY_COLOR_NAMES[int(item.quality)], "width": item.size[0], "height": item.size[1], "value": _format_value(int(item.value)), "tags": " / ".join(item.tags)})
 	var lines: PackedStringArray = [TEXT.get_message(&"intel.partial")]
 	if item.has("outline"):
 		lines.append(TEXT.get_message(&"intel.outline").format({"width": item.rect[2], "height": item.rect[3]}))
