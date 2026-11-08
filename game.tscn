@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://b2cvkqbwm85jy" path="res://games/minigame/godot_party_default_auction_master/warehouse_view.gd" id="warehouse"]
 
 [ext_resource type="StyleBox" path="res://core/ui/ambient_reveal/theme/frames/focused.tres" id="button_frame"]
+[ext_resource type="PackedScene" path="res://games/minigame/godot_party_default_auction_master/settlement_panel.tscn" id="settlement"]
 
 [sub_resource type="Theme" id="OperationTheme"]
 Button/styles/normal = ExtResource("button_frame")
@@ -101,6 +102,7 @@ visible = false
 text = ""
 
 [node name="Operations" type="PanelContainer" parent="GameCanvas/Stage/Board/Columns"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
 theme = SubResource("OperationTheme")
@@ -379,3 +381,8 @@ mouse_filter = 2
 theme_override_font_sizes/font_size = 28
 vertical_alignment = 1
 text = "剩余  0"
+
+[node name="SettlementPanel" parent="GameCanvas/Stage/Board/Columns" instance=ExtResource("settlement")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2

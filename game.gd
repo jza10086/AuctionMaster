@@ -3,10 +3,14 @@ extends "res://games/protocols/godot_party_default_protocol/ranked_round.gd"
 const WarehouseView: Script = preload("res://games/minigame/godot_party_default_auction_master/warehouse_view.gd")
 const Session: Script = preload("res://games/minigame/godot_party_default_auction_master/session.gd")
 const PlayerCard: PackedScene = preload("res://games/minigame/godot_party_default_auction_master/player_card.tscn")
+const SettlementPanel: Script = preload("res://games/minigame/godot_party_default_auction_master/settlement_panel.gd")
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
 @onready var warehouse_view: WarehouseView = %Warehouse
 @onready var item_details: Label = %ItemDetails
 @onready var submit: Button = %Submit
+@onready var settlement_panel: SettlementPanel = %SettlementPanel
+@onready var operations: PanelContainer = %Operations
+@onready var warehouse_scroll: ScrollContainer = %WarehouseScroll
 @onready var quote: LineEdit = %Quote
 @onready var balance_label: Label = %Balance
 @onready var player_cards: VBoxContainer = %PlayerCards
@@ -23,6 +27,7 @@ var private_revision: int = -1
 var draft_bid: int = 0
 var draft_round: String = ""
 var quote_valid: bool = true
+var settlement_item: int = -1
 
 func build_game() -> void:
 	warehouse_view.selection_changed.connect(_show_item)
@@ -197,6 +202,19 @@ func render_game() -> void:
 	var intel: Array = private_view.intel if not local_id.is_empty() and not private_view.is_empty() and private_view.warehouse == snap.warehouse else []
 	warehouse_view.set_snapshot(snap, intel)
 	warehouse_view.set_reveal_elapsed(float(snap.reveal_elapsed))
+	var settling: bool = snap.phase == "settlement"
+	operations.visible = not settling
+	settlement_panel.visible = settling
+	if settling:
+		settlement_panel.set_snapshot(snap)
+		var index: int = warehouse_view.revealed_count - 1
+		if index >= 0 and index != settlement_item:
+			settlement_item = index
+			warehouse_view.select_item(index)
+			var rect: Rect2 = warehouse_view.get_item_rect(index)
+			warehouse_scroll.scroll_vertical = int(maxf(0.0, rect.get_center().y - warehouse_scroll.size.y * 0.5))
+	else:
+		settlement_item = -1
 	var round_key: String = "%d/%d" % [snap.warehouse, snap.round]
 	if round_key != draft_round:
 		draft_round = round_key

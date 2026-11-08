@@ -30,6 +30,8 @@ var _winner: int = -1
 var _price: int = 0
 var _outcome: String = ""
 var _settled: bool = false
+var _profit_applied: bool = false
+var _payout_seats: Array[int] = []
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var _assist_seed: int = 0
 
@@ -90,6 +92,8 @@ func _begin_warehouse() -> void:
 	_price = 0
 	_outcome = ""
 	_settled = false
+	_profit_applied = false
+	_payout_seats.clear()
 	_begin_round()
 
 func _begin_round() -> void:
@@ -205,12 +209,14 @@ func tick(delta: float) -> void:
 		_begin_pending()
 		return
 	time = maxf(0.0, time - maxf(delta, 0.0))
+	if phase == "settlement":
+		_update_settlement()
 	if time > 0.0:
 		return
 	match phase:
 		"bidding": expire_round()
 		"pending": _resolve_round()
-		"round_result", "reveal": advance()
+		"round_result", "settlement", "reveal": advance()
 
 func expire_round() -> void:
 	if phase != "bidding":
@@ -229,13 +235,14 @@ func withdraw_player(seat: int) -> void:
 func advance() -> void:
 	if phase == "round_result":
 		if not _outcome.is_empty():
-			_settle()
-			phase = "reveal"
-			time = 15.0
+			phase = "settlement" if _winner >= 0 else "reveal"
+			time = rules.settlement_seconds if _winner >= 0 else 15.0
 		else:
 			round += 1
 			_begin_round()
-	elif phase == "reveal":
+	elif phase in ["settlement", "reveal"]:
+		if phase == "settlement":
+			_settle()
 		if warehouse + 1 < rules.warehouses:
 			warehouse += 1
 			_begin_warehouse()
@@ -243,39 +250,52 @@ func advance() -> void:
 			phase = "finished"
 			time = 0.0
 
-## Delay balance changes until opening so review snapshots cannot expose the sealed value.
+## Financial commits follow the host timeline, independently of client animation frames.
+func _update_settlement() -> void:
+	var progress: float = 1.0 - time / rules.settlement_seconds
+	if progress >= Rules.PROFIT_END:
+		_apply_profit()
+	if progress >= Rules.PAYOUT_END:
+		_settle()
+
+func _apply_profit() -> void:
+	if _profit_applied:
+		return
+	_profit_applied = true
+	var profit: int = _hidden_total() - _price
+	balances[_winner] += profit
+	if profit < 0:
+		_calculate_loss(-profit)
+
 func _settle() -> void:
 	if _settled:
 		return
+	_apply_profit()
 	_settled = true
-	if _winner >= 0:
-		var profit: int = _hidden_total() - _price
-		balances[_winner] += profit
-		if profit < 0:
-			_distribute_loss(-profit)
+	for seat: int in _payout_seats:
+		balances[seat] += _payouts[seat]
 
 ## Largest remainders conserve the entire loss pool in whole coins; zero bids receive nothing.
-func _distribute_loss(loss: int) -> void:
+func _calculate_loss(loss: int) -> void:
 	var total_weight: int = 0
-	var recipients: Array[int] = []
+	_payout_seats.clear()
 	for seat: int in names.size():
 		if seat != _winner and not _withdrawn[seat] and _bids[seat] > 0:
-			recipients.append(seat)
+			_payout_seats.append(seat)
 			total_weight += _bids[seat]
 	if total_weight == 0:
 		return
 	var remaining: int = loss
-	for seat: int in recipients:
+	for seat: int in _payout_seats:
 		_payouts[seat] = int(float(loss * _bids[seat]) / total_weight)
 		remaining -= _payouts[seat]
-	recipients.sort_custom(func(a: int, b: int) -> bool:
+	_payout_seats.sort_custom(func(a: int, b: int) -> bool:
 		var left: int = loss * _bids[a] % total_weight
 		var right: int = loss * _bids[b] % total_weight
 		return a < b if left == right else left > right)
 	for index: int in remaining:
-		_payouts[recipients[index]] += 1
-	for seat: int in recipients:
-		balances[seat] += _payouts[seat]
+		_payouts[_payout_seats[index]] += 1
+	_payout_seats.sort()
 
 ## One operation per round. Previously discovered information persists only in this warehouse.
 func use_assist(seat: int, kind: String) -> bool:
@@ -328,10 +348,15 @@ func snapshot(seat: int = -1) -> Dictionary:
 		"outcome": _outcome, "round_bids": [], "winner": -1, "price": 0,
 		"payouts": _payouts.duplicate(), "rankings": rankings(),
 		"reveal_elapsed": 15.0 - time if phase == "reveal" else 0.0,
+		"settlement_elapsed": rules.settlement_seconds - time if phase == "settlement" else 0.0,
+		"settlement_seconds": rules.settlement_seconds,
+		"payout_seats": _payout_seats.duplicate(),
 	}
-	if phase in ["round_result", "reveal", "finished"]:
+	if phase == "settlement":
+		result.reveal_elapsed = result.settlement_elapsed
+	if phase in ["round_result", "settlement", "reveal", "finished"]:
 		result.round_bids = _bids.duplicate()
-	if phase in ["reveal", "finished"]:
+	if phase in ["settlement", "reveal", "finished"]:
 		result.winner = _winner
 		result.price = _price
 		result.items = _appraisals[warehouse].items.duplicate(true)

@@ -1,0 +1,289 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/settlement_panel.gd" id="panel"]
+[ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/rolling_number.gd" id="roller"]
+
+[sub_resource type="StyleBoxFlat" id="Background"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+bg_color = Color(0.04, 0.08, 0.12, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_left = 12
+corner_radius_bottom_right = 12
+
+[node name="SettlementPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(450, 0)
+theme_override_styles/panel = SubResource("Background")
+script = ExtResource("panel")
+
+[node name="Content" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "成交结算"
+
+[node name="Winner" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "玩家成交"
+text_overrun_behavior = 3
+
+[node name="Stage" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.94, 0.69, 0.28, 1)
+text = "逐件估值"
+
+[node name="ItemBox" type="VBoxContainer" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ItemIcon" type="TextureRect" parent="Content/ItemBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 260)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ItemName" type="Label" parent="Content/ItemBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ItemCaption" type="Label" parent="Content/ItemBox"]
+layout_mode = 2
+text = "本件价格（含羁绊）"
+horizontal_alignment = 1
+
+[node name="ItemValue" type="Control" parent="Content/ItemBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+script = ExtResource("roller")
+font_size = 38
+
+[node name="TotalTitle" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "累计仓库价格"
+
+[node name="TotalValue" type="Control" parent="Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+script = ExtResource("roller")
+font_size = 44
+number_color = Color(0.94, 0.69, 0.28, 1)
+
+[node name="Formula" type="VBoxContainer" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="FormulaCaption" type="Label" parent="Content/Formula"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "仓库价格 − 成交价 = 盈亏"
+horizontal_alignment = 1
+
+[node name="Equation" type="HBoxContainer" parent="Content/Formula"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="WarehousePrice" type="Control" parent="Content/Formula/Equation"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("roller")
+font_size = 26
+
+[node name="FormulaOperator" type="Label" parent="Content/Formula/Equation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "−"
+
+[node name="SalePrice" type="Control" parent="Content/Formula/Equation"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("roller")
+font_size = 26
+
+[node name="Equals" type="Label" parent="Content/Formula/Equation"]
+layout_mode = 2
+text = "="
+
+[node name="ProfitValue" type="Control" parent="Content/Formula/Equation"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("roller")
+font_size = 26
+
+[node name="ProfitCaption" type="Label" parent="Content/Formula"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 2
+text = "盈亏"
+
+[node name="PayoutsBox" type="VBoxContainer" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PayoutTitle" type="Label" parent="Content/PayoutsBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "亏损价值分配"
+
+[node name="PayoutNote" type="Label" parent="Content/PayoutsBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 3
+text = "按成交轮报价权重分配"
+
+[node name="PayoutRows" type="VBoxContainer" parent="Content/PayoutsBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Player1" type="HBoxContainer" parent="Content/PayoutsBox/PayoutRows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Content/PayoutsBox/PayoutRows/Player1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 18
+
+[node name="Amount" type="Control" parent="Content/PayoutsBox/PayoutRows/Player1"]
+custom_minimum_size = Vector2(140, 42)
+layout_mode = 2
+script = ExtResource("roller")
+font_size = 25
+number_color = Color(0.37, 0.84, 0.65, 1)
+
+[node name="Player2" type="HBoxContainer" parent="Content/PayoutsBox/PayoutRows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Content/PayoutsBox/PayoutRows/Player2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 18
+
+[node name="Amount" type="Control" parent="Content/PayoutsBox/PayoutRows/Player2"]
+custom_minimum_size = Vector2(140, 42)
+layout_mode = 2
+script = ExtResource("roller")
+font_size = 25
+number_color = Color(0.37, 0.84, 0.65, 1)
+
+[node name="Player3" type="HBoxContainer" parent="Content/PayoutsBox/PayoutRows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Content/PayoutsBox/PayoutRows/Player3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 18
+
+[node name="Amount" type="Control" parent="Content/PayoutsBox/PayoutRows/Player3"]
+custom_minimum_size = Vector2(140, 42)
+layout_mode = 2
+script = ExtResource("roller")
+font_size = 25
+number_color = Color(0.37, 0.84, 0.65, 1)
+
+[node name="Player4" type="HBoxContainer" parent="Content/PayoutsBox/PayoutRows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Content/PayoutsBox/PayoutRows/Player4"]
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 18
+
+[node name="Amount" type="Control" parent="Content/PayoutsBox/PayoutRows/Player4"]
+custom_minimum_size = Vector2(140, 42)
+layout_mode = 2
+script = ExtResource("roller")
+font_size = 25
+number_color = Color(0.37, 0.84, 0.65, 1)
+
+[node name="Player5" type="HBoxContainer" parent="Content/PayoutsBox/PayoutRows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Content/PayoutsBox/PayoutRows/Player5"]
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 18
+
+[node name="Amount" type="Control" parent="Content/PayoutsBox/PayoutRows/Player5"]
+custom_minimum_size = Vector2(140, 42)
+layout_mode = 2
+script = ExtResource("roller")
+font_size = 25
+number_color = Color(0.37, 0.84, 0.65, 1)
+
+[node name="Player6" type="HBoxContainer" parent="Content/PayoutsBox/PayoutRows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Content/PayoutsBox/PayoutRows/Player6"]
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 18
+
+[node name="Amount" type="Control" parent="Content/PayoutsBox/PayoutRows/Player6"]
+custom_minimum_size = Vector2(140, 42)
+layout_mode = 2
+script = ExtResource("roller")
+font_size = 25
+number_color = Color(0.37, 0.84, 0.65, 1)
+
+[node name="Player7" type="HBoxContainer" parent="Content/PayoutsBox/PayoutRows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Content/PayoutsBox/PayoutRows/Player7"]
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 18
+
+[node name="Amount" type="Control" parent="Content/PayoutsBox/PayoutRows/Player7"]
+custom_minimum_size = Vector2(140, 42)
+layout_mode = 2
+script = ExtResource("roller")
+font_size = 25
+number_color = Color(0.37, 0.84, 0.65, 1)
+
+[node name="Spacer" type="Control" parent="Content"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2

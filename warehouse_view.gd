@@ -3,6 +3,7 @@ extends Control
 signal selection_changed(item: Dictionary)
 signal reveal_progress(revealed: int, total: int)
 
+const Rules: Script = preload("res://games/minigame/godot_party_default_auction_master/rules.gd")
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
 const GRID_COLUMNS: int = Catalog.GRID_COLUMNS
 const GRID_ROWS: int = Catalog.GRID_ROWS
@@ -19,6 +20,7 @@ var warehouse: int = -1
 var phase: String = ""
 var opened: bool = false
 var _grid_rows: int = GRID_ROWS
+var _settlement_item_seconds: float = 1.0
 var _reveal_elapsed: float = 0.0
 var _animation_time: float = 0.0
 var _revealed_at: Array[float] = []
@@ -43,12 +45,14 @@ func _load_item_textures() -> void:
 				_textures[kind] = texture
 
 func set_snapshot(snap: Dictionary, discoveries: Array = []) -> void:
-	var next_opened: bool = snap.phase in ["reveal", "finished"]
+	var next_opened: bool = snap.phase in ["settlement", "reveal", "finished"]
 	var visible_items: Array = snap.items.duplicate(true) if next_opened else discoveries.duplicate(true)
 	var changed: bool = int(snap.warehouse) != warehouse or next_opened != opened or visible_items != items
 	warehouse = snap.warehouse
 	phase = snap.phase
 	opened = next_opened
+	if phase == "settlement":
+		_settlement_item_seconds = float(snap.settlement_seconds) * Rules.ITEMS_END / visible_items.size()
 	if changed:
 		items = visible_items
 		layout.clear()
@@ -77,7 +81,18 @@ func set_snapshot(snap: Dictionary, discoveries: Array = []) -> void:
 
 ## Synchronize the host clock without exposing animation internals. Repeated/older clocks do not rewind.
 func set_reveal_elapsed(elapsed_seconds: float) -> void:
-	advance_reveal(maxf(0.0, elapsed_seconds - _animation_time))
+	if phase != "settlement":
+		advance_reveal(maxf(0.0, elapsed_seconds - _animation_time))
+		return
+	_animation_time = maxf(_animation_time, elapsed_seconds)
+	var target_count: int = mini(items.size(), 1 + int(_animation_time / _settlement_item_seconds))
+	while revealed_count < target_count:
+		_revealed_at[revealed_count] = revealed_count * _settlement_item_seconds
+		revealed_count += 1
+		reveal_progress.emit(revealed_count, items.size())
+	if selected_index < 0 and revealed_count > 0:
+		select_item(0)
+	queue_redraw()
 
 func advance_reveal(delta: float) -> void:
 	if not opened or delta <= 0.0:
