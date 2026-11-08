@@ -13,7 +13,7 @@ const PAYOUT_END: float = 0.95
 @export_range(5.0, 300.0) var round_seconds: float = 15.0
 @export_range(1.0, 60.0) var reveal_seconds: float = 10.0
 @export_range(10.0, 180.0) var settlement_seconds: float = 60.0
-@export var item_counts: Array[int] = [15, 30]
+@export var item_counts: Array[int] = [30, 60]
 @export var quality_weights: Array[int] = [120, 90, 60, 40, 20, 6, 2]
 
 func configure(settings: Dictionary) -> Error:
