@@ -176,7 +176,7 @@ msgid "outcome.final"
 msgstr "最终轮成交"
 
 msgid "rules.auction"
-msgstr "每仓最多 5 轮，默认一局 3 仓。报价以 1 为单位；全员封盘后进入 3 秒倒计时；竞价超时则直接揭示。统一公开报价和操作，默认停留 10 秒供核对，再进入下一轮或开仓。最后一轮前按 200% / 160% / 130% / 110% 提前成交；最终轮同价由先提交者成交。\n每人每轮任选一次辅助操作，即时生效且结果仅本人可见。成交亏损全额按其他在线玩家成交当轮报价加权奖励；赢家不重复扣款，权重全为 0 不分配。"
+msgstr "默认一局 3 仓，每仓最多 5 轮。仓前展示特殊规则与公共信息，可在报价面板重新查看；本仓说明优先于普通规则。报价单位 1，始终允许 0；底价或步步加价生效时，正报价必须满足显示的最低值。全员封盘后默认倒计时 3 秒，超时则直接揭示，默认停留 10 秒供核对。普通提前成交倍率默认 200% / 160% / 130% / 110%；快速成交规则默认 150% / 130% / 110% / 105%。最终轮同价由先提交者成交。\n每人每轮任选一次辅助操作，结果仅本人可见；公共发现所有人可见。成交亏损全额按其他在线玩家成交当轮报价加权奖励；赢家不重复扣款，权重全为 0 不分配。数值以房间配置和本仓说明为准。"
 
 msgid "phase.pending"
 msgstr "全员封盘 · 3 秒后公布"
@@ -309,3 +309,234 @@ msgstr "每轮揭示秒数"
 
 msgid "成交结算秒数"
 msgstr "成交结算秒数"
+
+msgid "基础规则"
+msgstr "基础规则"
+
+msgid "仓前与抽取"
+msgstr "仓前与抽取"
+
+msgid "特殊规则"
+msgstr "特殊规则"
+
+msgid "公共信息"
+msgstr "公共信息"
+
+msgid "仓前展示秒数（0 跳过）"
+msgstr "仓前展示秒数（0 跳过）"
+
+msgid "起拍底价（允许 0 或不低于底价）"
+msgstr "起拍底价（允许 0 或不低于底价）"
+
+msgid "步步加价：比本人上次正报价至少增加"
+msgstr "步步加价：比本人上次正报价至少增加"
+
+msgid "耐心竞拍：禁止提前成交的轮数"
+msgstr "耐心竞拍：禁止提前成交的轮数"
+
+msgid "增值目标：高品质参考价百分比"
+msgstr "增值目标：高品质参考价百分比"
+
+msgid "冷门标签贬值百分比"
+msgstr "冷门标签贬值百分比"
+
+msgid "小件增值：最多格数"
+msgstr "小件增值：最多格数"
+
+msgid "大件增值：最少格数"
+msgstr "大件增值：最少格数"
+
+msgid "普货增值：最高品质序号（0–6）"
+msgstr "普货增值：最高品质序号（0–6）"
+
+msgid "品质增值：随机品质最低序号"
+msgstr "品质增值：随机品质最低序号"
+
+msgid "品质增值：随机品质最高序号"
+msgstr "品质增值：随机品质最高序号"
+
+msgid "成批增值：同款最低件数"
+msgstr "成批增值：同款最低件数"
+
+msgid "跨界增值：最低标签数"
+msgstr "跨界增值：最低标签数"
+
+msgid "工具加倍：辅助操作数量倍率"
+msgstr "工具加倍：辅助操作数量倍率"
+
+msgid "区域扫描：正方形边长（格）"
+msgstr "区域扫描：正方形边长（格）"
+
+msgid "大件线索：轮廓和品质揭示件数"
+msgstr "大件线索：轮廓和品质揭示件数"
+
+msgid "价格线索：仅价格揭示件数"
+msgstr "价格线索：仅价格揭示件数"
+
+msgid "估价区间宽度"
+msgstr "估价区间宽度"
+
+msgid "珍品线索：最高价物品件数"
+msgstr "珍品线索：最高价物品件数"
+
+msgid "珍品线索：每件揭示标签数"
+msgstr "珍品线索：每件揭示标签数"
+
+msgid "廉价统计：低于此价格"
+msgstr "廉价统计：低于此价格"
+
+msgid "重复货物：完整揭示的同款组数"
+msgstr "重复货物：完整揭示的同款组数"
+
+msgid "羁绊线索：公开已激活组数"
+msgstr "羁绊线索：公开已激活组数"
+
+msgid "集中度：最高价值物品件数"
+msgstr "集中度：最高价值物品件数"
+
+msgid "集中度：占比区间宽度（百分点）"
+msgstr "集中度：占比区间宽度（百分点）"
+
+msgid "全部确认后的倒计时"
+msgstr "全部确认后的倒计时"
+
+msgid "流拍开仓秒数"
+msgstr "流拍开仓秒数"
+
+msgid "特殊规则数量范围"
+msgstr "特殊规则数量范围"
+
+msgid "最少"
+msgstr "最少"
+
+msgid "最多"
+msgstr "最多"
+
+msgid "公共信息数量范围"
+msgstr "公共信息数量范围"
+
+msgid "普通提前成交倍率（百分比）"
+msgstr "普通提前成交倍率（百分比）"
+
+msgid "第 1 轮"
+msgstr "第 1 轮"
+
+msgid "第 2 轮"
+msgstr "第 2 轮"
+
+msgid "第 3 轮"
+msgstr "第 3 轮"
+
+msgid "第 4 轮"
+msgstr "第 4 轮"
+
+msgid "快速成交倍率（百分比）"
+msgstr "快速成交倍率（百分比）"
+
+msgid "每轮辅助揭示件数"
+msgstr "每轮辅助揭示件数"
+
+msgid "完整信息"
+msgstr "完整信息"
+
+msgid "轮廓"
+msgstr "轮廓"
+
+msgid "品质"
+msgstr "品质"
+
+msgid "标签"
+msgstr "标签"
+
+msgid "公共揭示件数"
+msgstr "公共揭示件数"
+
+msgid "特殊规则抽取权重"
+msgstr "特殊规则抽取权重"
+
+msgid "起拍底价"
+msgstr "起拍底价"
+
+msgid "步步加价"
+msgstr "步步加价"
+
+msgid "耐心竞拍"
+msgstr "耐心竞拍"
+
+msgid "快速成交"
+msgstr "快速成交"
+
+msgid "热门标签"
+msgstr "热门标签"
+
+msgid "冷门标签"
+msgstr "冷门标签"
+
+msgid "小件增值"
+msgstr "小件增值"
+
+msgid "大件增值"
+msgstr "大件增值"
+
+msgid "普货增值"
+msgstr "普货增值"
+
+msgid "品质增值"
+msgstr "品质增值"
+
+msgid "孤品增值"
+msgstr "孤品增值"
+
+msgid "成批增值"
+msgstr "成批增值"
+
+msgid "跨界增值"
+msgstr "跨界增值"
+
+msgid "工具加倍"
+msgstr "工具加倍"
+
+msgid "公共信息抽取权重"
+msgstr "公共信息抽取权重"
+
+msgid "区域扫描"
+msgstr "区域扫描"
+
+msgid "货物数量"
+msgstr "货物数量"
+
+msgid "占格统计"
+msgstr "占格统计"
+
+msgid "品质统计"
+msgstr "品质统计"
+
+msgid "标签统计"
+msgstr "标签统计"
+
+msgid "大件线索"
+msgstr "大件线索"
+
+msgid "价格线索"
+msgstr "价格线索"
+
+msgid "估价区间"
+msgstr "估价区间"
+
+msgid "珍品线索"
+msgstr "珍品线索"
+
+msgid "廉价统计"
+msgstr "廉价统计"
+
+msgid "重复货物"
+msgstr "重复货物"
+
+msgid "羁绊线索"
+msgstr "羁绊线索"
+
+msgid "价值集中度"
+msgstr "价值集中度"
+
+msgid "缺席线索"
+msgstr "缺席线索"

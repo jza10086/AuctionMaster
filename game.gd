@@ -4,12 +4,17 @@ const WarehouseView: Script = preload("res://games/minigame/godot_party_default_
 const Session: Script = preload("res://games/minigame/godot_party_default_auction_master/session.gd")
 const PlayerCard: PackedScene = preload("res://games/minigame/godot_party_default_auction_master/player_card.tscn")
 const SettlementPanel: Script = preload("res://games/minigame/godot_party_default_auction_master/settlement_panel.gd")
+const ConditionsPanel: Script = preload("res://games/minigame/godot_party_default_auction_master/conditions_panel.gd")
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
 @onready var warehouse_view: WarehouseView = %Warehouse
 @onready var item_details: Label = %ItemDetails
 @onready var submit: Button = %Submit
 @onready var settlement_panel: SettlementPanel = %SettlementPanel
 @onready var operations: PanelContainer = %Operations
+@onready var conditions_panel: ConditionsPanel = %ConditionsPanel
+@onready var bid_minimum: Label = %BidMinimum
+var reviewing_conditions: bool = false
+var review_warehouse: int = -1
 @onready var warehouse_scroll: ScrollContainer = %WarehouseScroll
 @onready var quote: LineEdit = %Quote
 @onready var balance_label: Label = %Balance
@@ -31,6 +36,14 @@ var settlement_item: int = -1
 
 func build_game() -> void:
 	warehouse_view.selection_changed.connect(_show_item)
+	%ReviewConditions.pressed.connect(func() -> void:
+		if not api.input.input_blocked:
+			reviewing_conditions = true
+			render_game())
+	conditions_panel.close_requested.connect(func() -> void:
+		if not api.input.input_blocked:
+			reviewing_conditions = false
+			render_game())
 	quote.text_changed.connect(_on_quote_changed)
 	quote.focus_exited.connect(_format_quote)
 	quote.text_submitted.connect(func(_text: String) -> void: _format_quote())
@@ -88,7 +101,7 @@ func _on_quote_changed(text: String) -> void:
 	quote_valid = digits.is_valid_int()
 	if quote_valid:
 		var amount: int = digits.to_int()
-		quote_valid = amount >= 0 and amount <= int(private_view.balances[seat_of(local_id)])
+		quote_valid = amount >= 0 and amount <= int(private_view.balances[seat_of(local_id)]) and (amount == 0 or amount >= int(private_view.minimum_bid))
 		if quote_valid:
 			draft_bid = amount
 	if quote_valid:
@@ -105,7 +118,9 @@ func _show_quote() -> void:
 	quote_valid = true
 	quote.remove_theme_color_override("font_color")
 	_format_quote()
-	submit.disabled = not _can_bid()
+	if _can_bid():
+		_on_quote_changed(quote.text)
+	submit.disabled = not _can_bid() or not quote_valid
 
 func _can_bid() -> bool:
 	return running and not local_id.is_empty() and not private_view.is_empty() and private_view.phase == "bidding" and not private_view.bidlocked
@@ -199,12 +214,19 @@ func render_game() -> void:
 	var snap: Dictionary = private_view if not local_id.is_empty() and private_revision >= int(view.get("_sequence", 0)) else view
 	if snap.is_empty():
 		return
-	var intel: Array = private_view.intel if not local_id.is_empty() and not private_view.is_empty() and private_view.warehouse == snap.warehouse else []
+	var intel: Array = private_view.intel if not local_id.is_empty() and not private_view.is_empty() and private_view.warehouse == snap.warehouse else snap.public_intel
 	warehouse_view.set_snapshot(snap, intel)
 	warehouse_view.set_reveal_elapsed(float(snap.reveal_elapsed))
 	var settling: bool = snap.phase == "settlement"
-	operations.visible = not settling
+	if review_warehouse != int(snap.warehouse):
+		review_warehouse = int(snap.warehouse)
+		reviewing_conditions = false
+	conditions_panel.visible = not settling and (snap.phase == "briefing" or reviewing_conditions)
+	if conditions_panel.visible:
+		conditions_panel.set_snapshot(snap)
+	operations.visible = not settling and not conditions_panel.visible
 	settlement_panel.visible = settling
+	bid_minimum.text = "本轮可报 0，或至少 " + _format_coins(int(snap.minimum_bid)) if int(snap.minimum_bid) > 1 else ""
 	if settling:
 		settlement_panel.set_snapshot(snap)
 		var index: int = warehouse_view.revealed_count - 1
@@ -262,7 +284,10 @@ func _format_coins(value: int) -> String:
 	return ("−" if value < 0 else "") + result
 
 func _show_assist_description(kind: String) -> void:
-	assist_description.text = api.i18n.text(StringName("assist.description." + kind))
+	if private_view.is_empty():
+		return
+	var index: int = Session.ASSISTS.find(kind)
+	assist_description.text = "揭示 %s 件物品的%s" % [_format_coins(int(private_view.assist_counts[index])), ["完整信息", "轮廓", "品质", "羁绊标签"][index]]
 
 func _clear_assist_description() -> void:
 	assist_description.text = ""

@@ -14,9 +14,21 @@ static func schema() -> Dictionary:
 		"item_counts": {"type": "array", "default": defaults.item_counts, "title": "每仓物品数量范围", "control": "numbers", "min_items": 2, "max_items": 2, "ordered": true, "labels": ["最少物品", "最多物品"], "items": {"type": "int", "min": 1, "max": 100}},
 		"quality_weights": {"type": "array", "default": defaults.quality_weights, "title": "物品品质相对权重", "description": "先按品质权重抽取，再在该品质物品中等概率抽取；0 表示不出现，至少一档大于 0。", "control": "numbers", "min_items": 7, "max_items": 7, "labels": ["普通", "优良", "稀有", "珍贵", "典藏", "传世", "至臻"], "items": {"type": "int", "min": 0, "max": 10000}},
 	}
-	var children: Array[Dictionary] = []
+	fields.merge(Rules.Conditions.FIELDS.duplicate(true))
+	var groups: Array[Dictionary] = [
+		{"id": "room", "title": "基础规则", "children": []},
+		{"id": "selection", "title": "仓前与抽取", "children": []},
+		{"id": "special", "title": "特殊规则", "children": []},
+		{"id": "public", "title": "公共信息", "children": []}]
 	for key: String in fields:
 		fields[key]["audience"] = "room"
 		fields[key]["apply"] = "next_round"
-		children.append({"field": key})
-	return {"schema_format": 3, "settings_version": 1, "fields": fields, "layout": [{"id": "room", "title": "游戏规则", "expanded": true, "children": children}]}
+		var group: int = 0
+		if key in ["briefing_seconds", "special_counts", "public_counts", "special_weights", "public_weights"]:
+			group = 1
+		elif key in ["reserve_price", "raise_step", "patient_rounds", "fast_percent", "uplift_target", "discount_percent", "small_cells", "large_cells", "common_quality", "quality_min", "quality_max", "bulk_count", "cross_tags", "assist_multiplier"]:
+			group = 2
+		elif key in ["public_reveals", "region_cells", "largest_count", "price_count", "price_band", "highest_count", "highest_tags", "cheap_price", "duplicate_kinds", "synergy_groups", "top_count", "share_band"]:
+			group = 3
+		groups[group].children.append({"field": key})
+	return {"schema_format": 3, "settings_version": 1, "fields": fields, "layout": groups}

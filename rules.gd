@@ -1,8 +1,8 @@
 extends Resource
 ## Host room rules. Schema reads these defaults; runtime receives the host snapshot.
-const EARLY_WIN_PERCENT: Array[int] = [200, 160, 130, 110]
+const Conditions: Script = preload("res://games/minigame/godot_party_default_auction_master/warehouse_conditions.gd")
 const BID_UNIT: int = 1
-const REVEAL_DELAY: float = 3.0
+@export var conditions: Conditions = Conditions.new()
 const ITEMS_END: float = 0.5
 const TOTAL_END: float = 0.6
 const PROFIT_END: float = 0.75
@@ -36,4 +36,4 @@ func configure(settings: Dictionary) -> Error:
 		if weight < 0 or weight > 10000:
 			return ERR_INVALID_PARAMETER
 		total += weight
-	return OK if total > 0 else ERR_INVALID_PARAMETER
+	return conditions.configure(settings) if total > 0 else ERR_INVALID_PARAMETER

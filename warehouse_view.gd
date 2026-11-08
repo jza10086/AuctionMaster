@@ -335,6 +335,8 @@ func describe_item(item: Dictionary) -> String:
 	if item.has("name"):
 		return TEXT.get_message(&"warehouse.tooltip").format({"name": item.name, "quality": Catalog.QUALITY_NAMES[int(item.quality)], "color": Catalog.QUALITY_COLOR_NAMES[int(item.quality)], "width": item.size[0], "height": item.size[1], "value": _format_value(int(item.value)), "tags": " / ".join(item.tags)})
 	var lines: PackedStringArray = [TEXT.get_message(&"intel.partial")]
+	if item.has("value"):
+		lines.append("调整后基础价格：" + _format_value(int(item.value)))
 	if item.has("outline"):
 		lines.append(TEXT.get_message(&"intel.outline").format({"width": item.rect[2], "height": item.rect[3]}))
 	if item.has("quality"):
