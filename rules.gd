@@ -1,7 +1,7 @@
 extends Resource
 ## Host room rules. Schema reads these defaults; runtime receives the host snapshot.
 const EARLY_WIN_PERCENT: Array[int] = [200, 160, 130, 110]
-const BID_UNIT: int = 100
+const BID_UNIT: int = 1
 const REVEAL_DELAY: float = 3.0
 const ITEMS_END: float = 0.5
 const TOTAL_END: float = 0.6

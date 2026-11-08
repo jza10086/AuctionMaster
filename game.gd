@@ -70,7 +70,7 @@ func start_game() -> void:
 func _adjust_bid(amount: int) -> void:
 	if api.input.input_blocked or not _can_bid():
 		return
-	var maximum: int = int(private_view.balances[seat_of(local_id)]) / 100 * 100
+	var maximum: int = int(private_view.balances[seat_of(local_id)])
 	draft_bid = clampi(draft_bid + amount, 0, maximum)
 	_show_quote()
 
@@ -80,7 +80,7 @@ func _reset_bid() -> void:
 	draft_bid = 0
 	_show_quote()
 
-## Keep incomplete input editable; only valid whole-hundred bids can be confirmed.
+## Keep incomplete input editable; only whole-number bids within the balance can be confirmed.
 func _on_quote_changed(text: String) -> void:
 	if api.input.input_blocked or not _can_bid():
 		return
@@ -88,7 +88,7 @@ func _on_quote_changed(text: String) -> void:
 	quote_valid = digits.is_valid_int()
 	if quote_valid:
 		var amount: int = digits.to_int()
-		quote_valid = amount >= 0 and amount % 100 == 0 and amount <= int(private_view.balances[seat_of(local_id)])
+		quote_valid = amount >= 0 and amount <= int(private_view.balances[seat_of(local_id)])
 		if quote_valid:
 			draft_bid = amount
 	if quote_valid:
