@@ -3,6 +3,7 @@ extends "res://games/protocols/godot_party_default_protocol/ranked_round.gd"
 const WarehouseView: Script = preload("res://games/minigame/godot_party_default_auction_master/warehouse_view.gd")
 const Session: Script = preload("res://games/minigame/godot_party_default_auction_master/session.gd")
 const CatalogItem: PackedScene = preload("res://games/minigame/godot_party_default_auction_master/catalog_item.tscn")
+const PlayerCard: PackedScene = preload("res://games/minigame/godot_party_default_auction_master/player_card.tscn")
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
 @onready var warehouse_view: WarehouseView = %Warehouse
 @onready var item_details: Label = %ItemDetails
@@ -11,11 +12,13 @@ const Catalog: Script = preload("res://games/minigame/godot_party_default_auctio
 @onready var submit: Button = %Submit
 @onready var quote: Label = %Quote
 @onready var balance_label: Label = %Balance
-@onready var history_label: RichTextLabel = %History
-@onready var private_label: Label = %PrivateNote
-@onready var clues: Label = %Clues
+@onready var player_cards: VBoxContainer = %PlayerCards
+@onready var assist_description: Label = %AssistDescription
+@onready var countdown: Label = %Countdown
+@onready var round_indicator: Label = %RoundIndicator
+var assist_colors: Dictionary[String, Color] = {}
 @onready var bid_buttons: GridContainer = %BidButtons
-@onready var assist_buttons: VBoxContainer = %AssistButtons
+@onready var assist_buttons: HBoxContainer = %AssistButtons
 var session: Session = Session.new()
 var private_view: Dictionary = {}
 var public_revision: int = 0
@@ -31,18 +34,23 @@ func build_game() -> void:
 	%Zero.pressed.connect(_reset_bid)
 	for button: Button in assist_buttons.get_children():
 		var kind: String = button.get_meta("assist")
-		button.text = api.i18n.text(StringName("assist." + kind))
+		assist_colors[kind] = button.get_node("Swatch").color
+		button.mouse_entered.connect(_show_assist_description.bind(kind))
+		button.mouse_exited.connect(_clear_assist_description)
+		button.focus_entered.connect(_show_assist_description.bind(kind))
+		button.focus_exited.connect(_clear_assist_description)
 		button.pressed.connect(_act.bind("assist", kind))
 	%OpenCatalog.pressed.connect(_open_catalog)
 	%CatalogRules.text = api.i18n.text(&"rules.auction") + "\n" + Catalog.RULE_TEXT
 	%OpenCatalog.text = api.i18n.text(&"hud.catalog_button")
 	%Zero.text = api.i18n.text(&"bid.zero")
-	%HistoryTitle.text = api.i18n.text(&"history.title")
 	%AssistTitle.text = api.i18n.text(&"assist.title")
 	%BidTitle.text = api.i18n.text(&"bid.title")
 	submit.text = api.i18n.text(&"hud.submit")
 	encyclopedia.title = api.i18n.text(&"catalog.title")
 	encyclopedia.ok_button_text = api.i18n.text(&"catalog.close")
+	for player: Dictionary in players:
+		player_cards.add_child(PlayerCard.instantiate())
 	_show_item({})
 
 func start_game() -> void:
@@ -178,36 +186,42 @@ func render_game() -> void:
 	submit.disabled = not can_bid
 	for button: Button in assist_buttons.get_children():
 		button.disabled = not running or local_id.is_empty() or private_view.is_empty() or not private_view.assist_available
-	private_label.text = api.i18n.text(&"assist.hint") if not local_id.is_empty() else api.i18n.text(&"hud.spectating")
 	valuation.text = api.i18n.text(&"hud.valuation", {"base": snap.base_value, "bonus": snap.bonus_value, "total": snap.total_value}) if snap.phase in ["reveal", "finished"] else api.i18n.text(&"hud.sealed")
-	status.text = api.i18n.text(&"hud.clock", {"current": int(snap.warehouse) + 1, "total": snap.warehouses_total, "round": api.i18n.text(&"hud.regular_round", {"number": snap.round, "total": snap.rounds_total}), "time": ceili(snap.time), "phase": api.i18n.text(StringName("phase." + str(snap.phase)))})
-	if players.size() == 1:
-		status.text = api.i18n.text(&"hud.solo_status", {"mode": api.i18n.text(&"hud.solo"), "status": status.text})
-	var lines: PackedStringArray = []
-	for seat: int in players.size():
-		var state_text: String = api.i18n.text(&"hud.withdrawn") if snap.withdrawn[seat] else api.i18n.text(&"hud.bid_locked" if snap.locked[seat] else &"hud.bid_thinking")
-		lines.append(api.i18n.text(&"history.current", {"name": players[seat].name, "coins": snap.balances[seat], "state": state_text, "assist": _assist_name(snap.assists[seat])}))
-	var records: Array = snap.history
-	for index: int in range(records.size() - 1, -1, -1):
-		var record: Dictionary = records[index]
-		lines.append("\n" + api.i18n.text(&"history.round", {"warehouse": int(record.warehouse) + 1, "round": record.round}))
-		for seat: int in players.size():
-			lines.append(api.i18n.text(&"history.bid", {"name": players[seat].name, "bid": record.bids[seat], "assist": _assist_name(record.assists[seat])}))
-	var history_text: String = "\n".join(lines)
-	if history_label.text != history_text:
-		history_label.text = history_text
-	clues.text = "\n".join(snap.clues)
-	if snap.phase in ["reveal", "finished"]:
-		clues.text = api.i18n.text(&"hud.unsold") if int(snap.winner) < 0 else api.i18n.text(&"hud.sale", {"player": players[int(snap.winner)].name, "price": snap.price, "total": snap.total_value})
-		if int(snap.winner) >= 0:
-			clues.text += "\n" + api.i18n.text(&"hud.sale_profit", {"reason": api.i18n.text(StringName("outcome." + str(snap.outcome))), "profit": int(snap.total_value) - int(snap.price)})
-		for seat: int in players.size():
-			if snap.payouts[seat] > 0:
-				clues.text += "\n" + api.i18n.text(&"sale.payout", {"name": players[seat].name, "amount": snap.payouts[seat]})
-	footer.text = api.i18n.text(&"hud.reveal_rule") if snap.phase in ["reveal", "finished"] else (api.i18n.text(&"hud.early_rule", {"percent": snap.early_percent}) if int(snap.early_percent) > 0 else api.i18n.text(&"hud.final_rule"))
+	countdown.text = str(ceili(snap.time))
+	countdown.add_theme_color_override("font_color", Color("f06b72") if float(snap.time) <= 10.0 else Color("f4f1e8"))
+	round_indicator.text = api.i18n.text(&"hud.round_indicator", {"current": snap.round, "total": snap.rounds_total})
+	_render_player_cards(snap)
 
-func _assist_name(kind: String) -> String:
-	return api.i18n.text(&"assist.none" if kind.is_empty() else StringName("assist.short." + kind))
+func _render_player_cards(snap: Dictionary) -> void:
+	for seat: int in players.size():
+		var amount: String = "—"
+		var kinds: Array[String] = []
+		kinds.resize(int(snap.rounds_total))
+		kinds.fill("")
+		for record: Dictionary in snap.history:
+			if record.warehouse == snap.warehouse:
+				amount = _format_coins(int(record.bids[seat]))
+				kinds[int(record.round) - 1] = record.assists[seat]
+		kinds[int(snap.round) - 1] = snap.assists[seat]
+		var colors: Array[Color] = []
+		for kind: String in kinds:
+			colors.append(Color.TRANSPARENT if kind.is_empty() else assist_colors[kind])
+		player_cards.get_child(seat).set_view(players[seat].name, amount, colors, snap.withdrawn[seat])
+
+func _format_coins(value: int) -> String:
+	var digits: String = str(value)
+	var result: String = ""
+	for index: int in digits.length():
+		if index > 0 and (digits.length() - index) % 3 == 0:
+			result += ","
+		result += digits[index]
+	return result
+
+func _show_assist_description(kind: String) -> void:
+	assist_description.text = api.i18n.text(StringName("assist.description." + kind))
+
+func _clear_assist_description() -> void:
+	assist_description.text = ""
 
 func player_left(id: String) -> void:
 	session.withdraw_player(seat_of(id))

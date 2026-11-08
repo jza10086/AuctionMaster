@@ -15,6 +15,18 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
+[sub_resource type="StyleBoxFlat" id="ClockFrame"]
+bg_color = Color(0.035, 0.066, 0.095, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.45, 0.56, 0.62, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_left = 12
+corner_radius_bottom_right = 12
+
 [node name="Game" unique_id=2091912236 instance=ExtResource("round")]
 layout_mode = 3
 anchors_preset = 15
@@ -26,37 +38,20 @@ script = ExtResource("1")
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 28.0
-offset_top = 132.0
+offset_top = 120.0
 offset_right = -28.0
-offset_bottom = -100.0
+offset_bottom = -28.0
 mouse_filter = 2
 
 [node name="Columns" type="HBoxContainer" parent="GameCanvas/Stage/Board"]
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="HistoryPanel" type="PanelContainer" parent="GameCanvas/Stage/Board/Columns"]
+[node name="PlayerCards" type="VBoxContainer" parent="GameCanvas/Stage/Board/Columns"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(370, 0)
 layout_mode = 2
-theme_override_styles/panel = SubResource("CatalogPanel")
-
-[node name="HistoryContent" type="VBoxContainer" parent="GameCanvas/Stage/Board/Columns/HistoryPanel"]
-layout_mode = 2
-theme_override_constants/separation = 14
-
-[node name="HistoryTitle" type="Label" parent="GameCanvas/Stage/Board/Columns/HistoryPanel/HistoryContent"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "竞拍记录"
-theme_override_font_sizes/font_size = 22
-
-[node name="History" type="RichTextLabel" parent="GameCanvas/Stage/Board/Columns/HistoryPanel/HistoryContent"]
-unique_name_in_owner = true
-layout_mode = 2
-custom_minimum_size = Vector2(322, 0)
-size_flags_vertical = 3
-theme_override_font_sizes/normal_font_size = 18
-scroll_following = false
+theme_override_constants/separation = 10
 
 [node name="Inventory" type="VBoxContainer" parent="GameCanvas/Stage/Board/Columns"]
 layout_mode = 2
@@ -234,57 +229,99 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "辅助操作 · 每轮任选一次"
 
-[node name="AssistButtons" type="VBoxContainer" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+[node name="AssistButtons" type="HBoxContainer" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation = 12
 
 [node name="full" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 38)
-theme_override_font_sizes/font_size = 18
-text = "发现 1 件物品完整信息"
+custom_minimum_size = Vector2(80, 80)
+size_flags_horizontal = 3
 metadata/assist = "full"
+
+[node name="Swatch" type="ColorRect" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons/full"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0.94, 0.69, 0.28, 1)
 
 [node name="outline" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 38)
-theme_override_font_sizes/font_size = 18
-text = "显示 3 件物品轮廓"
+custom_minimum_size = Vector2(80, 80)
+size_flags_horizontal = 3
 metadata/assist = "outline"
+
+[node name="Swatch" type="ColorRect" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons/outline"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0.25, 0.7, 0.84, 1)
 
 [node name="quality" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 38)
-theme_override_font_sizes/font_size = 18
-text = "显示 2 件物品品质"
+custom_minimum_size = Vector2(80, 80)
+size_flags_horizontal = 3
 metadata/assist = "quality"
+
+[node name="Swatch" type="ColorRect" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons/quality"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0.66, 0.48, 0.89, 1)
 
 [node name="tags" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 38)
-theme_override_font_sizes/font_size = 18
-text = "显示 4 件物品羁绊"
+custom_minimum_size = Vector2(80, 80)
+size_flags_horizontal = 3
 metadata/assist = "tags"
 
-[node name="PrivateNote" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-autowrap_mode = 3
+[node name="Swatch" type="ColorRect" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons/tags"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0.32, 0.77, 0.57, 1)
 
-[node name="ClueScroll" type="ScrollContainer" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+[node name="AssistDescription" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(0, 72)
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="Clues" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/ClueScroll"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 20
 autowrap_mode = 3
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="OpenCatalog" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
 unique_name_in_owner = true
@@ -293,14 +330,47 @@ custom_minimum_size = Vector2(0, 36)
 theme_override_font_sizes/font_size = 18
 text = "物资图鉴 / 羁绊规则"
 
-[node name="Heading" parent="OverlayHUD/Standard/Counters" index="0"]
-text = "竞拍大师 · 密封报价"
+[node name="Counters" parent="OverlayHUD/Standard" index="0"]
+visible = false
 
 [node name="Footer" parent="OverlayHUD/Standard" index="1"]
-text = "最小报价单位 100 · Esc：菜单"
+visible = false
 
 [node name="ToggleDetails" parent="OverlayHUD/Standard" index="3"]
 visible = false
+
+[node name="ClockFrame" type="PanelContainer" parent="OverlayHUD/Standard"]
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_right = 64.0
+offset_top = 24.0
+offset_bottom = 96.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("ClockFrame")
+
+[node name="Countdown" type="Label" parent="OverlayHUD/Standard/ClockFrame"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 40
+text = "15"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RoundIndicator" type="Label" parent="OverlayHUD/Standard"]
+unique_name_in_owner = true
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -208.0
+offset_right = -28.0
+offset_top = 24.0
+offset_bottom = 96.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 2
+vertical_alignment = 1
+text = "1/5轮"
 
 [node name="Encyclopedia" type="AcceptDialog" parent="." index="2" unique_id=275228206]
 unique_name_in_owner = true

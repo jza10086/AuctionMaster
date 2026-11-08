@@ -7,6 +7,21 @@ msgstr ""
 msgid "hud.solo"
 msgstr "单人竞拍测试"
 
+msgid "hud.round_indicator"
+msgstr "{current}/{total}轮"
+
+msgid "assist.description.full"
+msgstr "揭示一件物品的完整信息"
+
+msgid "assist.description.outline"
+msgstr "揭示三件物品的轮廓"
+
+msgid "assist.description.quality"
+msgstr "揭示两件物品的品质"
+
+msgid "assist.description.tags"
+msgstr "揭示四件物品的羁绊标签"
+
 msgid "phase.bidding"
 msgstr "密封报价"
 
