@@ -34,7 +34,7 @@ func build_game() -> void:
 	%Zero.pressed.connect(_reset_bid)
 	for button: Button in assist_buttons.get_children():
 		var kind: String = button.get_meta("assist")
-		assist_colors[kind] = button.get_node("Swatch").color
+		assist_colors[kind] = button.get_node("Swatch").self_modulate
 		button.mouse_entered.connect(_show_assist_description.bind(kind))
 		button.mouse_exited.connect(_clear_assist_description)
 		button.focus_entered.connect(_show_assist_description.bind(kind))
@@ -229,8 +229,9 @@ func player_left(id: String) -> void:
 func _show_item(item: Dictionary) -> void:
 	if item_details == null:
 		return
+	item_details.visible = not item.is_empty()
 	if item.is_empty():
-		item_details.text = api.i18n.text(&"hud.item_hint")
+		item_details.text = ""
 	elif item.has("effective_value"):
 		item_details.text = api.i18n.text(&"hud.item_details", {"name": item.name, "quality": _quality_caption(int(item.quality)), "width": item.size[0], "height": item.size[1], "tags": _tag_caption(item, &"hud.premium_tags"), "base": item.value, "bonus": item.bonus_value, "percent": item.bonus_percent, "total": item.effective_value})
 	else:

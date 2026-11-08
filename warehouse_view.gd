@@ -3,11 +3,11 @@ extends Control
 signal selection_changed(item: Dictionary)
 signal reveal_progress(revealed: int, total: int)
 
-const GRID_COLUMNS: int = 12
-const GRID_ROWS: int = 14
-const GRID_SIZE: Vector2 = Vector2(576.0, 672.0)
-const REVEAL_SECONDS: float = 0.12
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
+const GRID_COLUMNS: int = Catalog.GRID_COLUMNS
+const GRID_ROWS: int = Catalog.GRID_ROWS
+const GRID_SIZE: Vector2 = Vector2(GRID_COLUMNS * 48.0, GRID_ROWS * 48.0)
+const REVEAL_SECONDS: float = 0.12
 const TEXT: Translation = preload("res://games/minigame/godot_party_default_auction_master/i18n/zh_Hans.po")
 # Public, read-only-by-convention presentation state for integration and QA.
 var items: Array = []

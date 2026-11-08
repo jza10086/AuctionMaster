@@ -13,5 +13,5 @@ func set_view(player_name: String, amount: String, colors: Array[Color], withdra
 		var slot: PanelContainer = operations.get_child(index)
 		slot.visible = index < colors.size()
 		if slot.visible:
-			var swatch: ColorRect = slot.get_node("Swatch")
-			swatch.color = colors[index]
+			var swatch: Panel = slot.get_node("Swatch")
+			swatch.self_modulate = colors[index]

@@ -27,6 +27,13 @@ corner_radius_top_right = 12
 corner_radius_bottom_left = 12
 corner_radius_bottom_right = 12
 
+[sub_resource type="StyleBoxFlat" id="SwatchStyle"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_left = 8
+corner_radius_bottom_right = 8
+
 [node name="Game" unique_id=2091912236 instance=ExtResource("round")]
 layout_mode = 3
 anchors_preset = 15
@@ -75,18 +82,19 @@ horizontal_scroll_mode = 0
 
 [node name="Warehouse" type="Control" parent="GameCanvas/Stage/Board/Columns/Inventory/WarehouseScroll"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(576, 672)
+custom_minimum_size = Vector2(960, 960)
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("warehouse")
 
 [node name="ItemDetails" type="Label" parent="GameCanvas/Stage/Board/Columns/Inventory"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(600, 90)
+custom_minimum_size = Vector2(960, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 autowrap_mode = 3
-text = "悬停或点击已发现物品查看信息"
+visible = false
+text = ""
 
 [node name="Operations" type="PanelContainer" parent="GameCanvas/Stage/Board/Columns"]
 custom_minimum_size = Vector2(450, 0)
@@ -240,7 +248,7 @@ custom_minimum_size = Vector2(80, 80)
 size_flags_horizontal = 3
 metadata/assist = "full"
 
-[node name="Swatch" type="ColorRect" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons/full"]
+[node name="Swatch" type="Panel" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons/full"]
 layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
@@ -251,7 +259,8 @@ offset_top = -24.0
 offset_right = 24.0
 offset_bottom = 24.0
 mouse_filter = 2
-color = Color(0.94, 0.69, 0.28, 1)
+self_modulate = Color(0.94, 0.69, 0.28, 1)
+theme_override_styles/panel = SubResource("SwatchStyle")
 
 [node name="outline" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons"]
 layout_mode = 2
@@ -259,7 +268,7 @@ custom_minimum_size = Vector2(80, 80)
 size_flags_horizontal = 3
 metadata/assist = "outline"
 
-[node name="Swatch" type="ColorRect" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons/outline"]
+[node name="Swatch" type="Panel" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons/outline"]
 layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
@@ -270,7 +279,8 @@ offset_top = -24.0
 offset_right = 24.0
 offset_bottom = 24.0
 mouse_filter = 2
-color = Color(0.25, 0.7, 0.84, 1)
+self_modulate = Color(0.25, 0.7, 0.84, 1)
+theme_override_styles/panel = SubResource("SwatchStyle")
 
 [node name="quality" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons"]
 layout_mode = 2
@@ -278,7 +288,7 @@ custom_minimum_size = Vector2(80, 80)
 size_flags_horizontal = 3
 metadata/assist = "quality"
 
-[node name="Swatch" type="ColorRect" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons/quality"]
+[node name="Swatch" type="Panel" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons/quality"]
 layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
@@ -289,7 +299,8 @@ offset_top = -24.0
 offset_right = 24.0
 offset_bottom = 24.0
 mouse_filter = 2
-color = Color(0.66, 0.48, 0.89, 1)
+self_modulate = Color(0.66, 0.48, 0.89, 1)
+theme_override_styles/panel = SubResource("SwatchStyle")
 
 [node name="tags" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons"]
 layout_mode = 2
@@ -297,7 +308,7 @@ custom_minimum_size = Vector2(80, 80)
 size_flags_horizontal = 3
 metadata/assist = "tags"
 
-[node name="Swatch" type="ColorRect" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons/tags"]
+[node name="Swatch" type="Panel" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent/AssistButtons/tags"]
 layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
@@ -308,7 +319,8 @@ offset_top = -24.0
 offset_right = 24.0
 offset_bottom = 24.0
 mouse_filter = 2
-color = Color(0.32, 0.77, 0.57, 1)
+self_modulate = Color(0.32, 0.77, 0.57, 1)
+theme_override_styles/panel = SubResource("SwatchStyle")
 
 [node name="AssistDescription" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
 unique_name_in_owner = true

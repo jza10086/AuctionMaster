@@ -34,6 +34,13 @@ content_margin_right = 5.0
 content_margin_top = 5.0
 content_margin_bottom = 5.0
 
+[sub_resource type="StyleBoxFlat" id="SwatchStyle"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_left = 5
+corner_radius_bottom_right = 5
+
 [node name="PlayerCard" type="PanelContainer"]
 custom_minimum_size = Vector2(370, 104)
 size_flags_horizontal = 3
@@ -67,58 +74,64 @@ text = "—"
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 9
+alignment = 1
 
 [node name="Slot1" type="PanelContainer" parent="Content/Operations"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 40)
-size_flags_horizontal = 3
+custom_minimum_size = Vector2(40, 40)
+size_flags_horizontal = 0
 theme_override_styles/panel = SubResource("Slot")
 
-[node name="Swatch" type="ColorRect" parent="Content/Operations/Slot1"]
+[node name="Swatch" type="Panel" parent="Content/Operations/Slot1"]
 layout_mode = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0)
+self_modulate = Color(0, 0, 0, 0)
+theme_override_styles/panel = SubResource("SwatchStyle")
 
 [node name="Slot2" type="PanelContainer" parent="Content/Operations"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 40)
-size_flags_horizontal = 3
+custom_minimum_size = Vector2(40, 40)
+size_flags_horizontal = 0
 theme_override_styles/panel = SubResource("Slot")
 
-[node name="Swatch" type="ColorRect" parent="Content/Operations/Slot2"]
+[node name="Swatch" type="Panel" parent="Content/Operations/Slot2"]
 layout_mode = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0)
+self_modulate = Color(0, 0, 0, 0)
+theme_override_styles/panel = SubResource("SwatchStyle")
 
 [node name="Slot3" type="PanelContainer" parent="Content/Operations"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 40)
-size_flags_horizontal = 3
+custom_minimum_size = Vector2(40, 40)
+size_flags_horizontal = 0
 theme_override_styles/panel = SubResource("Slot")
 
-[node name="Swatch" type="ColorRect" parent="Content/Operations/Slot3"]
+[node name="Swatch" type="Panel" parent="Content/Operations/Slot3"]
 layout_mode = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0)
+self_modulate = Color(0, 0, 0, 0)
+theme_override_styles/panel = SubResource("SwatchStyle")
 
 [node name="Slot4" type="PanelContainer" parent="Content/Operations"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 40)
-size_flags_horizontal = 3
+custom_minimum_size = Vector2(40, 40)
+size_flags_horizontal = 0
 theme_override_styles/panel = SubResource("Slot")
 
-[node name="Swatch" type="ColorRect" parent="Content/Operations/Slot4"]
+[node name="Swatch" type="Panel" parent="Content/Operations/Slot4"]
 layout_mode = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0)
+self_modulate = Color(0, 0, 0, 0)
+theme_override_styles/panel = SubResource("SwatchStyle")
 
 [node name="Slot5" type="PanelContainer" parent="Content/Operations"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 40)
-size_flags_horizontal = 3
+custom_minimum_size = Vector2(40, 40)
+size_flags_horizontal = 0
 theme_override_styles/panel = SubResource("Slot")
 
-[node name="Swatch" type="ColorRect" parent="Content/Operations/Slot5"]
+[node name="Swatch" type="Panel" parent="Content/Operations/Slot5"]
 layout_mode = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0)
+self_modulate = Color(0, 0, 0, 0)
+theme_override_styles/panel = SubResource("SwatchStyle")

@@ -67,9 +67,6 @@ msgstr "同仓羁绊（只给对应物资增值）\n{groups}"
 msgid "hud.spectating"
 msgstr "观战中 · 不显示玩家私密探查结果"
 
-msgid "hud.item_hint"
-msgstr "悬停或点击已发现物品查看信息 · 滚轮浏览仓库"
-
 msgid "hud.item_details"
 msgstr "{name} · {quality} · {width} × {height} 格\n{tags}\n基础 {base} + 羁绊 {bonus}（+{percent}%）= {total} 金币"
 
