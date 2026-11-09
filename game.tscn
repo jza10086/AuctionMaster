@@ -106,14 +106,31 @@ layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("warehouse")
 
-[node name="ItemDetails" type="Label" parent="GameCanvas/Stage/Board/Columns/Inventory"]
+[node name="InventoryFooter" type="HBoxContainer" parent="GameCanvas/Stage/Board/Columns/Inventory"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 96)
+theme_override_constants/separation = 16
+[node name="DetailsSpace" type="VBoxContainer" parent="GameCanvas/Stage/Board/Columns/Inventory/InventoryFooter"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ItemDetails" type="Label" parent="GameCanvas/Stage/Board/Columns/Inventory/InventoryFooter/DetailsSpace"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(960, 0)
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 autowrap_mode = 3
 visible = false
 text = ""
+
+[node name="ReviewConditions" type="Button" parent="GameCanvas/Stage/Board/Columns/Inventory/InventoryFooter"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(240, 48)
+size_flags_vertical = 8
+theme = SubResource("OperationTheme")
+text = "特殊规则 / 公共情报"
+theme_override_font_sizes/font_size = 20
 
 [node name="Operations" type="PanelContainer" parent="GameCanvas/Stage/Board/Columns"]
 unique_name_in_owner = true
@@ -318,12 +335,6 @@ theme_override_font_sizes/font_size = 20
 autowrap_mode = 3
 vertical_alignment = 1
 
-[node name="ReviewConditions" type="Button" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "本仓规则 / 公共信息"
-theme_override_font_sizes/font_size = 20
-
 [node name="BidMinimum" type="Label" parent="GameCanvas/Stage/Board/Columns/Operations/OperationContent"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -414,11 +425,6 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
-[node name="ConditionsPanel" parent="GameCanvas/Stage/Board/Columns" instance=ExtResource("conditions")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-
 [node name="GameAudio" parent="." instance=ExtResource("game_audio")]
 unique_name_in_owner = true
 
@@ -432,3 +438,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("flash")
+
+[node name="ConditionsPanel" parent="OverlayHUD" instance=ExtResource("conditions")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1

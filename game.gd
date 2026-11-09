@@ -61,6 +61,8 @@ func build_game() -> void:
 	assert(reveal_sounds.size() == 7)
 	for cue: PartyAudioCue in reveal_sounds:
 		assert(cue != null and cue.validate() == OK)
+	warehouse_view.assist_search_changed.connect(_on_assist_search_changed)
+	warehouse_view.assist_found.connect(_on_assist_found)
 	warehouse_view.reveal_progress.connect(_on_reveal_progress)
 	warehouse_view.selection_changed.connect(_show_item)
 	%ReviewConditions.pressed.connect(func() -> void:
@@ -123,6 +125,24 @@ func _on_reveal_progress(count: int, total: int) -> void:
 				return
 	else:
 		_stop_search_sound()
+
+func _on_assist_search_changed(active: bool) -> void:
+	if not active:
+		_stop_search_sound()
+	elif _search_handle == null:
+		_search_handle = game_audio.play_ambience(search_sound, 0.06)
+		if _search_handle.error != OK:
+			_fail_publication("assist_search_audio", _search_handle.error)
+
+func _on_assist_found(item: Dictionary) -> void:
+	# Outline/tag discoveries do not carry rarity, so they use a neutral click.
+	var quality: int = int(item.get("quality", 0))
+	var handle: PartyAudioHandle = game_audio.play_sfx(reveal_sounds[quality])
+	if handle.error != OK:
+		_fail_publication("assist_found_audio", handle.error)
+		return
+	if item.has("quality"):
+		discovery_flash.reveal(quality, warehouse_scroll.get_global_rect().get_center())
 
 func _stop_search_sound() -> void:
 	if _search_handle != null:
@@ -276,18 +296,20 @@ func render_game() -> void:
 	if snap.is_empty():
 		return
 	var intel: Array = private_view.intel if not local_id.is_empty() and not private_view.is_empty() and private_view.warehouse == snap.warehouse else snap.public_intel
-	warehouse_view.set_snapshot(snap, intel)
+	warehouse_view.set_snapshot(snap, intel, not local_id.is_empty())
 	warehouse_view.set_reveal_elapsed(float(snap.reveal_elapsed))
+	if warehouse_view.is_assist_searching():
+		warehouse_scroll.scroll_vertical = int(maxf(0.0, warehouse_view.get_assist_rect().get_center().y - warehouse_scroll.size.y * 0.5))
 	var settling: bool = snap.phase == "settlement"
-	if snap.phase not in ["settlement", "reveal"]:
+	if snap.phase not in ["settlement", "reveal"] and not warehouse_view.is_assist_searching():
 		_stop_search_sound()
 	if review_warehouse != int(snap.warehouse):
 		review_warehouse = int(snap.warehouse)
-		reviewing_conditions = false
-	conditions_panel.visible = not settling and (snap.phase == "briefing" or reviewing_conditions)
+		reviewing_conditions = true
+	conditions_panel.visible = reviewing_conditions
 	if conditions_panel.visible:
 		conditions_panel.set_snapshot(snap)
-	operations.visible = not settling and not conditions_panel.visible
+	operations.visible = not settling
 	settlement_panel.visible = settling
 	bid_minimum.text = "本轮可报 0，或至少 " + _format_coins(int(snap.minimum_bid)) if int(snap.minimum_bid) > 1 else ""
 	if settling:

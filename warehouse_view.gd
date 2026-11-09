@@ -46,7 +46,76 @@ func _load_item_textures() -> void:
 			if texture != null:
 				_textures[kind] = texture
 
-func set_snapshot(snap: Dictionary, discoveries: Array = []) -> void:
+## Animate only new personal information; public clues and opened lots stay authoritative.
+signal assist_search_changed(active: bool)
+signal assist_found(item: Dictionary)
+@export_range(0.1, 3.0) var assist_search_seconds: float = 0.65
+var _assist_warehouse: int = -1
+var _received_discoveries: Dictionary = {}
+var _displayed_discoveries: Array = []
+var _assist_queue: Array[Dictionary] = []
+var _assist_elapsed: float = 0.0
+var _assist_snapshot: Dictionary = {}
+
+func is_assist_searching() -> bool:
+	return not _assist_queue.is_empty()
+
+func get_assist_rect() -> Rect2:
+	var rect: Array = _assist_queue[0].rect
+	return Rect2(get_grid_rect().position + Vector2(rect[0], rect[1]) * CELL_SIZE, Vector2.ONE * CELL_SIZE)
+
+func set_snapshot(snap: Dictionary, discoveries: Array = [], animate_assists: bool = false) -> void:
+	var next_opened: bool = snap.phase in ["settlement", "reveal", "finished"]
+	var reset: bool = int(snap.warehouse) != _assist_warehouse or not animate_assists or next_opened
+	if reset:
+		var was_searching: bool = is_assist_searching()
+		_assist_queue.clear()
+		_assist_elapsed = 0.0
+		_assist_warehouse = int(snap.warehouse)
+		_received_discoveries.clear()
+		_displayed_discoveries = snap.public_intel.duplicate(true) if animate_assists and not next_opened else discoveries.duplicate(true)
+		for item: Dictionary in _displayed_discoveries:
+			_received_discoveries[int(item.index)] = item.duplicate(true)
+		if was_searching:
+			assist_search_changed.emit(false)
+	_assist_snapshot = snap
+	if animate_assists and not next_opened:
+		var was_searching: bool = is_assist_searching()
+		for item: Dictionary in discoveries:
+			if _received_discoveries.get(int(item.index), {}) != item:
+				_assist_queue.append(item.duplicate(true))
+				_received_discoveries[int(item.index)] = item.duplicate(true)
+		_set_visible_snapshot(snap, _displayed_discoveries)
+		if not was_searching and is_assist_searching():
+			assist_search_changed.emit(true)
+	else:
+		_set_visible_snapshot(snap, discoveries)
+
+func _advance_assist_search(delta: float) -> void:
+	if not is_assist_searching():
+		return
+	_assist_elapsed += delta
+	_animation_time += delta
+	while is_assist_searching() and _assist_elapsed >= assist_search_seconds:
+		_assist_elapsed -= assist_search_seconds
+		var found: Dictionary = _assist_queue.pop_front()
+		var existing: int = -1
+		for index: int in _displayed_discoveries.size():
+			if int(_displayed_discoveries[index].index) == int(found.index):
+				existing = index
+				break
+		if existing >= 0:
+			_displayed_discoveries[existing] = found
+		else:
+			_displayed_discoveries.append(found)
+		_set_visible_snapshot(_assist_snapshot, _displayed_discoveries)
+		assist_found.emit(found)
+	if not is_assist_searching():
+		_assist_elapsed = 0.0
+		assist_search_changed.emit(false)
+	queue_redraw()
+
+func _set_visible_snapshot(snap: Dictionary, discoveries: Array) -> void:
 	var next_opened: bool = snap.phase in ["settlement", "reveal", "finished"]
 	var visible_items: Array = snap.items.duplicate(true) if next_opened else discoveries.duplicate(true)
 	var changed: bool = int(snap.warehouse) != warehouse or next_opened != opened or visible_items != items
@@ -93,6 +162,8 @@ func set_reveal_elapsed(elapsed_seconds: float) -> void:
 	_update_search(_search_clock)
 
 func _process(delta: float) -> void:
+	if is_visible_in_tree():
+		_advance_assist_search(delta)
 	if phase != "settlement" or not is_visible_in_tree():
 		return
 	_since_search_snapshot += delta
@@ -179,7 +250,7 @@ func _draw() -> void:
 	for row: int in range(_grid_rows + 1):
 		var y: float = grid.position.y + row * cell
 		draw_line(Vector2(grid.position.x, y), Vector2(grid.end.x, y), Color(0.67,0.72,0.71,0.17), 1.0)
-	if not opened and items.is_empty():
+	if not opened and items.is_empty() and not is_assist_searching():
 		_draw_sealed(Rect2(grid.position, GRID_SIZE))
 		return
 	for index: int in range(layout.size()):
@@ -192,6 +263,10 @@ func _draw() -> void:
 			_draw_item(rect, index)
 		else:
 			_draw_discovery(rect, items[index])
+	if is_assist_searching():
+		var target: Array = _assist_queue[0].rect
+		var position: Vector2 = grid.position + Vector2(target[0], target[1]) * CELL_SIZE
+		_draw_unknown(Rect2(position, Vector2.ONE * CELL_SIZE).grow(-1.0), true)
 
 func _draw_discovery(rect: Rect2, item: Dictionary) -> void:
 	var color: Color = Catalog.QUALITY_COLORS[int(item.quality)] if item.has("quality") else Color("91a0ad")
