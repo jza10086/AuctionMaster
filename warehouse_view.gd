@@ -219,15 +219,13 @@ func _draw_unknown(rect: Rect2, scanning: bool) -> void:
 	draw_rect(rect,Color(0.10,0.14,0.145,0.72))
 	draw_rect(rect,Color("74817d") if scanning else Color("414e50"),false,1.0)
 	if scanning:
-		var progress: float = Rules.search_fraction(_search_ends, revealed_count, _animation_time) if phase == "settlement" else clampf(_reveal_elapsed / REVEAL_SECONDS, 0.0, 1.0)
+		# Sweep at a fixed speed: neither the bar nor a fill discloses completion time.
 		var scan_y: float = rect.position.y + rect.size.y * fposmod(_animation_time * 1.4, 1.0)
-		draw_rect(Rect2(rect.position,Vector2(rect.size.x,rect.size.y*progress)),Color(0.65,0.76,0.54,0.08))
 		draw_line(Vector2(rect.position.x,scan_y),Vector2(rect.end.x,scan_y),Color("b8c996"),1.0)
 		_draw_selection_corners(rect.grow(-3.0), Color("a4c9dd"))
 		var center: Vector2 = rect.get_center()
 		var radius: float = minf(14.0, rect.size.x * 0.18)
 		draw_arc(center, radius, _animation_time * 4.0, _animation_time * 4.0 + 4.5, 24, Color("a4c9dd"), 2.0, true)
-		draw_rect(Rect2(Vector2(rect.position.x + 4.0, rect.end.y - 5.0), Vector2((rect.size.x - 8.0) * progress, 2.0)), Color("a4c9dd"))
 	var question_size: Vector2 = get_theme_default_font().get_string_size("?",HORIZONTAL_ALIGNMENT_LEFT,-1,24)
 	_draw_text("?",rect.get_center()+Vector2(-question_size.x*0.5,8),24,Color("82918c"))
 

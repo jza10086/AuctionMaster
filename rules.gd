@@ -12,7 +12,7 @@ const PAYOUT_END: float = 0.95
 @export_range(1000, 1000000, 100) var initialcoins: int = 80000
 @export_range(5.0, 300.0) var round_seconds: float = 15.0
 @export_range(1.0, 60.0) var reveal_seconds: float = 10.0
-@export_range(10.0, 180.0) var settlement_seconds: float = 60.0
+@export_range(10.0, 180.0) var settlement_seconds: float = 90.0
 @export var search_seconds: Array[float] = [0.08, 0.14, 0.35, 0.85, 1.7, 2.8, 4.2]
 @export_range(0, 100) var search_jitter_percent: int = 15
 @export_range(0, 100) var search_fakeout_percent: int = 5
@@ -84,9 +84,3 @@ static func revealed_items(ends: Array, elapsed: float) -> int:
 			break
 		count += 1
 	return count
-
-static func search_fraction(ends: Array, count: int, elapsed: float) -> float:
-	if count == ends.size():
-		return 1.0
-	var start: float = 0.0 if count == 0 else float(ends[count - 1])
-	return clampf((elapsed - start) / (float(ends[count]) - start), 0.0, 1.0)

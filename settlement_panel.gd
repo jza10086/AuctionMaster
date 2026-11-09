@@ -86,7 +86,7 @@ func _render(elapsed: float) -> void:
 		var show_found: bool = count > 0 and (not searching or since_reveal < 0.22)
 		search_effect.visible = not show_found
 		item_icon.visible = show_found
-		search_effect.show_search(elapsed, Rules.search_fraction(snapshot.search_ends, count, elapsed))
+		search_effect.show_search(elapsed)
 		if count > 0:
 			var index: int = count - 1
 			var item: Dictionary = snapshot.items[index]

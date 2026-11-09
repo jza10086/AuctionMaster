@@ -8,6 +8,17 @@
 [ext_resource type="PackedScene" path="res://games/minigame/godot_party_default_auction_master/settlement_panel.tscn" id="settlement"]
 [ext_resource type="PackedScene" path="res://games/minigame/godot_party_default_auction_master/conditions_panel.tscn" id="conditions"]
 
+[ext_resource type="PackedScene" path="res://games/protocols/godot_party_default_protocol/audio/game_audio.tscn" id="game_audio"]
+[ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/discovery_flash.gd" id="flash"]
+[ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/audio/search_loop.tres" id="search_sound"]
+[ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/audio/reveal_0.tres" id="reveal_0"]
+[ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/audio/reveal_1.tres" id="reveal_1"]
+[ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/audio/reveal_2.tres" id="reveal_2"]
+[ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/audio/reveal_3.tres" id="reveal_3"]
+[ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/audio/reveal_4.tres" id="reveal_4"]
+[ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/audio/reveal_5.tres" id="reveal_5"]
+[ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/audio/reveal_6.tres" id="reveal_6"]
+
 [sub_resource type="Theme" id="OperationTheme"]
 Button/styles/normal = ExtResource("button_frame")
 Button/styles/hover = ExtResource("button_frame")
@@ -54,6 +65,8 @@ anchors_preset = 15
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
+search_sound = ExtResource("search_sound")
+reveal_sounds = Array[Resource]([ExtResource("reveal_0"), ExtResource("reveal_1"), ExtResource("reveal_2"), ExtResource("reveal_3"), ExtResource("reveal_4"), ExtResource("reveal_5"), ExtResource("reveal_6")])
 
 [node name="Board" type="MarginContainer" parent="GameCanvas/Stage" index="0"]
 anchor_right = 1.0
@@ -405,3 +418,17 @@ layout_mode = 2
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
+
+[node name="GameAudio" parent="." instance=ExtResource("game_audio")]
+unique_name_in_owner = true
+
+[node name="DiscoveryFlash" type="Control" parent="GameCanvas/Stage"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("flash")

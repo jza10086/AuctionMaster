@@ -6,6 +6,14 @@ const PlayerCard: PackedScene = preload("res://games/minigame/godot_party_defaul
 const SettlementPanel: Script = preload("res://games/minigame/godot_party_default_auction_master/settlement_panel.gd")
 const ConditionsPanel: Script = preload("res://games/minigame/godot_party_default_auction_master/conditions_panel.gd")
 const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
+const DiscoveryFlash: Script = preload("res://games/minigame/godot_party_default_auction_master/discovery_flash.gd")
+@export var search_sound: PartyAudioCue
+@export var reveal_sounds: Array[PartyAudioCue] = []
+@onready var game_audio: PartyGameAudio = %GameAudio
+@onready var discovery_flash: DiscoveryFlash = %DiscoveryFlash
+var _search_handle: PartyAudioHandle
+var _audio_warehouse: int = -1
+var _heard_count: int = 0
 @onready var warehouse_view: WarehouseView = %Warehouse
 @onready var item_details: Label = %ItemDetails
 @onready var submit: Button = %Submit
@@ -34,7 +42,26 @@ var draft_round: String = ""
 var quote_valid: bool = true
 var settlement_item: int = -1
 
+func party_setup(value: PartyAPI, config: Dictionary) -> void:
+	super.party_setup(value, config)
+	%GameAudio.prepare_scope()
+
+func godot_party_audio_target() -> PartyGameAudio:
+	return %GameAudio
+
+func party_stop(reason: StringName) -> void:
+	super.party_stop(reason)
+	warehouse_view.set_process(false)
+	settlement_panel.set_process(false)
+	game_audio.close_scope()
+	discovery_flash.clear()
+
 func build_game() -> void:
+	assert(search_sound != null and search_sound.validate() == OK)
+	assert(reveal_sounds.size() == 7)
+	for cue: PartyAudioCue in reveal_sounds:
+		assert(cue != null and cue.validate() == OK)
+	warehouse_view.reveal_progress.connect(_on_reveal_progress)
 	warehouse_view.selection_changed.connect(_show_item)
 	%ReviewConditions.pressed.connect(func() -> void:
 		if not api.input.input_blocked:
@@ -67,6 +94,40 @@ func build_game() -> void:
 	for player: Dictionary in players:
 		player_cards.add_child(PlayerCard.instantiate())
 	_show_item({})
+
+## Reveal signals follow the displayed host timeline, including rapid consecutive items.
+## Repeated snapshots cannot replay a discovery; no rarity cue plays before it is visible.
+func _on_reveal_progress(count: int, total: int) -> void:
+	if warehouse_view.warehouse != _audio_warehouse:
+		_audio_warehouse = warehouse_view.warehouse
+		_heard_count = 0
+		game_audio.stop_all()
+		_search_handle = null
+		discovery_flash.clear()
+	if warehouse_view.phase not in ["settlement", "reveal"]:
+		return
+	for index: int in range(_heard_count, count):
+		var quality: int = int(warehouse_view.items[index].quality)
+		var handle: PartyAudioHandle = game_audio.play_sfx(reveal_sounds[quality])
+		if handle.error != OK:
+			_fail_publication("discovery_audio", handle.error)
+			return
+		var flash_center: Vector2 = settlement_panel.item_box.get_global_rect().position + Vector2(settlement_panel.item_box.size.x * 0.5, settlement_panel.item_icon.custom_minimum_size.y * 0.5)
+		discovery_flash.reveal(quality, flash_center)
+	_heard_count = count
+	if count < total:
+		if _search_handle == null:
+			_search_handle = game_audio.play_ambience(search_sound, 0.06)
+			if _search_handle.error != OK:
+				_fail_publication("search_audio", _search_handle.error)
+				return
+	else:
+		_stop_search_sound()
+
+func _stop_search_sound() -> void:
+	if _search_handle != null:
+		_search_handle.stop(0.12)
+		_search_handle = null
 
 func start_game() -> void:
 	if not api.is_host():
@@ -218,6 +279,8 @@ func render_game() -> void:
 	warehouse_view.set_snapshot(snap, intel)
 	warehouse_view.set_reveal_elapsed(float(snap.reveal_elapsed))
 	var settling: bool = snap.phase == "settlement"
+	if snap.phase not in ["settlement", "reveal"]:
+		_stop_search_sound()
 	if review_warehouse != int(snap.warehouse):
 		review_warehouse = int(snap.warehouse)
 		reviewing_conditions = false
