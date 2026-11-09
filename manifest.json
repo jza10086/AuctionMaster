@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "core_api_major": 4,
-  "package_version": "1.1.0",
+  "package_version": "1.1.1",
   "id": "godot_party_default_auction_master",
   "name": "GodotPartyDefault · 竞拍大师",
   "kind": "minigame",
@@ -20,7 +20,7 @@
     "original"
   ],
   "dependencies": {
-    "godot_party_default_protocol": "1.0.3"
+    "godot_party_default_protocol": "1.0.4"
   },
   "adapters": [
     {
@@ -48,7 +48,8 @@
       "audience": "instance"
     }
   },
-  "introduction": "1–8 人密封竞拍；随机仓库规则与公共信息，每仓最多五轮，辅助探查即时生效，成交亏损按其他玩家报价加权分配。",
+  "cover": "assets/preview.png",
+  "introduction": "每仓最多 5 轮：每轮一次辅助探查，再密封报价。最高价按规则成交，末轮同价先提交者胜；最终余额最高者获胜。\n赢家亏损按其他玩家报价权重分配。\n普通仓库价格中位数约 46,000（默认配置，仅供估价）。",
   "localization": {
     "supported_locales": [
       "zh_Hans"
