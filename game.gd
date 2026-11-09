@@ -9,6 +9,10 @@ const Catalog: Script = preload("res://games/minigame/godot_party_default_auctio
 const DiscoveryFlash: Script = preload("res://games/minigame/godot_party_default_auction_master/discovery_flash.gd")
 @export var search_sound: PartyAudioCue
 @export var reveal_sounds: Array[PartyAudioCue] = []
+const MusicPlaylist: Script = preload("res://games/minigame/godot_party_default_auction_master/music_playlist.gd")
+const CatalogPanel: Script = preload("res://games/minigame/godot_party_default_auction_master/catalog_panel.gd")
+@onready var music_playlist: MusicPlaylist = %MusicPlaylist
+@onready var catalog_panel: CatalogPanel = %CatalogPanel
 @onready var game_audio: PartyGameAudio = %GameAudio
 @onready var discovery_flash: DiscoveryFlash = %DiscoveryFlash
 var _search_handle: PartyAudioHandle
@@ -53,6 +57,7 @@ func party_stop(reason: StringName) -> void:
 	super.party_stop(reason)
 	warehouse_view.set_process(false)
 	settlement_panel.set_process(false)
+	music_playlist.stop()
 	game_audio.close_scope()
 	discovery_flash.clear()
 
@@ -65,8 +70,14 @@ func build_game() -> void:
 	warehouse_view.assist_found.connect(_on_assist_found)
 	warehouse_view.reveal_progress.connect(_on_reveal_progress)
 	warehouse_view.selection_changed.connect(_show_item)
+	%ShowCatalog.pressed.connect(func() -> void:
+		if not api.input.input_blocked:
+			reviewing_conditions = false
+			render_game()
+			catalog_panel.open_catalog())
 	%ReviewConditions.pressed.connect(func() -> void:
 		if not api.input.input_blocked:
+			catalog_panel.hide()
 			reviewing_conditions = true
 			render_game())
 	conditions_panel.close_requested.connect(func() -> void:
@@ -103,7 +114,8 @@ func _on_reveal_progress(count: int, total: int) -> void:
 	if warehouse_view.warehouse != _audio_warehouse:
 		_audio_warehouse = warehouse_view.warehouse
 		_heard_count = 0
-		game_audio.stop_all()
+		game_audio.stop_category(PartyGameAudio.Category.SFX)
+		game_audio.stop_category(PartyGameAudio.Category.AMBIENCE)
 		_search_handle = null
 		discovery_flash.clear()
 	if warehouse_view.phase not in ["settlement", "reveal"]:
@@ -150,6 +162,7 @@ func _stop_search_sound() -> void:
 		_search_handle = null
 
 func start_game() -> void:
+	music_playlist.start()
 	if not api.is_host():
 		return
 	session.names.clear()
@@ -305,6 +318,7 @@ func render_game() -> void:
 		_stop_search_sound()
 	if review_warehouse != int(snap.warehouse):
 		review_warehouse = int(snap.warehouse)
+		catalog_panel.hide()
 		reviewing_conditions = true
 	conditions_panel.visible = reviewing_conditions
 	if conditions_panel.visible:

@@ -19,6 +19,13 @@
 [ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/audio/reveal_5.tres" id="reveal_5"]
 [ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/audio/reveal_6.tres" id="reveal_6"]
 
+[ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/music_playlist.gd" id="playlist"]
+[ext_resource type="PackedScene" path="res://games/minigame/godot_party_default_auction_master/catalog_panel.tscn" id="catalog"]
+[ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/music/hammer_and_heirloom.tres" id="music0"]
+[ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/music/mahogany_and_velvet.tres" id="music1"]
+[ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/music/the_gilded_handshake.tres" id="music2"]
+[ext_resource type="Resource" path="res://games/minigame/godot_party_default_auction_master/assets/music/the_winning_bid.tres" id="music3"]
+
 [sub_resource type="Theme" id="OperationTheme"]
 Button/styles/normal = ExtResource("button_frame")
 Button/styles/hover = ExtResource("button_frame")
@@ -122,6 +129,15 @@ theme_override_font_sizes/font_size = 18
 autowrap_mode = 3
 visible = false
 text = ""
+
+[node name="ShowCatalog" type="Button" parent="GameCanvas/Stage/Board/Columns/Inventory/InventoryFooter"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(150, 48)
+size_flags_vertical = 8
+theme = SubResource("OperationTheme")
+theme_override_font_sizes/font_size = 20
+text = "物品图鉴"
 
 [node name="ReviewConditions" type="Button" parent="GameCanvas/Stage/Board/Columns/Inventory/InventoryFooter"]
 unique_name_in_owner = true
@@ -440,6 +456,16 @@ mouse_filter = 2
 script = ExtResource("flash")
 
 [node name="ConditionsPanel" parent="OverlayHUD" instance=ExtResource("conditions")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="MusicPlaylist" type="Node" parent="." node_paths=PackedStringArray("audio")]
+unique_name_in_owner = true
+script = ExtResource("playlist")
+audio = NodePath("../GameAudio")
+tracks = Array[Resource]([ExtResource("music0"), ExtResource("music1"), ExtResource("music2"), ExtResource("music3")])
+[node name="CatalogPanel" parent="OverlayHUD" instance=ExtResource("catalog")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
