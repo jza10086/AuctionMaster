@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "core_api_major": 4,
-  "package_version": "1.5.0",
+  "package_version": "1.6.0",
   "id": "godot_party_default_auction_master",
   "name": "GodotPartyDefault · 竞拍大师",
   "kind": "minigame",

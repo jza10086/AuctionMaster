@@ -43,6 +43,8 @@ var public_revision: int = 0
 var private_revision: int = -1
 var draft_bid: int = 0
 var draft_round: String = ""
+var sent_draft_key: String = ""
+var sent_draft_amount: int = -1
 var quote_valid: bool = true
 var settlement_item: int = -1
 
@@ -203,6 +205,16 @@ func _on_quote_changed(text: String) -> void:
 	else:
 		quote.add_theme_color_override("font_color", Color("f06b72"))
 	submit.disabled = not quote_valid
+	_sync_draft()
+
+## Send edits before the deadline so the host can commit the last valid current input.
+func _sync_draft() -> void:
+	var amount: int = draft_bid if quote_valid else 0
+	if sent_draft_key == draft_round and sent_draft_amount == amount:
+		return
+	sent_draft_key = draft_round
+	sent_draft_amount = amount
+	send_action({"kind": "draft", "amount": amount, "warehouse": private_view.warehouse, "round": private_view.round})
 
 func _format_quote() -> void:
 	if quote_valid:
@@ -217,10 +229,12 @@ func _show_quote() -> void:
 	submit.disabled = not _can_bid() or not quote_valid
 
 func _can_bid() -> bool:
-	return running and not local_id.is_empty() and not private_view.is_empty() and private_view.phase == "bidding" and not private_view.bidlocked
+	return running and not local_id.is_empty() and not private_view.is_empty() and private_view.phase == "bidding" and (private_revision >= int(view.get("_sequence", 0)) or view.phase == "bidding") and not private_view.bidlocked
 
 func _act(kind: String, assist: String = "") -> void:
 	if api.input.input_blocked or private_view.is_empty():
+		return
+	if kind == "assist" and (private_view.phase != "bidding" or (private_revision < int(view.get("_sequence", 0)) and view.phase != "bidding")):
 		return
 	if kind == "bid" and (not _can_bid() or not quote_valid):
 		return
@@ -239,6 +253,9 @@ func handle_action(id: String, data: Dictionary) -> void:
 	if not data.get("warehouse") is int or not data.get("round") is int or data.warehouse != session.warehouse or data.round != session.round:
 		return
 	var seat: int = seat_of(id)
+	if data.get("kind") == "draft" and data.get("amount") is int:
+		session.update_draft(seat, data.amount, data.warehouse, data.round)
+		return
 	if data.get("kind") == "bid" and data.get("amount") is int:
 		session.submit_bid(seat, data.amount, data.warehouse, data.round)
 	elif data.get("kind") == "assist" and data.get("assist") is String:
@@ -352,7 +369,7 @@ func render_game() -> void:
 	%Zero.disabled = not can_bid
 	submit.disabled = not can_bid or not quote_valid
 	for button: Button in assist_buttons.get_children():
-		button.disabled = not running or local_id.is_empty() or private_view.is_empty() or not private_view.assist_available
+		button.disabled = not running or local_id.is_empty() or private_view.is_empty() or snap.phase != "bidding" or not private_view.assist_available
 	countdown.text = _format_coins(ceili(snap.time))
 	countdown.add_theme_color_override("font_color", Color("f06b72") if float(snap.time) <= 10.0 else Color("f4f1e8"))
 	round_indicator.text = api.i18n.text(&"hud.round_indicator", {"current": _format_coins(int(snap.round)), "total": _format_coins(int(snap.rounds_total))})
@@ -360,18 +377,20 @@ func render_game() -> void:
 
 func _render_player_cards(snap: Dictionary) -> void:
 	for seat: int in players.size():
-		var amount: String = "—"
+		var amount: int = -1
+		var result_key: String = ""
 		var kinds: Array[String] = []
 		kinds.resize(int(snap.rounds_total))
 		kinds.fill("")
 		for record: Dictionary in snap.history:
 			if record.warehouse == snap.warehouse:
-				amount = _format_coins(int(record.bids[seat]))
+				amount = int(record.bids[seat])
+				result_key = "%s:%s" % [record.warehouse, record.round]
 				kinds[int(record.round) - 1] = record.assists[seat]
 		var colors: Array[Color] = []
 		for kind: String in kinds:
 			colors.append(Color.TRANSPARENT if kind.is_empty() else assist_colors[kind])
-		player_cards.get_child(seat).set_view(players[seat].name, amount, colors, snap.withdrawn[seat])
+		player_cards.get_child(seat).set_view(players[seat].name, amount, colors, snap.withdrawn[seat], result_key, snap.phase == "round_result" and snap.outcome.is_empty())
 
 func _format_coins(value: int) -> String:
 	var digits: String = str(absi(value))

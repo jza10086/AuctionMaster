@@ -16,6 +16,7 @@ var _lots: Array[Array] = []
 var _appraisals: Array[Dictionary] = []
 var _layouts: Array[Array] = []
 var _bids: Array[int] = []
+var _drafts: Array[int] = []
 var _locked: Array[bool] = []
 var _bid_order: Array[int] = []
 var _submission_count: int = 0
@@ -118,6 +119,8 @@ func _begin_round() -> void:
 	_submission_count = 0
 	_bids.resize(names.size())
 	_bids.fill(0)
+	_drafts.resize(names.size())
+	_drafts.fill(0)
 	_bid_order.resize(names.size())
 	_bid_order.fill(-1)
 	_locked = _withdrawn.duplicate()
@@ -147,7 +150,8 @@ func assist_count(kind: String) -> int:
 		count *= int(rules.conditions.values.assist_multiplier)
 	return count
 
-func submit_bid(seat: int, amount: int, expected_warehouse: int, expected_round: int) -> bool:
+## Host-private drafts are validated without locking or publishing a player's quote.
+func update_draft(seat: int, amount: int, expected_warehouse: int, expected_round: int) -> bool:
 	if phase != "bidding" or expected_warehouse != warehouse or expected_round != round:
 		return false
 	if seat < 0 or seat >= names.size() or _locked[seat] or _withdrawn[seat]:
@@ -155,6 +159,12 @@ func submit_bid(seat: int, amount: int, expected_warehouse: int, expected_round:
 	if amount < 0 or amount > balances[seat] or amount % Rules.BID_UNIT != 0:
 		return false
 	if amount > 0 and amount < minimum_bid(seat):
+		return false
+	_drafts[seat] = amount
+	return true
+
+func submit_bid(seat: int, amount: int, expected_warehouse: int, expected_round: int) -> bool:
+	if not update_draft(seat, amount, expected_warehouse, expected_round):
 		return false
 	_bids[seat] = amount
 	_locked[seat] = true
@@ -231,13 +241,14 @@ func expire_round() -> void:
 		return
 	for seat: int in names.size():
 		if not _locked[seat]:
-			submit_bid(seat, 0, warehouse, round)
+			submit_bid(seat, _drafts[seat], warehouse, round)
 	_resolve_round()
 
 func withdraw_player(seat: int) -> void:
 	_withdrawn[seat] = true
 	if phase in ["bidding", "pending"]:
 		_bids[seat] = 0
+		_drafts[seat] = 0
 		_locked[seat] = true
 
 func advance() -> void:
