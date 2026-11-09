@@ -33,6 +33,7 @@ var review_warehouse: int = -1
 @onready var player_cards: VBoxContainer = %PlayerCards
 @onready var assist_description: Label = %AssistDescription
 @onready var countdown: Label = %Countdown
+@onready var phase_label: Label = %PhaseLabel
 @onready var round_indicator: Label = %RoundIndicator
 var assist_colors: Dictionary[String, Color] = {}
 @onready var bid_buttons: GridContainer = %BidButtons
@@ -370,6 +371,16 @@ func render_game() -> void:
 	submit.disabled = not can_bid or not quote_valid
 	for button: Button in assist_buttons.get_children():
 		button.disabled = not running or local_id.is_empty() or private_view.is_empty() or snap.phase != "bidding" or not private_view.assist_available
+	var phase_names: Dictionary[String, StringName] = {
+		"briefing": &"hud.phase_rules",
+		"bidding": &"hud.phase_bid",
+		"pending": &"hud.phase_bid",
+		"round_result": &"hud.phase_result",
+		"settlement": &"hud.phase_reveal",
+		"reveal": &"hud.phase_reveal",
+		"finished": &"hud.phase_result",
+	}
+	phase_label.text = api.i18n.text(phase_names[snap.phase])
 	countdown.text = _format_coins(ceili(snap.time))
 	countdown.add_theme_color_override("font_color", Color("f06b72") if float(snap.time) <= 10.0 else Color("f4f1e8"))
 	round_indicator.text = api.i18n.text(&"hud.round_indicator", {"current": _format_coins(int(snap.round)), "total": _format_coins(int(snap.rounds_total))})

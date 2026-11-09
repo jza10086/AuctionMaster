@@ -561,3 +561,16 @@ msgstr "最短"
 
 msgid "最长"
 msgstr "最长"
+
+
+msgid "hud.phase_rules"
+msgstr "规则确认"
+
+msgid "hud.phase_bid"
+msgstr "报价阶段"
+
+msgid "hud.phase_result"
+msgstr "结算阶段"
+
+msgid "hud.phase_reveal"
+msgstr "揭示阶段"
