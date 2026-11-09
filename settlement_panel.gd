@@ -1,11 +1,16 @@
 extends PanelContainer
 ## Presentation only: interpolate the host clock; all prices and payouts come from its snapshot.
 const Rules: Script = preload("res://games/minigame/godot_party_default_auction_master/rules.gd")
+const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
+const Scanner: Script = preload("res://games/minigame/godot_party_default_auction_master/search_effect.gd")
 const Roller: Script = preload("res://games/minigame/godot_party_default_auction_master/rolling_number.gd")
 @onready var winner_label: Label = %Winner
 @onready var stage_label: Label = %Stage
 @onready var item_box: VBoxContainer = %ItemBox
 @onready var item_icon: TextureRect = %ItemIcon
+@onready var search_effect: Scanner = %SearchEffect
+@onready var search_profit: Roller = %SearchProfit
+@onready var search_profit_box: VBoxContainer = %SearchProfitBox
 @onready var item_name: Label = %ItemName
 @onready var item_value: Roller = %ItemValue
 @onready var total_value: Roller = %TotalValue
@@ -22,6 +27,7 @@ const Roller: Script = preload("res://games/minigame/godot_party_default_auction
 @onready var payout_rows: VBoxContainer = %PayoutRows
 var snapshot: Dictionary = {}
 var _since_snapshot: float = 0.0
+var _display_elapsed: float = 0.0
 var _item_index: int = -1
 var _warehouse: int = -1
 var _prefix_totals: Array[int] = []
@@ -34,8 +40,12 @@ func set_snapshot(data: Dictionary) -> void:
 	_since_snapshot = 0.0
 	if _warehouse != int(data.warehouse):
 		_warehouse = data.warehouse
+		_display_elapsed = 0.0
 		_item_index = -1
 		_prefix_totals.assign([0])
+		total_value.reset_value()
+		item_value.reset_value()
+		search_profit.reset_value(-int(data.price))
 		for item: Dictionary in data.items:
 			_prefix_totals.append(_prefix_totals.back() + int(item.effective_value))
 	winner_label.text = "%s 成交" % data.names[int(data.winner)]
@@ -50,6 +60,8 @@ func _process(delta: float) -> void:
 	_render(minf(float(snapshot.settlement_seconds), float(snapshot.settlement_elapsed) + minf(_since_snapshot, 0.1)))
 
 func _render(elapsed: float) -> void:
+	elapsed = maxf(_display_elapsed, elapsed)
+	_display_elapsed = elapsed
 	var duration: float = snapshot.settlement_seconds
 	var progress: float = elapsed / duration
 	var counting: bool = progress < Rules.ITEMS_END
@@ -57,29 +69,44 @@ func _render(elapsed: float) -> void:
 	var profiting: bool = progress >= Rules.TOTAL_END and progress < Rules.PROFIT_END
 	var distributing: bool = progress >= Rules.PROFIT_END
 	item_box.visible = counting
+	search_profit_box.visible = counting
 	formula.visible = progress >= Rules.ITEMS_END
 	payouts_box.visible = distributing
 	total_title.text = "累计仓库价格" if counting else "仓库价格（含羁绊）"
 	var total: int = snapshot.total_value
 	var price: int = snapshot.price
 	var profit: int = total - price
+	# The running total never restarts for each item or when the formula phase begins.
+	var count: int = Rules.revealed_items(snapshot.search_ends, elapsed)
+	var known_total: int = _prefix_totals[count]
+	total_value.follow_value(known_total, elapsed)
 	if counting:
-		var position: float = elapsed / (duration * Rules.ITEMS_END) * snapshot.items.size()
-		var index: int = mini(int(position), snapshot.items.size() - 1)
-		var fraction: float = clampf(fposmod(position, 1.0) / 0.8, 0.0, 1.0)
-		var item: Dictionary = snapshot.items[index]
-		if index != _item_index:
-			_item_index = index
-			item_icon.texture = load("res://games/minigame/godot_party_default_auction_master/assets/items/realistic/%s.png" % item.kind)
-			item_name.text = item.name
-		stage_label.text = "逐件估值  %d / %d" % [index + 1, snapshot.items.size()]
-		item_value.set_roll(0, int(item.effective_value), fraction)
-		total_value.set_roll(_prefix_totals[index], _prefix_totals[index + 1], fraction)
+		var searching: bool = count < snapshot.items.size()
+		var since_reveal: float = elapsed - float(snapshot.search_ends[count - 1]) if count > 0 else 100.0
+		var show_found: bool = count > 0 and (not searching or since_reveal < 0.22)
+		search_effect.visible = not show_found
+		item_icon.visible = show_found
+		search_effect.show_search(elapsed, Rules.search_fraction(snapshot.search_ends, count, elapsed))
+		if count > 0:
+			var index: int = count - 1
+			var item: Dictionary = snapshot.items[index]
+			if index != _item_index:
+				_item_index = index
+				item_icon.texture = load("res://games/minigame/godot_party_default_auction_master/assets/items/realistic/%s.png" % item.kind)
+			item_value.follow_value(int(item.effective_value), elapsed)
+			item_name.text = item.name if show_found else "正在搜索…"
+			item_name.add_theme_color_override("font_color", Catalog.QUALITY_COLORS[int(item.quality)] if show_found else Color("99b5c4"))
+		else:
+			item_value.follow_value(0, elapsed)
+			item_name.text = "正在搜索…"
+			item_name.add_theme_color_override("font_color", Color("99b5c4"))
+		stage_label.text = "搜索物资  %d / %d" % [mini(count + 1, snapshot.items.size()), snapshot.items.size()] if searching else "搜索完成"
+		# This is a provisional appraisal, not a balance mutation.
+		var current_profit: int = known_total - price
+		search_profit.number_color = Color("#ef7277") if current_profit < 0 else Color("#5fd6a5")
+		search_profit.follow_value(current_profit, elapsed)
 	elif totaling:
 		stage_label.text = "核算仓库总价"
-		total_value.set_roll(0, total, _fraction(progress, Rules.ITEMS_END, Rules.TOTAL_END))
-	else:
-		total_value.set_roll(total, total, 1.0)
 	if progress >= Rules.TOTAL_END:
 		formula_caption.text = "仓库价格 − 成交价 = 盈亏"
 		formula_operator.text = "−"

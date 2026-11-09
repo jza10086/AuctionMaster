@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/settlement_panel.gd" id="panel"]
 [ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/rolling_number.gd" id="roller"]
+[ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/search_effect.gd" id="scanner"]
 
 [sub_resource type="StyleBoxFlat" id="Background"]
 content_margin_left = 24.0
@@ -54,6 +55,13 @@ layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
+[node name="SearchEffect" type="Control" parent="Content/ItemBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 260)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("scanner")
+
 [node name="ItemName" type="Label" parent="Content/ItemBox"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -63,7 +71,7 @@ autowrap_mode = 3
 
 [node name="ItemCaption" type="Label" parent="Content/ItemBox"]
 layout_mode = 2
-text = "本件价格（含羁绊）"
+text = "最近发现价格（含羁绊）"
 horizontal_alignment = 1
 
 [node name="ItemValue" type="Control" parent="Content/ItemBox"]
@@ -86,6 +94,23 @@ layout_mode = 2
 script = ExtResource("roller")
 font_size = 44
 number_color = Color(0.94, 0.69, 0.28, 1)
+
+[node name="SearchProfitBox" type="VBoxContainer" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Caption" type="Label" parent="Content/SearchProfitBox"]
+layout_mode = 2
+text = "已发现价值 − 成交价（暂计盈亏）"
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+
+[node name="SearchProfit" type="Control" parent="Content/SearchProfitBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+script = ExtResource("roller")
+font_size = 32
 
 [node name="Formula" type="VBoxContainer" parent="Content"]
 unique_name_in_owner = true

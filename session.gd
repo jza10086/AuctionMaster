@@ -35,6 +35,7 @@ var _outcome: String = ""
 var _settled: bool = false
 var _profit_applied: bool = false
 var _payout_seats: Array[int] = []
+var _search_ends: Array[float] = []
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var _assist_seed: int = 0
 
@@ -88,6 +89,7 @@ func _begin_warehouse() -> void:
 	_condition = rules.conditions.draw(_rng)
 	rules.conditions.apply_values(_lots[warehouse], _condition, catalog.items)
 	_appraisals[warehouse] = Catalog.evaluate(_lots[warehouse])
+	_search_ends.clear()
 	_rule_lines = rules.conditions.describe(_condition)
 	var evidence: Dictionary = rules.conditions.public_evidence(_lots[warehouse], _layouts[warehouse], _appraisals[warehouse], _condition, _rng)
 	_clues.assign(evidence.lines)
@@ -241,6 +243,8 @@ func withdraw_player(seat: int) -> void:
 func advance() -> void:
 	if phase == "round_result":
 		if not _outcome.is_empty():
+			if _winner >= 0:
+				_search_ends = rules.make_search_ends(_appraisals[warehouse].items, _rng)
 			phase = "settlement" if _winner >= 0 else "reveal"
 			time = rules.settlement_seconds if _winner >= 0 else float(rules.conditions.values.unsold_seconds)
 		else:
@@ -358,6 +362,7 @@ func snapshot(seat: int = -1) -> Dictionary:
 		result.winner = _winner
 		result.price = _price
 		result.items = _appraisals[warehouse].items.duplicate(true)
+		result.search_ends = _search_ends.duplicate()
 		result.total_value = _hidden_total()
 		result.base_value = _appraisals[warehouse].base_value
 		result.bonus_value = _appraisals[warehouse].bonus_value

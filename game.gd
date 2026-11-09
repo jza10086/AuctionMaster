@@ -229,10 +229,10 @@ func render_game() -> void:
 	bid_minimum.text = "本轮可报 0，或至少 " + _format_coins(int(snap.minimum_bid)) if int(snap.minimum_bid) > 1 else ""
 	if settling:
 		settlement_panel.set_snapshot(snap)
-		var index: int = warehouse_view.revealed_count - 1
-		if index >= 0 and index != settlement_item:
-			settlement_item = index
-			warehouse_view.select_item(index)
+		var index: int = mini(warehouse_view.revealed_count, warehouse_view.items.size() - 1)
+		if index >= 0 and warehouse_view.revealed_count != settlement_item:
+			settlement_item = warehouse_view.revealed_count
+			warehouse_view.select_item(warehouse_view.revealed_count - 1)
 			var rect: Rect2 = warehouse_view.get_item_rect(index)
 			warehouse_scroll.scroll_vertical = int(maxf(0.0, rect.get_center().y - warehouse_scroll.size.y * 0.5))
 	else:

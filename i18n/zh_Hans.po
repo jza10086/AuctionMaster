@@ -540,3 +540,24 @@ msgstr "价值集中度"
 
 msgid "缺席线索"
 msgstr "缺席线索"
+
+msgid "各品质搜索秒数"
+msgstr "各品质搜索秒数"
+
+msgid "搜索时间随机扰动（±百分比）"
+msgstr "搜索时间随机扰动（±百分比）"
+
+msgid "低品质长搜索概率（百分比）"
+msgstr "低品质长搜索概率（百分比）"
+
+msgid "长搜索扰动最高品质（0普通 / 1优良）"
+msgstr "长搜索扰动最高品质（0普通 / 1优良）"
+
+msgid "低品质长搜索秒数范围"
+msgstr "低品质长搜索秒数范围"
+
+msgid "最短"
+msgstr "最短"
+
+msgid "最长"
+msgstr "最长"

@@ -20,7 +20,9 @@ var warehouse: int = -1
 var phase: String = ""
 var opened: bool = false
 var _grid_rows: int = GRID_ROWS
-var _settlement_item_seconds: float = 1.0
+var _search_ends: Array[float] = []
+var _search_clock: float = 0.0
+var _since_search_snapshot: float = 0.0
 var _reveal_elapsed: float = 0.0
 var _animation_time: float = 0.0
 var _revealed_at: Array[float] = []
@@ -52,7 +54,7 @@ func set_snapshot(snap: Dictionary, discoveries: Array = []) -> void:
 	phase = snap.phase
 	opened = next_opened
 	if phase == "settlement":
-		_settlement_item_seconds = float(snap.settlement_seconds) * Rules.ITEMS_END / visible_items.size()
+		_search_ends.assign(snap.search_ends)
 	if changed:
 		items = visible_items
 		layout.clear()
@@ -60,6 +62,8 @@ func set_snapshot(snap: Dictionary, discoveries: Array = []) -> void:
 		_hovered_index = -1
 		_reveal_elapsed = 0.0
 		_animation_time = 0.0
+		_search_clock = 0.0
+		_since_search_snapshot = 0.0
 		_revealed_at.resize(items.size())
 		_revealed_at.fill(-100.0)
 		if opened:
@@ -84,10 +88,21 @@ func set_reveal_elapsed(elapsed_seconds: float) -> void:
 	if phase != "settlement":
 		advance_reveal(maxf(0.0, elapsed_seconds - _animation_time))
 		return
-	_animation_time = maxf(_animation_time, elapsed_seconds)
-	var target_count: int = mini(items.size(), 1 + int(_animation_time / _settlement_item_seconds))
+	_search_clock = maxf(_search_clock, elapsed_seconds)
+	_since_search_snapshot = 0.0
+	_update_search(_search_clock)
+
+func _process(delta: float) -> void:
+	if phase != "settlement" or not is_visible_in_tree():
+		return
+	_since_search_snapshot += delta
+	_update_search(_search_clock + minf(_since_search_snapshot, 0.1))
+
+func _update_search(elapsed: float) -> void:
+	_animation_time = maxf(_animation_time, elapsed)
+	var target_count: int = Rules.revealed_items(_search_ends, _animation_time)
 	while revealed_count < target_count:
-		_revealed_at[revealed_count] = revealed_count * _settlement_item_seconds
+		_revealed_at[revealed_count] = _search_ends[revealed_count]
 		revealed_count += 1
 		reveal_progress.emit(revealed_count, items.size())
 	if selected_index < 0 and revealed_count > 0:
@@ -204,11 +219,15 @@ func _draw_unknown(rect: Rect2, scanning: bool) -> void:
 	draw_rect(rect,Color(0.10,0.14,0.145,0.72))
 	draw_rect(rect,Color("74817d") if scanning else Color("414e50"),false,1.0)
 	if scanning:
-		var progress: float = clampf(_reveal_elapsed / REVEAL_SECONDS,0.0,1.0)
-		var scan_y: float = rect.position.y+rect.size.y*progress
+		var progress: float = Rules.search_fraction(_search_ends, revealed_count, _animation_time) if phase == "settlement" else clampf(_reveal_elapsed / REVEAL_SECONDS, 0.0, 1.0)
+		var scan_y: float = rect.position.y + rect.size.y * fposmod(_animation_time * 1.4, 1.0)
 		draw_rect(Rect2(rect.position,Vector2(rect.size.x,rect.size.y*progress)),Color(0.65,0.76,0.54,0.08))
 		draw_line(Vector2(rect.position.x,scan_y),Vector2(rect.end.x,scan_y),Color("b8c996"),1.0)
-		_draw_text(TEXT.get_message(&"warehouse.scanning"),rect.position+Vector2(7,17),11,Color("d8dfcd"))
+		_draw_selection_corners(rect.grow(-3.0), Color("a4c9dd"))
+		var center: Vector2 = rect.get_center()
+		var radius: float = minf(14.0, rect.size.x * 0.18)
+		draw_arc(center, radius, _animation_time * 4.0, _animation_time * 4.0 + 4.5, 24, Color("a4c9dd"), 2.0, true)
+		draw_rect(Rect2(Vector2(rect.position.x + 4.0, rect.end.y - 5.0), Vector2((rect.size.x - 8.0) * progress, 2.0)), Color("a4c9dd"))
 	var question_size: Vector2 = get_theme_default_font().get_string_size("?",HORIZONTAL_ALIGNMENT_LEFT,-1,24)
 	_draw_text("?",rect.get_center()+Vector2(-question_size.x*0.5,8),24,Color("82918c"))
 
@@ -240,8 +259,11 @@ func _draw_item(rect: Rect2, index: int) -> void:
 	var name_text: String = item.name
 	if not compact:
 		_draw_text(_fit_text(name_text,rect.size.x-12,11),rect.position+Vector2(6,16),11,Color("d9dfd4"))
-	var flash: float = 1-clampf((_animation_time-_revealed_at[index])/0.32,0,1)
-	if flash>0: draw_rect(rect,Color(rarity,flash*0.14))
+	var flash: float = 1.0 - clampf((_animation_time - _revealed_at[index]) / (0.24 + int(item.quality) * 0.09), 0.0, 1.0)
+	if flash > 0.0:
+		draw_rect(rect, Color(rarity, flash * 0.32))
+		draw_rect(rect.grow(3.0 * (1.0 - flash)), Color(rarity, flash), false, 2.0)
+		_draw_selection_corners(rect, Color(rarity, flash))
 	if selected or hovered:
 		var border: Color = Color("e3ecce") if selected else Color("a2b6aa")
 		draw_rect(rect,border,false,1)
