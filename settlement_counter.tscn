@@ -1,0 +1,209 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://games/minigame/gp_auction_master/settlement_counter.gd" id="script"]
+
+[ext_resource type="Script" path="res://games/minigame/gp_auction_master/punch_number.gd" id="punch"]
+
+[sub_resource type="SystemFont" id="NumberFont"]
+font_names = PackedStringArray("Arial", "DejaVu Sans")
+font_weight = 900
+
+[sub_resource type="StyleBoxFlat" id="Frame"]
+bg_color = Color(0.035, 0.075, 0.09, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 5
+border_color = Color(0.29, 0.44, 0.46, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_left = 18
+corner_radius_bottom_right = 18
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxFlat" id="Total"]
+bg_color = Color(0.035, 0.20, 0.23, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 5
+border_color = Color(0.23, 0.68, 0.64, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_left = 18
+corner_radius_bottom_right = 18
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxFlat" id="Item"]
+bg_color = Color(0.16, 0.13, 0.10, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 5
+border_color = Color(0.74, 0.53, 0.26, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_left = 18
+corner_radius_bottom_right = 18
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxFlat" id="Strip"]
+bg_color = Color(0.025, 0.05, 0.065, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 5
+border_color = Color(0.15, 0.24, 0.27, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_left = 18
+corner_radius_bottom_right = 18
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
+
+[node name="SettlementCounter" type="PanelContainer"]
+custom_minimum_size = Vector2(1240, 700)
+theme_override_styles/panel = SubResource("Frame")
+script = ExtResource("script")
+
+[node name="Content" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Header" type="HBoxContainer" parent="Content"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Content/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "仓库清点"
+theme_override_font_sizes/font_size = 32
+size_flags_horizontal = 3
+
+[node name="Counter" type="Label" parent="Content/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "物品  01 / 06"
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.65, 0.77, 0.77, 1)
+
+[node name="Body" type="HBoxContainer" parent="Content"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 22
+
+[node name="TotalCard" type="PanelContainer" parent="Content/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("Total")
+
+[node name="Values" type="VBoxContainer" parent="Content/Body/TotalCard"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Caption" type="Label" parent="Content/Body/TotalCard/Values"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "累计仓库价值"
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.56, 0.82, 0.79, 1)
+
+[node name="Digits" type="Control" parent="Content/Body/TotalCard/Values"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 160)
+size_flags_vertical = 3
+script = ExtResource("punch")
+number_font = SubResource("NumberFont")
+
+[node name="Operand" type="Label" parent="Content/Body/TotalCard/Values"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "+  100"
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.44, 1)
+
+[node name="Step" type="Label" parent="Content/Body/TotalCard/Values"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "发现物品 · 准备计入"
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 2
+theme_override_colors/font_color = Color(0.55, 0.79, 0.77, 1)
+
+[node name="ItemCard" type="PanelContainer" parent="Content/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(340, 0)
+theme_override_styles/panel = SubResource("Item")
+
+[node name="ItemContent" type="VBoxContainer" parent="Content/Body/ItemCard"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ItemCaption" type="Label" parent="Content/Body/ItemCard/ItemContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "本件物品"
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.75, 0.67, 0.52, 1)
+
+[node name="ItemIcon" type="TextureRect" parent="Content/Body/ItemCard/ItemContent"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 150)
+size_flags_vertical = 3
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ItemName" type="Label" parent="Content/Body/ItemCard/ItemContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "物品名称"
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+
+[node name="ItemValue" type="Label" parent="Content/Body/ItemCard/ItemContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "+100"
+theme_override_font_sizes/font_size = 34
+horizontal_alignment = 1
+
+[node name="Equation" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1,000  +  100"
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+custom_minimum_size = Vector2(0, 48)
+
+[node name="Result" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+custom_minimum_size = Vector2(0, 40)
+
+[node name="LedgerFrame" type="PanelContainer" parent="Content"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("Strip")
+
+[node name="Ledger" type="HBoxContainer" parent="Content/LedgerFrame"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16

@@ -92,6 +92,10 @@ func _draw() -> void:
 	var length: int = maxi(old_digits.length(), new_digits.length())
 	if _streaming:
 		length = maxi(length, _positions.size())
+	# Settled numbers use their own digit count, including separators and centering.
+	if progress >= 1.0:
+		length = new_digits.length()
+		old_digits = old_digits.right(length)
 	old_digits = old_digits.lpad(length, "0")
 	new_digits = new_digits.lpad(length, "0")
 	var slots: int = length + (length - 1) / 3 + (1 if to_value < 0 else 0)
@@ -115,9 +119,7 @@ func _draw() -> void:
 		var digit: int = int(floor(position)) % 10
 		var offset: float = fposmod(position, 1.0) * size.y
 		if progress >= 1.0:
-			var padding: int = length - str(absi(to_value)).length()
-			if index >= padding:
-				draw_string(font, Vector2(x, baseline), str(target), HORIZONTAL_ALIGNMENT_LEFT, -1, draw_size, number_color)
+			draw_string(font, Vector2(x, baseline), str(target), HORIZONTAL_ALIGNMENT_LEFT, -1, draw_size, number_color)
 		else:
 			draw_string(font, Vector2(x, baseline - offset), str(digit), HORIZONTAL_ALIGNMENT_LEFT, -1, draw_size, number_color)
 			draw_string(font, Vector2(x, baseline - offset + size.y), str((digit + 1) % 10), HORIZONTAL_ALIGNMENT_LEFT, -1, draw_size, number_color)
