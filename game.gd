@@ -95,7 +95,7 @@ func build_game() -> void:
 			render_game())
 	quote.text_changed.connect(_on_quote_changed)
 	quote.focus_exited.connect(_format_quote)
-	quote.text_submitted.connect(func(_text: String) -> void: _format_quote())
+	quote.text_submitted.connect(func(_text: String) -> void: _act("bid"))
 	quote.tooltip_text = api.i18n.text(&"bid.input_hint")
 	submit.pressed.connect(func() -> void: _act("bid"))
 	for button: Button in bid_buttons.get_children():
@@ -111,8 +111,8 @@ func build_game() -> void:
 		button.focus_entered.connect(_show_assist_description.bind(kind))
 		button.focus_exited.connect(_clear_assist_description)
 		button.pressed.connect(_act.bind("assist", kind))
-	%Zero.text = api.i18n.text(&"bid.zero")
-	submit.text = api.i18n.text(&"hud.submit")
+	%Zero.tooltip_text = api.i18n.text(&"bid.zero")
+	submit.tooltip_text = api.i18n.text(&"hud.submit")
 	for player: Dictionary in players:
 		player_cards.add_child(PlayerCard.instantiate())
 	_show_item({})
@@ -224,13 +224,15 @@ func _sync_draft() -> void:
 	send_action({"kind": "draft", "amount": amount, "warehouse": private_view.warehouse, "round": private_view.round})
 
 func _format_quote() -> void:
+	if _can_bid():
+		_on_quote_changed(quote.text)
 	if quote_valid:
 		quote.text = _format_coins(draft_bid)
 
 func _show_quote() -> void:
 	quote_valid = true
 	quote.remove_theme_color_override("font_color")
-	_format_quote()
+	quote.text = _format_coins(draft_bid)
 	if _can_bid():
 		_on_quote_changed(quote.text)
 	submit.disabled = not _can_bid() or not quote_valid
@@ -243,8 +245,12 @@ func _act(kind: String, assist: String = "") -> void:
 		return
 	if kind == "assist" and (private_view.phase != "bidding" or not _private_matches_phase()):
 		return
-	if kind == "bid" and (not _can_bid() or not quote_valid):
-		return
+	if kind == "bid":
+		if not _can_bid():
+			return
+		_on_quote_changed(quote.text)
+		if not quote_valid:
+			return
 	send_action({"kind": kind, "amount": draft_bid, "assist": assist, "warehouse": private_view.warehouse, "round": private_view.round})
 
 func send_action(data: Dictionary) -> void:
@@ -502,7 +508,9 @@ func render_game() -> void:
 		_show_quote()
 	balance_label.text = api.i18n.text(&"bid.balance", {"amount": _format_coins(int(snap.balances[seat_of(local_id)]))}) if not local_id.is_empty() else api.i18n.text(&"hud.spectating")
 	var can_bid: bool = _can_bid()
-	quote.editable = can_bid and not api.input.input_blocked
+	var editable: bool = can_bid and not api.input.input_blocked
+	if quote.editable != editable:
+		quote.editable = editable
 	for button: Button in bid_buttons.get_children():
 		button.disabled = not can_bid
 	%Zero.disabled = not can_bid
