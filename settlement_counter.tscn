@@ -2,19 +2,16 @@
 
 [ext_resource type="Script" path="res://games/minigame/gp_auction_master/settlement_counter.gd" id="script"]
 
-[ext_resource type="Script" path="res://games/minigame/gp_auction_master/punch_number.gd" id="punch"]
-
-[sub_resource type="SystemFont" id="NumberFont"]
-font_names = PackedStringArray("Arial", "DejaVu Sans")
-font_weight = 900
+[ext_resource type="PackedScene" path="res://core/ui/components/impact_number.tscn" id="number"]
+[ext_resource type="Theme" path="res://core/ui/ambient_reveal/ambient_theme.tres" id="theme"]
 
 [sub_resource type="StyleBoxFlat" id="Frame"]
-bg_color = Color(0.035, 0.075, 0.09, 1)
+bg_color = Color(0.035, 0.055, 0.085, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 5
-border_color = Color(0.29, 0.44, 0.46, 1)
+border_color = Color(0.29, 0.36, 0.44, 1)
 corner_radius_top_left = 18
 corner_radius_top_right = 18
 corner_radius_bottom_left = 18
@@ -25,12 +22,12 @@ content_margin_right = 28.0
 content_margin_bottom = 24.0
 
 [sub_resource type="StyleBoxFlat" id="Total"]
-bg_color = Color(0.035, 0.20, 0.23, 1)
+bg_color = Color(0.055, 0.09, 0.135, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 5
-border_color = Color(0.23, 0.68, 0.64, 1)
+border_color = Color(0.31, 0.43, 0.54, 1)
 corner_radius_top_left = 18
 corner_radius_top_right = 18
 corner_radius_bottom_left = 18
@@ -41,12 +38,12 @@ content_margin_right = 28.0
 content_margin_bottom = 24.0
 
 [sub_resource type="StyleBoxFlat" id="Item"]
-bg_color = Color(0.16, 0.13, 0.10, 1)
+bg_color = Color(0.055, 0.08, 0.12, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 5
-border_color = Color(0.74, 0.53, 0.26, 1)
+border_color = Color(0.31, 0.43, 0.54, 1)
 corner_radius_top_left = 18
 corner_radius_top_right = 18
 corner_radius_bottom_left = 18
@@ -57,12 +54,12 @@ content_margin_right = 28.0
 content_margin_bottom = 24.0
 
 [sub_resource type="StyleBoxFlat" id="Strip"]
-bg_color = Color(0.025, 0.05, 0.065, 1)
+bg_color = Color(0.025, 0.04, 0.065, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 5
-border_color = Color(0.15, 0.24, 0.27, 1)
+border_color = Color(0.20, 0.27, 0.34, 1)
 corner_radius_top_left = 18
 corner_radius_top_right = 18
 corner_radius_bottom_left = 18
@@ -74,6 +71,7 @@ content_margin_bottom = 24.0
 
 [node name="SettlementCounter" type="PanelContainer"]
 custom_minimum_size = Vector2(1240, 700)
+theme = ExtResource("theme")
 theme_override_styles/panel = SubResource("Frame")
 script = ExtResource("script")
 
@@ -96,7 +94,7 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "物品  01 / 06"
 theme_override_font_sizes/font_size = 22
-theme_override_colors/font_color = Color(0.65, 0.77, 0.77, 1)
+theme_override_colors/font_color = Color(0.75, 0.79, 0.84, 1)
 
 [node name="Body" type="HBoxContainer" parent="Content"]
 layout_mode = 2
@@ -117,15 +115,14 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "累计仓库价值"
 theme_override_font_sizes/font_size = 22
-theme_override_colors/font_color = Color(0.56, 0.82, 0.79, 1)
+theme_override_colors/font_color = Color(0.75, 0.79, 0.84, 1)
 
-[node name="Digits" type="Control" parent="Content/Body/TotalCard/Values"]
+[node name="Digits" parent="Content/Body/TotalCard/Values" instance=ExtResource("number")]
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(0, 160)
 size_flags_vertical = 3
-script = ExtResource("punch")
-number_font = SubResource("NumberFont")
+manual_clock = true
 
 [node name="Operand" type="Label" parent="Content/Body/TotalCard/Values"]
 unique_name_in_owner = true
@@ -133,7 +130,7 @@ layout_mode = 2
 text = "+  100"
 theme_override_font_sizes/font_size = 40
 horizontal_alignment = 2
-theme_override_colors/font_color = Color(1, 0.8, 0.44, 1)
+theme_override_colors/font_color = Color(0.475, 0.898, 0.678, 1)
 
 [node name="Step" type="Label" parent="Content/Body/TotalCard/Values"]
 unique_name_in_owner = true
@@ -141,7 +138,7 @@ layout_mode = 2
 text = "发现物品 · 准备计入"
 theme_override_font_sizes/font_size = 22
 horizontal_alignment = 2
-theme_override_colors/font_color = Color(0.55, 0.79, 0.77, 1)
+theme_override_colors/font_color = Color(0.75, 0.79, 0.84, 1)
 
 [node name="ItemCard" type="PanelContainer" parent="Content/Body"]
 unique_name_in_owner = true
@@ -159,7 +156,7 @@ layout_mode = 2
 text = "本件物品"
 theme_override_font_sizes/font_size = 18
 horizontal_alignment = 1
-theme_override_colors/font_color = Color(0.75, 0.67, 0.52, 1)
+theme_override_colors/font_color = Color(0.75, 0.79, 0.84, 1)
 
 [node name="ItemIcon" type="TextureRect" parent="Content/Body/ItemCard/ItemContent"]
 unique_name_in_owner = true

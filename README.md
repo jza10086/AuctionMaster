@@ -78,3 +78,5 @@ API 4 / manifest 2，普通 standard 排名协议。由原版小游戏轮换大�
 `assets/music/` 收录用户提供的四首 Google AI Lyria 生成 BGM，原始 credit.txt 与文件映射随包保留。进入玩法后随机顺序播放，每轮四首各播放一次后重新洗牌，并避免跨轮相邻重复；换仓、搜索和打开图鉴不打断音乐。离开游戏停止播放，音乐受本游戏音乐音量设置控制，默认 Cue 音量为 -18 dB，可在资源中调整。
 
 独立结算预览：`settlement_counter.tscn` 接收已估值的物品列表，按“物品触发 → 加值弹出 → 总价更新”的顺序逐件累计，每件完整价值一次入账，数字错峰缩放倾斜并回弹；三位及以下不显示千位分隔符。动画时长在 Inspector 中配置，目前未替换正式结算面板。
+
+组合预制体复用 `res://core/ui/components/impact_number.tscn`（`PartyImpactNumber`）。常态数字使用通用主题浅色，增值冲击为绿色，亏损为红色；品质色仅保留在物品名称上。公共组件使用 `reset(value)` 初始化、`set_value(value)` 触发动画，默认自行播放；`signed_value` 保持正绿负红，`manual_clock` 可交给父级通过 `advance(delta)` 驱动。字体、颜色、冲击时长和逐位延迟均可在 Inspector 调整。竞拍组合仍为独立展示场景，未接入正式结算流程。

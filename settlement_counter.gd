@@ -4,7 +4,8 @@ signal completed(total: int)
 @export_range(0.1, 2.0) var item_hold_seconds: float = 0.7
 @export_range(0.1, 1.0) var transfer_seconds: float = 0.24
 @export_range(0.1, 2.0) var result_hold_seconds: float = 0.65
-@onready var digits: Control = %Digits
+const ImpactNumber = preload("res://core/ui/components/impact_number.gd")
+@onready var digits: ImpactNumber = %Digits
 @onready var item_card: PanelContainer = %ItemCard
 @onready var item_icon: TextureRect = %ItemIcon
 @onready var item_name: Label = %ItemName
@@ -32,6 +33,7 @@ func _ready() -> void:
 func start(items: Array[Dictionary], initial_total: int = 0, sale_price: int = 0) -> void:
 	_items = items
 	total = initial_total
+	digits.reset(initial_total)
 	_price = sale_price
 	_index = -1
 	_receipts.clear()
@@ -75,7 +77,7 @@ func _next_item() -> void:
 		equation.text = "仓库价格  " + format_number(total) + "  −  成交价  " + format_number(_price)
 		var profit: int = total - _price
 		result.text = ("盈利  +" if profit >= 0 else "亏损  −") + format_number(absi(profit))
-		result.add_theme_color_override("font_color", Color("#79e5ad") if profit >= 0 else Color("#ff787c"))
+		result.add_theme_color_override("font_color", digits.increase_color if profit >= 0 else digits.decrease_color)
 		step_label.text = "结算完成"
 		operand.text = "=  " + format_number(total)
 		completed.emit(total)
@@ -86,7 +88,8 @@ func _next_item() -> void:
 	item_name.text = _items[_index].name
 	item_icon.texture = _items[_index].icon
 	item_value.text = "+" + format_number(int(_items[_index].value))
-	item_value.add_theme_color_override("font_color", _items[_index].color)
+	item_value.add_theme_color_override("font_color", digits.increase_color)
+	item_name.add_theme_color_override("font_color", _items[_index].color)
 	counter.text = "物品  %02d / %02d" % [_index + 1, _items.size()]
 	_render()
 
@@ -107,7 +110,7 @@ func _render() -> void:
 	item_value.rotation = source_hit * -0.045
 	item_value.modulate.a = 1.0 - clampf((hit_time - transfer_seconds) / result_hold_seconds, 0.0, 0.5)
 	for index: int in _receipts.size():
-		_receipts[index].modulate = Color("#f4cf78") if index == _index else (Color("#a5bfc1") if index < _index else Color("#566e78"))
+		_receipts[index].modulate = digits.increase_color if index == _index else (Color("#a5bfc1") if index < _index else Color("#566e78"))
 	item_card.pivot_offset = item_card.size * 0.5
 	var pop: float = sin(clampf(maxf(0.0, hit_time) / 0.24, 0.0, 1.0) * PI)
 	item_card.scale = Vector2.ONE * (1.0 + pop * 0.065)
