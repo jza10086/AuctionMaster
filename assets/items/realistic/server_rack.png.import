@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://w8uvic7hovi2"
-path="res://.godot/imported/server_rack.png-aa5ae9fbc16ed15fe36db5227aa1e7d8.ctex"
+path="res://.godot/imported/server_rack.png-5ecd978d7cf6a425a7c37e79bc8b2b80.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/server_rack.png"
-dest_files=["res://.godot/imported/server_rack.png-aa5ae9fbc16ed15fe36db5227aa1e7d8.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/server_rack.png"
+dest_files=["res://.godot/imported/server_rack.png-5ecd978d7cf6a425a7c37e79bc8b2b80.ctex"]
 
 [params]
 

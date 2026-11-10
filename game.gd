@@ -1,16 +1,16 @@
 extends "res://games/protocols/godot_party_default_protocol/ranked_round.gd"
 ## Auction entry owns transport and panels; session owns secrets, rules and settlement.
-const WarehouseView: Script = preload("res://games/minigame/godot_party_default_auction_master/warehouse_view.gd")
-const Session: Script = preload("res://games/minigame/godot_party_default_auction_master/session.gd")
-const PlayerCard: PackedScene = preload("res://games/minigame/godot_party_default_auction_master/player_card.tscn")
-const SettlementPanel: Script = preload("res://games/minigame/godot_party_default_auction_master/settlement_panel.gd")
-const ConditionsPanel: Script = preload("res://games/minigame/godot_party_default_auction_master/conditions_panel.gd")
-const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
-const DiscoveryFlash: Script = preload("res://games/minigame/godot_party_default_auction_master/discovery_flash.gd")
+const WarehouseView: Script = preload("res://games/minigame/gp_auction_master/warehouse_view.gd")
+const Session: Script = preload("res://games/minigame/gp_auction_master/session.gd")
+const PlayerCard: PackedScene = preload("res://games/minigame/gp_auction_master/player_card.tscn")
+const SettlementPanel: Script = preload("res://games/minigame/gp_auction_master/settlement_panel.gd")
+const ConditionsPanel: Script = preload("res://games/minigame/gp_auction_master/conditions_panel.gd")
+const Catalog: Script = preload("res://games/minigame/gp_auction_master/item_catalog.gd")
+const DiscoveryFlash: Script = preload("res://games/minigame/gp_auction_master/discovery_flash.gd")
 @export var search_sound: PartyAudioCue
 @export var reveal_sounds: Array[PartyAudioCue] = []
-const MusicPlaylist: Script = preload("res://games/minigame/godot_party_default_auction_master/music_playlist.gd")
-const CatalogPanel: Script = preload("res://games/minigame/godot_party_default_auction_master/catalog_panel.gd")
+const MusicPlaylist: Script = preload("res://games/minigame/gp_auction_master/music_playlist.gd")
+const CatalogPanel: Script = preload("res://games/minigame/gp_auction_master/catalog_panel.gd")
 @onready var music_playlist: MusicPlaylist = %MusicPlaylist
 @onready var catalog_panel: CatalogPanel = %CatalogPanel
 @onready var game_audio: PartyGameAudio = %GameAudio

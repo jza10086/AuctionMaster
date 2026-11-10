@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://hoxqhqdjvtpg"
-path="res://.godot/imported/headphones.svg-1a9e465d8f2e7cfdf43a7e5ea387a136.ctex"
+path="res://.godot/imported/headphones.svg-3f1f6b32dee5004b2c7beb8fe09c26e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/headphones.svg"
-dest_files=["res://.godot/imported/headphones.svg-1a9e465d8f2e7cfdf43a7e5ea387a136.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/headphones.svg"
+dest_files=["res://.godot/imported/headphones.svg-3f1f6b32dee5004b2c7beb8fe09c26e4.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dmnaqe3daxycb"
-path="res://.godot/imported/telescope.png-2914f41322708f45a448774218c0990d.ctex"
+path="res://.godot/imported/telescope.png-9c1cda8053070e1d80e53810656090af.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/telescope.png"
-dest_files=["res://.godot/imported/telescope.png-2914f41322708f45a448774218c0990d.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/telescope.png"
+dest_files=["res://.godot/imported/telescope.png-9c1cda8053070e1d80e53810656090af.ctex"]
 
 [params]
 

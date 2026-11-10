@@ -1,6 +1,6 @@
 extends Resource
 ## Host room rules. Schema reads these defaults; runtime receives the host snapshot.
-const Conditions: Script = preload("res://games/minigame/godot_party_default_auction_master/warehouse_conditions.gd")
+const Conditions: Script = preload("res://games/minigame/gp_auction_master/warehouse_conditions.gd")
 const BID_UNIT: int = 1
 @export var conditions: Conditions = Conditions.new()
 const ITEMS_END: float = 0.5

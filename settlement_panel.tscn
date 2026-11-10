@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/settlement_panel.gd" id="panel"]
-[ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/rolling_number.gd" id="roller"]
-[ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/search_effect.gd" id="scanner"]
+[ext_resource type="Script" path="res://games/minigame/gp_auction_master/settlement_panel.gd" id="panel"]
+[ext_resource type="Script" path="res://games/minigame/gp_auction_master/rolling_number.gd" id="roller"]
+[ext_resource type="Script" path="res://games/minigame/gp_auction_master/search_effect.gd" id="scanner"]
 
 [sub_resource type="StyleBoxFlat" id="Background"]
 content_margin_left = 24.0

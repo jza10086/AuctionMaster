@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bduj0iqalkknf"
-path="res://.godot/imported/soldering_iron.png-bcc91fc1766b98485d29a43a6fd3ac67.ctex"
+path="res://.godot/imported/soldering_iron.png-fff0ef4a1c8fc2fd96b61914020d1d10.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/soldering_iron.png"
-dest_files=["res://.godot/imported/soldering_iron.png-bcc91fc1766b98485d29a43a6fd3ac67.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/soldering_iron.png"
+dest_files=["res://.godot/imported/soldering_iron.png-fff0ef4a1c8fc2fd96b61914020d1d10.ctex"]
 
 [params]
 

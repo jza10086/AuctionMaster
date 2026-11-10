@@ -3,14 +3,14 @@ extends Control
 signal selection_changed(item: Dictionary)
 signal reveal_progress(revealed: int, total: int)
 
-const Rules: Script = preload("res://games/minigame/godot_party_default_auction_master/rules.gd")
-const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
+const Rules: Script = preload("res://games/minigame/gp_auction_master/rules.gd")
+const Catalog: Script = preload("res://games/minigame/gp_auction_master/item_catalog.gd")
 const GRID_COLUMNS: int = Catalog.GRID_COLUMNS
 const GRID_ROWS: int = Catalog.GRID_ROWS
 const CELL_SIZE: float = 60.0
 const GRID_SIZE: Vector2 = Vector2(GRID_COLUMNS * CELL_SIZE, GRID_ROWS * CELL_SIZE)
 const REVEAL_SECONDS: float = 0.12
-const TEXT: Translation = preload("res://games/minigame/godot_party_default_auction_master/i18n/zh_Hans.po")
+const TEXT: Translation = preload("res://games/minigame/gp_auction_master/i18n/zh_Hans.po")
 # Public, read-only-by-convention presentation state for integration and QA.
 var items: Array = []
 var layout: Array[Rect2i] = []
@@ -40,7 +40,7 @@ func _ready() -> void:
 func _load_item_textures() -> void:
 	for item: Dictionary in Catalog.new().items:
 		var kind: String = item.kind
-		var path: String = "res://games/minigame/godot_party_default_auction_master/assets/items/realistic/%s.png" % kind
+		var path: String = "res://games/minigame/gp_auction_master/assets/items/realistic/%s.png" % kind
 		if ResourceLoader.exists(path):
 			var texture: Texture2D = load(path) as Texture2D
 			if texture != null:

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cpw3v6cghr0f0"
-path="res://.godot/imported/portable_scale.png-932350a34e484a9e8065342f8a8988f3.ctex"
+path="res://.godot/imported/portable_scale.png-8e0ecff2680f196ea945bedbcf7dd796.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/portable_scale.png"
-dest_files=["res://.godot/imported/portable_scale.png-932350a34e484a9e8065342f8a8988f3.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/portable_scale.png"
+dest_files=["res://.godot/imported/portable_scale.png-8e0ecff2680f196ea945bedbcf7dd796.ctex"]
 
 [params]
 

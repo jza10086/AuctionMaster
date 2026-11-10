@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b1ciy48dierp5"
-path="res://.godot/imported/backpack.svg-1668d65f2767568d331f03ccd60e933f.ctex"
+path="res://.godot/imported/backpack.svg-3c7e4c9d56d08309cb569be32fe0ed27.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/backpack.svg"
-dest_files=["res://.godot/imported/backpack.svg-1668d65f2767568d331f03ccd60e933f.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/backpack.svg"
+dest_files=["res://.godot/imported/backpack.svg-3c7e4c9d56d08309cb569be32fe0ed27.ctex"]
 
 [params]
 

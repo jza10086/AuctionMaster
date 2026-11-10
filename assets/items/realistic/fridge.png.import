@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bsfdn54ro6tk0"
-path="res://.godot/imported/fridge.png-40339882146524585bc45cbe78b336d5.ctex"
+path="res://.godot/imported/fridge.png-1bfa213b78d885bc1893b6f68b15e305.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/fridge.png"
-dest_files=["res://.godot/imported/fridge.png-40339882146524585bc45cbe78b336d5.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/fridge.png"
+dest_files=["res://.godot/imported/fridge.png-1bfa213b78d885bc1893b6f68b15e305.ctex"]
 
 [params]
 

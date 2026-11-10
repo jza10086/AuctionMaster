@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://doxhkvond1fc6"
-path="res://.godot/imported/soap.png-a836054120443d121acbd4bdb8a4bbc0.ctex"
+path="res://.godot/imported/soap.png-5ec22c83581489629b451260a2e110b4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/soap.png"
-dest_files=["res://.godot/imported/soap.png-a836054120443d121acbd4bdb8a4bbc0.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/soap.png"
+dest_files=["res://.godot/imported/soap.png-5ec22c83581489629b451260a2e110b4.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1syxxdaalwio"
-path="res://.godot/imported/fossil_skeleton.png-f659dce9e56728662621e364f3772dda.ctex"
+path="res://.godot/imported/fossil_skeleton.png-cb9ae6c700af1ac994fe14e1ce3e03f6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/fossil_skeleton.png"
-dest_files=["res://.godot/imported/fossil_skeleton.png-f659dce9e56728662621e364f3772dda.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/fossil_skeleton.png"
+dest_files=["res://.godot/imported/fossil_skeleton.png-cb9ae6c700af1ac994fe14e1ce3e03f6.ctex"]
 
 [params]
 

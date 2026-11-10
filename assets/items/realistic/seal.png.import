@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d1lck0pc5weq2"
-path="res://.godot/imported/seal.png-269c8e9151f7fa9878a99747c26e2667.ctex"
+path="res://.godot/imported/seal.png-3a6d9b89c8fd9a20b955403a677bf2bd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/seal.png"
-dest_files=["res://.godot/imported/seal.png-269c8e9151f7fa9878a99747c26e2667.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/seal.png"
+dest_files=["res://.godot/imported/seal.png-3a6d9b89c8fd9a20b955403a677bf2bd.ctex"]
 
 [params]
 

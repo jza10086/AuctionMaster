@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://daape4dx8alnl"
-path="res://.godot/imported/copper_wire.png-902ac2a74afbaab6b5a5e75144167c8f.ctex"
+path="res://.godot/imported/copper_wire.png-cb14fe02cf3cafc81dc29b1d6ebeeebf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/copper_wire.png"
-dest_files=["res://.godot/imported/copper_wire.png-902ac2a74afbaab6b5a5e75144167c8f.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/copper_wire.png"
+dest_files=["res://.godot/imported/copper_wire.png-cb14fe02cf3cafc81dc29b1d6ebeeebf.ctex"]
 
 [params]
 

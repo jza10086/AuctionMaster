@@ -1,7 +1,7 @@
 extends Control
 ## Static catalogue only: never consumes the current warehouse or private discoveries.
-const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
-const ItemCard: PackedScene = preload("res://games/minigame/godot_party_default_auction_master/catalog_item.tscn")
+const Catalog: Script = preload("res://games/minigame/gp_auction_master/item_catalog.gd")
+const ItemCard: PackedScene = preload("res://games/minigame/gp_auction_master/catalog_item.tscn")
 @onready var grid: GridContainer = %CatalogGrid
 @onready var search: LineEdit = %CatalogSearch
 
@@ -18,7 +18,7 @@ func open_catalog() -> void:
 		for item: Dictionary in items:
 			var card: VBoxContainer = ItemCard.instantiate()
 			grid.add_child(card)
-			card.get_node("Icon").texture = load("res://games/minigame/godot_party_default_auction_master/assets/items/realistic/%s.png" % item.kind)
+			card.get_node("Icon").texture = load("res://games/minigame/gp_auction_master/assets/items/realistic/%s.png" % item.kind)
 			card.get_node("Title").text = item.name
 			card.get_node("Title").add_theme_color_override("font_color", Catalog.QUALITY_COLORS[int(item.quality)])
 			card.get_node("Stripe").visible = int(item.quality) == 6

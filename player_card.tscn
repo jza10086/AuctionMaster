@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/player_card.gd" id="script"]
+[ext_resource type="Script" path="res://games/minigame/gp_auction_master/player_card.gd" id="script"]
 
-[ext_resource type="Script" path="res://games/minigame/godot_party_default_auction_master/rolling_number.gd" id="reel"]
+[ext_resource type="Script" path="res://games/minigame/gp_auction_master/rolling_number.gd" id="reel"]
 
 [sub_resource type="StyleBoxFlat" id="Card"]
 bg_color = Color(0.035, 0.066, 0.095, 0.97)

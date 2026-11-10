@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ygxymosqnbnc"
-path="res://.godot/imported/watch.svg-3dbcdf04c80b6466f1df08dc4f3db2a8.ctex"
+path="res://.godot/imported/watch.svg-e6db1383add4f226ce6a85e3b8ac5c0c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/watch.svg"
-dest_files=["res://.godot/imported/watch.svg-3dbcdf04c80b6466f1df08dc4f3db2a8.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/watch.svg"
+dest_files=["res://.godot/imported/watch.svg-e6db1383add4f226ce6a85e3b8ac5c0c.ctex"]
 
 [params]
 

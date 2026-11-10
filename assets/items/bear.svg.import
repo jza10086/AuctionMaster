@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cpu1iq6ijyhn7"
-path="res://.godot/imported/bear.svg-b2355acad13ac760eb47fe9dbaace17b.ctex"
+path="res://.godot/imported/bear.svg-3090fa7530d291a61d5be4cdc6f7e99c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/bear.svg"
-dest_files=["res://.godot/imported/bear.svg-b2355acad13ac760eb47fe9dbaace17b.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/bear.svg"
+dest_files=["res://.godot/imported/bear.svg-3090fa7530d291a61d5be4cdc6f7e99c.ctex"]
 
 [params]
 

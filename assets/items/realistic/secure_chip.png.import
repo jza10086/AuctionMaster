@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b38fd2ldetd2h"
-path="res://.godot/imported/secure_chip.png-be99e5f965c0473688572245a0e514bd.ctex"
+path="res://.godot/imported/secure_chip.png-b0ab07c9ea7b644a2695b179f9f3ccf7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/secure_chip.png"
-dest_files=["res://.godot/imported/secure_chip.png-be99e5f965c0473688572245a0e514bd.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/secure_chip.png"
+dest_files=["res://.godot/imported/secure_chip.png-b0ab07c9ea7b644a2695b179f9f3ccf7.ctex"]
 
 [params]
 

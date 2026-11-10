@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cturym1f5n1lb"
-path="res://.godot/imported/train.png-ca9c80223f561e43c217f5949292f893.ctex"
+path="res://.godot/imported/train.png-daf87836b1c58051bb7e47647e5a6563.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/train.png"
-dest_files=["res://.godot/imported/train.png-ca9c80223f561e43c217f5949292f893.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/train.png"
+dest_files=["res://.godot/imported/train.png-daf87836b1c58051bb7e47647e5a6563.ctex"]
 
 [params]
 

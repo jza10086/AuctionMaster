@@ -1,6 +1,6 @@
 extends Resource
 ## Warehouse-local rule selection, valuation and public evidence. Never owns player state.
-const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
+const Catalog: Script = preload("res://games/minigame/gp_auction_master/item_catalog.gd")
 const SPECIAL_IDS: Array[String] = ["reserve", "step", "patient", "fast", "hot", "cold", "small", "large", "common", "quality", "unique", "bulk", "cross", "assist"]
 const PUBLIC_IDS: Array[String] = ["outline", "quality", "full", "tags", "region", "count", "cells", "quality_count", "tag_count", "largest", "prices", "value_band", "highest", "cheap", "duplicates", "synergy", "concentration", "absent"]
 const ASSISTS: Array[String] = ["full", "outline", "quality", "tags"]

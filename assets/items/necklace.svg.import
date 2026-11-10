@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dcyp8ej7cae5f"
-path="res://.godot/imported/necklace.svg-92806da57efe029c1391ddb8cda268f2.ctex"
+path="res://.godot/imported/necklace.svg-9dbfe5127ba7b91d4fdcf4711f36be03.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/necklace.svg"
-dest_files=["res://.godot/imported/necklace.svg-92806da57efe029c1391ddb8cda268f2.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/necklace.svg"
+dest_files=["res://.godot/imported/necklace.svg-9dbfe5127ba7b91d4fdcf4711f36be03.ctex"]
 
 [params]
 

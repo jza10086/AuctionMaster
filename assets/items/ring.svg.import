@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://j8mmffcuxgle"
-path="res://.godot/imported/ring.svg-3b964d95be314deadf5550d14091f637.ctex"
+path="res://.godot/imported/ring.svg-70f705bd7567a4a45c35a2a99f6790dc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/ring.svg"
-dest_files=["res://.godot/imported/ring.svg-3b964d95be314deadf5550d14091f637.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/ring.svg"
+dest_files=["res://.godot/imported/ring.svg-70f705bd7567a4a45c35a2a99f6790dc.ctex"]
 
 [params]
 

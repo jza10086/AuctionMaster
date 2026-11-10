@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cmhbyctu20us3"
-path="res://.godot/imported/lantern.png-b073ee50fa29fb13547951a48a9be875.ctex"
+path="res://.godot/imported/lantern.png-8f8910c06dd17f8cf351e60d2c860037.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/lantern.png"
-dest_files=["res://.godot/imported/lantern.png-b073ee50fa29fb13547951a48a9be875.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/lantern.png"
+dest_files=["res://.godot/imported/lantern.png-8f8910c06dd17f8cf351e60d2c860037.ctex"]
 
 [params]
 

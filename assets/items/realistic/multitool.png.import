@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bim662w5qqob2"
-path="res://.godot/imported/multitool.png-a9459920fdca5997cf76b65cdd3d98be.ctex"
+path="res://.godot/imported/multitool.png-6063e6605d5c02ba686dc5889ed8e2e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/multitool.png"
-dest_files=["res://.godot/imported/multitool.png-a9459920fdca5997cf76b65cdd3d98be.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/multitool.png"
+dest_files=["res://.godot/imported/multitool.png-6063e6605d5c02ba686dc5889ed8e2e7.ctex"]
 
 [params]
 

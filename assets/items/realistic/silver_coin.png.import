@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://byd1uj1o58dew"
-path="res://.godot/imported/silver_coin.png-27377ad805521233f234c6408d41e994.ctex"
+path="res://.godot/imported/silver_coin.png-57606b045957cf83cb511da587e9ebd8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/silver_coin.png"
-dest_files=["res://.godot/imported/silver_coin.png-27377ad805521233f234c6408d41e994.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/silver_coin.png"
+dest_files=["res://.godot/imported/silver_coin.png-57606b045957cf83cb511da587e9ebd8.ctex"]
 
 [params]
 

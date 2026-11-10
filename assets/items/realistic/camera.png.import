@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c8vucogmtiwns"
-path="res://.godot/imported/camera.png-dc6d5bd9e171373f281f8067f92d5178.ctex"
+path="res://.godot/imported/camera.png-345761163a4a1823a9f83e807d0f6669.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/camera.png"
-dest_files=["res://.godot/imported/camera.png-dc6d5bd9e171373f281f8067f92d5178.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/camera.png"
+dest_files=["res://.godot/imported/camera.png-345761163a4a1823a9f83e807d0f6669.ctex"]
 
 [params]
 

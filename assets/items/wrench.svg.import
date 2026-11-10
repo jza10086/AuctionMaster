@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://beces3x5wfmh7"
-path="res://.godot/imported/wrench.svg-7545679f347b09fdc0146e87f175ef59.ctex"
+path="res://.godot/imported/wrench.svg-3d2900ad1667f58052e85ebe359a1010.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/wrench.svg"
-dest_files=["res://.godot/imported/wrench.svg-7545679f347b09fdc0146e87f175ef59.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/wrench.svg"
+dest_files=["res://.godot/imported/wrench.svg-3d2900ad1667f58052e85ebe359a1010.ctex"]
 
 [params]
 

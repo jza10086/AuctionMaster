@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b4rcdtv86solf"
-path="res://.godot/imported/arcade_cabinet.png-1b7c12edd64378a83cfaaf53972d1880.ctex"
+path="res://.godot/imported/arcade_cabinet.png-027d76d15ebf5b8458922e7ad3cf541e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/arcade_cabinet.png"
-dest_files=["res://.godot/imported/arcade_cabinet.png-1b7c12edd64378a83cfaaf53972d1880.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/arcade_cabinet.png"
+dest_files=["res://.godot/imported/arcade_cabinet.png-027d76d15ebf5b8458922e7ad3cf541e.ctex"]
 
 [params]
 

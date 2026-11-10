@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdmulmuqlfogd"
-path="res://.godot/imported/gold.png-661837073907705a3a80019c763ea183.ctex"
+path="res://.godot/imported/gold.png-6c2dc7447f189febabd3f57f98c0dbf4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/gold.png"
-dest_files=["res://.godot/imported/gold.png-661837073907705a3a80019c763ea183.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/gold.png"
+dest_files=["res://.godot/imported/gold.png-6c2dc7447f189febabd3f57f98c0dbf4.ctex"]
 
 [params]
 

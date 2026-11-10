@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://davrywes8fydc"
-path="res://.godot/imported/perfume.png-d9db9a5d1a9ab4e0b57685e355f3cfc0.ctex"
+path="res://.godot/imported/perfume.png-660a3abdd9685dbe9e816880cae908f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/perfume.png"
-dest_files=["res://.godot/imported/perfume.png-d9db9a5d1a9ab4e0b57685e355f3cfc0.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/perfume.png"
+dest_files=["res://.godot/imported/perfume.png-660a3abdd9685dbe9e816880cae908f5.ctex"]
 
 [params]
 

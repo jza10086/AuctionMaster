@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://duomy3wu1dixc"
-path="res://.godot/imported/drill.png-a6c4068cddfc04daaee198129b38c3d9.ctex"
+path="res://.godot/imported/drill.png-1691149ed19ce1aa13e0514df4787076.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/drill.png"
-dest_files=["res://.godot/imported/drill.png-a6c4068cddfc04daaee198129b38c3d9.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/drill.png"
+dest_files=["res://.godot/imported/drill.png-1691149ed19ce1aa13e0514df4787076.ctex"]
 
 [params]
 

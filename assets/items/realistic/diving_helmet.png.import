@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://be2qu3un0dr8t"
-path="res://.godot/imported/diving_helmet.png-59f0102f77cade3f2de5125715166780.ctex"
+path="res://.godot/imported/diving_helmet.png-1cf1cd003f5b39351e069cfcc2b7a6d0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/diving_helmet.png"
-dest_files=["res://.godot/imported/diving_helmet.png-59f0102f77cade3f2de5125715166780.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/diving_helmet.png"
+dest_files=["res://.godot/imported/diving_helmet.png-1cf1cd003f5b39351e069cfcc2b7a6d0.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bjrylxvncn4e0"
-path="res://.godot/imported/robot.svg-94465dcc14d48f7efd02e1365800e7d4.ctex"
+path="res://.godot/imported/robot.svg-7f5a5578578cfbebda218c7df30f0d4c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/robot.svg"
-dest_files=["res://.godot/imported/robot.svg-94465dcc14d48f7efd02e1365800e7d4.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/robot.svg"
+dest_files=["res://.godot/imported/robot.svg-7f5a5578578cfbebda218c7df30f0d4c.ctex"]
 
 [params]
 

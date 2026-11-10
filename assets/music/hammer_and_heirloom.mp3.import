@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://clauc44g3comn"
-path="res://.godot/imported/hammer_and_heirloom.mp3-e75eb3d649fa42a20440848e0245b30e.mp3str"
+path="res://.godot/imported/hammer_and_heirloom.mp3-dccb71f4b6a0d4e6cfcabaf221fd53e1.mp3str"
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/music/hammer_and_heirloom.mp3"
-dest_files=["res://.godot/imported/hammer_and_heirloom.mp3-e75eb3d649fa42a20440848e0245b30e.mp3str"]
+source_file="res://games/minigame/gp_auction_master/assets/music/hammer_and_heirloom.mp3"
+dest_files=["res://.godot/imported/hammer_and_heirloom.mp3-dccb71f4b6a0d4e6cfcabaf221fd53e1.mp3str"]
 
 [params]
 

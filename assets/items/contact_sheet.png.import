@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bbtp7ufswsbd2"
-path="res://.godot/imported/contact_sheet.png-30c06d44d99f9b2695d2f6fdb4d281f7.ctex"
+path="res://.godot/imported/contact_sheet.png-7d01802abada9874567576a611015392.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/contact_sheet.png"
-dest_files=["res://.godot/imported/contact_sheet.png-30c06d44d99f9b2695d2f6fdb4d281f7.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/contact_sheet.png"
+dest_files=["res://.godot/imported/contact_sheet.png-7d01802abada9874567576a611015392.ctex"]
 
 [params]
 

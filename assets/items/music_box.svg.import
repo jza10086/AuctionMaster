@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://seagmy07kwgd"
-path="res://.godot/imported/music_box.svg-e86b4030b79442efd8f5c9f067fdc873.ctex"
+path="res://.godot/imported/music_box.svg-812a408d799bcafa755fd019a7ea8dc0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/music_box.svg"
-dest_files=["res://.godot/imported/music_box.svg-e86b4030b79442efd8f5c9f067fdc873.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/music_box.svg"
+dest_files=["res://.godot/imported/music_box.svg-812a408d799bcafa755fd019a7ea8dc0.ctex"]
 
 [params]
 

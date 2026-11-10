@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://wccf3ajygdh4"
-path="res://.godot/imported/work_gloves.png-303d96b3c9c34e6a7f5f4456659e63da.ctex"
+path="res://.godot/imported/work_gloves.png-de8d84f97f3c0dcace9ba8f547c591a2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/work_gloves.png"
-dest_files=["res://.godot/imported/work_gloves.png-303d96b3c9c34e6a7f5f4456659e63da.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/work_gloves.png"
+dest_files=["res://.godot/imported/work_gloves.png-de8d84f97f3c0dcace9ba8f547c591a2.ctex"]
 
 [params]
 

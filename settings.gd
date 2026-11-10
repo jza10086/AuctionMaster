@@ -1,6 +1,6 @@
 extends RefCounted
 ## Room form and runtime share rule defaults.
-const Rules: Script = preload("res://games/minigame/godot_party_default_auction_master/rules.gd")
+const Rules: Script = preload("res://games/minigame/gp_auction_master/rules.gd")
 
 static func schema() -> Dictionary:
 	var defaults: Rules = Rules.new()

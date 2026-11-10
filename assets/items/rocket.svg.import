@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cx3f51438jpke"
-path="res://.godot/imported/rocket.svg-52bb5e354afb17c5c8ecdd84a7f209f7.ctex"
+path="res://.godot/imported/rocket.svg-f33b0771a8ce3907b64554b066303a06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/rocket.svg"
-dest_files=["res://.godot/imported/rocket.svg-52bb5e354afb17c5c8ecdd84a7f209f7.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/rocket.svg"
+dest_files=["res://.godot/imported/rocket.svg-f33b0771a8ce3907b64554b066303a06.ctex"]
 
 [params]
 

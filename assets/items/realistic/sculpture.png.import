@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ca52xuyu0xtpt"
-path="res://.godot/imported/sculpture.png-592847155c651eb52d67db252bf8a2c2.ctex"
+path="res://.godot/imported/sculpture.png-882e5ab958c7caa6f60f185dd44429e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/sculpture.png"
-dest_files=["res://.godot/imported/sculpture.png-592847155c651eb52d67db252bf8a2c2.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/sculpture.png"
+dest_files=["res://.godot/imported/sculpture.png-882e5ab958c7caa6f60f185dd44429e6.ctex"]
 
 [params]
 

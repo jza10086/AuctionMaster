@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dvn0iouwhxuoc"
-path="res://.godot/imported/memory_card.png-589ead9ed8762ba95ecbe0e61fcc533b.ctex"
+path="res://.godot/imported/memory_card.png-c234e96c2810a6127de78d1f75e2d940.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/memory_card.png"
-dest_files=["res://.godot/imported/memory_card.png-589ead9ed8762ba95ecbe0e61fcc533b.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/memory_card.png"
+dest_files=["res://.godot/imported/memory_card.png-c234e96c2810a6127de78d1f75e2d940.ctex"]
 
 [params]
 

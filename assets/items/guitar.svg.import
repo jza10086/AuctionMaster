@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bjlfvxkfnylwr"
-path="res://.godot/imported/guitar.svg-b352f6d3c88748e966e41c166b15a5ca.ctex"
+path="res://.godot/imported/guitar.svg-ef30703d367d924b0e96b8a2a937b6bd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/guitar.svg"
-dest_files=["res://.godot/imported/guitar.svg-b352f6d3c88748e966e41c166b15a5ca.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/guitar.svg"
+dest_files=["res://.godot/imported/guitar.svg-ef30703d367d924b0e96b8a2a937b6bd.ctex"]
 
 [params]
 

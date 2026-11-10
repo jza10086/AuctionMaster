@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bfhle7c5owrd6"
-path="res://.godot/imported/binoculars.svg-d1d145d389a8c641b98479d0252f183a.ctex"
+path="res://.godot/imported/binoculars.svg-ca38928c112e4033529a7f5196dab46b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/binoculars.svg"
-dest_files=["res://.godot/imported/binoculars.svg-d1d145d389a8c641b98479d0252f183a.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/binoculars.svg"
+dest_files=["res://.godot/imported/binoculars.svg-ca38928c112e4033529a7f5196dab46b.ctex"]
 
 [params]
 

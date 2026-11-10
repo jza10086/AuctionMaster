@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://d2205tj04k7mp"
-path="res://.godot/imported/mahogany_and_velvet.mp3-e873c626b663d034541e95f377b2f6ba.mp3str"
+path="res://.godot/imported/mahogany_and_velvet.mp3-76d13ae53d67c2f6a56b0bc5bd1a1ab4.mp3str"
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/music/mahogany_and_velvet.mp3"
-dest_files=["res://.godot/imported/mahogany_and_velvet.mp3-e873c626b663d034541e95f377b2f6ba.mp3str"]
+source_file="res://games/minigame/gp_auction_master/assets/music/mahogany_and_velvet.mp3"
+dest_files=["res://.godot/imported/mahogany_and_velvet.mp3-76d13ae53d67c2f6a56b0bc5bd1a1ab4.mp3str"]
 
 [params]
 

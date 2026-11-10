@@ -1,7 +1,7 @@
 extends RefCounted
 ## Host-owned auction. Recipient snapshots contain only that player's discovered fields.
-const Rules: Script = preload("res://games/minigame/godot_party_default_auction_master/rules.gd")
-const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
+const Rules: Script = preload("res://games/minigame/gp_auction_master/rules.gd")
+const Catalog: Script = preload("res://games/minigame/gp_auction_master/item_catalog.gd")
 const ASSISTS: Array[String] = ["full", "outline", "quality", "tags"]
 const Conditions: Script = Rules.Conditions
 var rules: Rules = Rules.new()

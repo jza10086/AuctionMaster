@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ca7uof3u6oyht"
-path="res://.godot/imported/toolbox.svg-cd87b5f8536f6689f3e52cd20f71b69e.ctex"
+path="res://.godot/imported/toolbox.svg-a686de10d5230530197fed4afde6e1cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/toolbox.svg"
-dest_files=["res://.godot/imported/toolbox.svg-cd87b5f8536f6689f3e52cd20f71b69e.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/toolbox.svg"
+dest_files=["res://.godot/imported/toolbox.svg-a686de10d5230530197fed4afde6e1cc.ctex"]
 
 [params]
 

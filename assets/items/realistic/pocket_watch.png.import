@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dlws6lb5bjtcd"
-path="res://.godot/imported/pocket_watch.png-79256cb0e1c64daa63681ce7e4fcc0af.ctex"
+path="res://.godot/imported/pocket_watch.png-fd8e900caeeccadb7bac7b325e947c5c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/pocket_watch.png"
-dest_files=["res://.godot/imported/pocket_watch.png-79256cb0e1c64daa63681ce7e4fcc0af.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/pocket_watch.png"
+dest_files=["res://.godot/imported/pocket_watch.png-fd8e900caeeccadb7bac7b325e947c5c.ctex"]
 
 [params]
 

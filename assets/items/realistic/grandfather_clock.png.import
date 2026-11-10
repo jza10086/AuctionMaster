@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bdpapi3arfp7o"
-path="res://.godot/imported/grandfather_clock.png-60fe1dbe19dab9e4ce325cd750d724cd.ctex"
+path="res://.godot/imported/grandfather_clock.png-cca7ec7c07c72401b178908a5fe33fd3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/grandfather_clock.png"
-dest_files=["res://.godot/imported/grandfather_clock.png-60fe1dbe19dab9e4ce325cd750d724cd.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/grandfather_clock.png"
+dest_files=["res://.godot/imported/grandfather_clock.png-cca7ec7c07c72401b178908a5fe33fd3.ctex"]
 
 [params]
 

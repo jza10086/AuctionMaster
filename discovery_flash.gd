@@ -1,6 +1,6 @@
 extends Control
 ## A single soft flare on real high-quality discoveries, never on search duration.
-const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
+const Catalog: Script = preload("res://games/minigame/gp_auction_master/item_catalog.gd")
 @export_range(0, 6) var minimum_quality: int = 3
 @export_range(0.1, 2.0) var duration: float = 0.85
 @export_range(0.0, 1.0) var intensity: float = 0.65

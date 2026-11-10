@@ -1,9 +1,9 @@
 extends PanelContainer
 ## Presentation only: interpolate the host clock; all prices and payouts come from its snapshot.
-const Rules: Script = preload("res://games/minigame/godot_party_default_auction_master/rules.gd")
-const Catalog: Script = preload("res://games/minigame/godot_party_default_auction_master/item_catalog.gd")
-const Scanner: Script = preload("res://games/minigame/godot_party_default_auction_master/search_effect.gd")
-const Roller: Script = preload("res://games/minigame/godot_party_default_auction_master/rolling_number.gd")
+const Rules: Script = preload("res://games/minigame/gp_auction_master/rules.gd")
+const Catalog: Script = preload("res://games/minigame/gp_auction_master/item_catalog.gd")
+const Scanner: Script = preload("res://games/minigame/gp_auction_master/search_effect.gd")
+const Roller: Script = preload("res://games/minigame/gp_auction_master/rolling_number.gd")
 @onready var winner_label: Label = %Winner
 @onready var stage_label: Label = %Stage
 @onready var item_box: VBoxContainer = %ItemBox
@@ -92,7 +92,7 @@ func _render(elapsed: float) -> void:
 			var item: Dictionary = snapshot.items[index]
 			if index != _item_index:
 				_item_index = index
-				item_icon.texture = load("res://games/minigame/godot_party_default_auction_master/assets/items/realistic/%s.png" % item.kind)
+				item_icon.texture = load("res://games/minigame/gp_auction_master/assets/items/realistic/%s.png" % item.kind)
 			item_value.follow_value(int(item.effective_value), elapsed)
 			item_name.text = item.name if show_found else "正在搜索…"
 			item_name.add_theme_color_override("font_color", Catalog.QUALITY_COLORS[int(item.quality)] if show_found else Color("99b5c4"))

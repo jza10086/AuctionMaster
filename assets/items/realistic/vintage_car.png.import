@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c4mxn7qjdbsnq"
-path="res://.godot/imported/vintage_car.png-2dd1859ff9ea784566c9ce5b24ec98db.ctex"
+path="res://.godot/imported/vintage_car.png-e04ef7ee9025248d1b0305abab9f5828.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/vintage_car.png"
-dest_files=["res://.godot/imported/vintage_car.png-2dd1859ff9ea784566c9ce5b24ec98db.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/vintage_car.png"
+dest_files=["res://.godot/imported/vintage_car.png-e04ef7ee9025248d1b0305abab9f5828.ctex"]
 
 [params]
 

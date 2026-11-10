@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://djpamh01h0qvf"
-path="res://.godot/imported/cloth_rag.png-9f15e333fca284ba785c0521065c82dc.ctex"
+path="res://.godot/imported/cloth_rag.png-7ae9294b6344465b331796d76d292bec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/cloth_rag.png"
-dest_files=["res://.godot/imported/cloth_rag.png-9f15e333fca284ba785c0521065c82dc.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/cloth_rag.png"
+dest_files=["res://.godot/imported/cloth_rag.png-7ae9294b6344465b331796d76d292bec.ctex"]
 
 [params]
 

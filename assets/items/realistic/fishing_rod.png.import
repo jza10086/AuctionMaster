@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dry31mj7e0mad"
-path="res://.godot/imported/fishing_rod.png-6acf334656a82f18d40e2f006aa3b9f0.ctex"
+path="res://.godot/imported/fishing_rod.png-ba21397538ed9ff0c48fd9ffceaa40e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/fishing_rod.png"
-dest_files=["res://.godot/imported/fishing_rod.png-6acf334656a82f18d40e2f006aa3b9f0.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/fishing_rod.png"
+dest_files=["res://.godot/imported/fishing_rod.png-ba21397538ed9ff0c48fd9ffceaa40e6.ctex"]
 
 [params]
 

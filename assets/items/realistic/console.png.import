@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dudiiprgtnypm"
-path="res://.godot/imported/console.png-913339b9797c05a96ae1221524ba9fdc.ctex"
+path="res://.godot/imported/console.png-8f9f937c583860706bd950b9725de5bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/console.png"
-dest_files=["res://.godot/imported/console.png-913339b9797c05a96ae1221524ba9fdc.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/console.png"
+dest_files=["res://.godot/imported/console.png-8f9f937c583860706bd950b9725de5bb.ctex"]
 
 [params]
 

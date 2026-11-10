@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ccry5fjqgq6tw"
-path="res://.godot/imported/jade_pendant.png-dcfdc1895af810994fb9eb33eb31b14a.ctex"
+path="res://.godot/imported/jade_pendant.png-eeac84a89dede21ec35994c272bd694d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_auction_master/assets/items/realistic/jade_pendant.png"
-dest_files=["res://.godot/imported/jade_pendant.png-dcfdc1895af810994fb9eb33eb31b14a.ctex"]
+source_file="res://games/minigame/gp_auction_master/assets/items/realistic/jade_pendant.png"
+dest_files=["res://.godot/imported/jade_pendant.png-eeac84a89dede21ec35994c272bd694d.ctex"]
 
 [params]
 
