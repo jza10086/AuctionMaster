@@ -1,130 +1,92 @@
-extends PanelContainer
-## Standalone presentation prefab. Supplied values are already appraised; no economy or network writes.
-signal completed(total: int)
-@export_range(0.1, 2.0) var item_hold_seconds: float = 0.7
-@export_range(0.1, 1.0) var transfer_seconds: float = 0.24
-@export_range(0.1, 2.0) var result_hold_seconds: float = 0.65
-const ImpactNumber = preload("res://core/ui/components/impact_number.gd")
-@onready var digits: ImpactNumber = %Digits
-@onready var item_card: PanelContainer = %ItemCard
-@onready var item_icon: TextureRect = %ItemIcon
-@onready var item_name: Label = %ItemName
-@onready var item_value: Label = %ItemValue
-@onready var operand: Label = %Operand
-@onready var equation: Label = %Equation
-@onready var step_label: Label = %Step
-@onready var counter: Label = %Counter
-@onready var ledger: HBoxContainer = %Ledger
-@onready var result: Label = %Result
-var total: int = 0
-var _items: Array[Dictionary] = []
-var _index: int = -1
-var _elapsed: float = 0.0
-var _before: int = 0
-var _price: int = 0
-var _active: bool = false
+extends Control
+## Presentation-only vertical settlement: item values accumulate, then three static amounts appear.
+signal completed(balance: int)
 
-var _receipts: Array[Label] = []
+const ImpactNumber = preload("res://core/ui/components/impact_number.gd")
+@export_range(0.1, 2.0) var item_interval_seconds: float = 0.65
+@export_range(0.1, 5.0) var reveal_interval_seconds: float = 1.0
+@onready var digits: ImpactNumber = %Digits
+@onready var bonus: ImpactNumber = %Bonus
+@onready var price: ImpactNumber = %Price
+@onready var balance: ImpactNumber = %Balance
+@onready var base_sign: Label = %BaseSign
+@onready var bonus_sign: Label = %BonusSign
+@onready var price_sign: Label = %PriceSign
+@onready var balance_sign: Label = %BalanceSign
+@onready var bonus_row: HBoxContainer = %BonusRow
+@onready var price_row: HBoxContainer = %PriceRow
+@onready var balance_row: HBoxContainer = %BalanceRow
+
+var total: int = 0
+var _values: Array[int] = []
+var _bonus: int = 0
+var _price: int = 0
+var _index: int = 0
+var _stage: int = 0
+var _elapsed: float = 0.0
+var _next_at: float = 0.0
+var _active: bool = false
 
 func _ready() -> void:
 	set_process(false)
 
-## Each entry supplies name, value, icon (Texture2D), and color (Color). Timing is Inspector-editable.
-func start(items: Array[Dictionary], initial_total: int = 0, sale_price: int = 0) -> void:
-	_items = items
-	total = initial_total
-	digits.reset(initial_total)
+## item_values are base values, excluding bonus; bonus_value may be signed.
+## No item metadata or textures are required. Restarts clear all later rows.
+func start(item_values: Array[int], bonus_value: int = 0, sale_price: int = 0) -> void:
+	_values = item_values.duplicate()
+	_bonus = bonus_value
 	_price = sale_price
-	_index = -1
-	_receipts.clear()
-	for child: Node in ledger.get_children():
-		child.queue_free()
-	for item: Dictionary in items:
-		var label: Label = Label.new()
-		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.add_theme_font_size_override("font_size", 18)
-		label.text = item.name + "\n待计入"
-		ledger.add_child(label)
-		_receipts.append(label)
-	result.text = ""
-	_next_item()
+	total = 0
+	_index = 0
+	_stage = 0 if not _values.is_empty() else 1
+	_elapsed = 0.0
+	_next_at = item_interval_seconds if _stage == 0 else reveal_interval_seconds
+	_active = true
+	_set_amount(digits, base_sign, 0)
+	_set_amount(bonus, bonus_sign, bonus_value)
+	_set_amount(price, price_sign, -sale_price)
+	_set_amount(balance, balance_sign, 0)
+	bonus_row.modulate.a = 0.0
+	price_row.modulate.a = 0.0
+	balance_row.modulate.a = 0.0
 	set_process(true)
 
 func _process(delta: float) -> void:
 	advance(delta)
 
-## Shared deterministic animation clock for live playback and frame-by-frame capture.
+## A shared clock keeps the base-number impact and the one-second reveals deterministic.
 func advance(delta: float) -> void:
 	digits.advance(delta)
 	if not _active:
-		if digits.is_settled():
-			set_process(false)
 		return
 	_elapsed += delta
-	var duration: float = item_hold_seconds + transfer_seconds + result_hold_seconds
-	_render()
-	if _elapsed >= duration:
-		total = _before + int(_items[_index].value)
-		_receipts[_index].text = _items[_index].name + "\n+" + format_number(int(_items[_index].value))
-		_next_item()
+	while _active and _elapsed >= _next_at:
+		if _stage == 0:
+			total += _values[_index]
+			digits.set_value(total)
+			_index += 1
+			if _index < _values.size():
+				_next_at += item_interval_seconds
+				continue
+			_stage = 1
+		elif _stage == 1:
+			bonus_row.modulate.a = 1.0
+			_stage = 2
+		elif _stage == 2:
+			price_row.modulate.a = 1.0
+			_stage = 3
+		else:
+			var final_balance: int = total + _bonus - _price
+			_set_amount(balance, balance_sign, final_balance)
+			balance_row.modulate.a = 1.0
+			_active = false
+			set_process(false)
+			completed.emit(final_balance)
+		_next_at += reveal_interval_seconds
 
-func _next_item() -> void:
-	_index += 1
-	if _index == _items.size():
-		_active = false
-		counter.text = "全部物品已计入"
-		equation.text = "仓库价格  " + format_number(total) + "  −  成交价  " + format_number(_price)
-		var profit: int = total - _price
-		result.text = ("盈利  +" if profit >= 0 else "亏损  −") + format_number(absi(profit))
-		result.add_theme_color_override("font_color", digits.increase_color if profit >= 0 else digits.decrease_color)
-		step_label.text = "结算完成"
-		operand.text = "=  " + format_number(total)
-		completed.emit(total)
-		return
-	_active = true
-	_elapsed = 0.0
-	_before = total
-	item_name.text = _items[_index].name
-	item_icon.texture = _items[_index].icon
-	item_value.text = "+" + format_number(int(_items[_index].value))
-	item_value.add_theme_color_override("font_color", digits.increase_color)
-	item_name.add_theme_color_override("font_color", _items[_index].color)
-	counter.text = "物品  %02d / %02d" % [_index + 1, _items.size()]
-	_render()
-
-func _render() -> void:
-	var item: Dictionary = _items[_index]
-	var hit_time: float = _elapsed - item_hold_seconds
-	var applied: bool = hit_time >= transfer_seconds
-	var shown: int = _before + (int(item.value) if applied else 0)
-	digits.set_value(shown)
-	operand.text = "+  " + format_number(int(item.value)) if not applied else "=  " + format_number(shown)
-	equation.text = format_number(_before) + "  +  " + format_number(int(item.value)) + ("  =  " + format_number(shown) if applied else "")
-	step_label.text = "物品价值" if hit_time < 0.0 else ("计入总价" if not applied else "已计入")
-	# Source first, accumulator second: the addition remains legible through the impact.
-	item_value.pivot_offset = item_value.size * 0.5
-	var source_age: float = maxf(0.0, hit_time)
-	var source_hit: float = sin(clampf(source_age / 0.3, 0.0, 1.0) * PI)
-	item_value.scale = Vector2.ONE * (1.0 + source_hit * 0.28)
-	item_value.rotation = source_hit * -0.045
-	item_value.modulate.a = 1.0 - clampf((hit_time - transfer_seconds) / result_hold_seconds, 0.0, 0.5)
-	for index: int in _receipts.size():
-		_receipts[index].modulate = digits.increase_color if index == _index else (Color("#a5bfc1") if index < _index else Color("#566e78"))
-	item_card.pivot_offset = item_card.size * 0.5
-	var pop: float = sin(clampf(maxf(0.0, hit_time) / 0.24, 0.0, 1.0) * PI)
-	item_card.scale = Vector2.ONE * (1.0 + pop * 0.065)
-	item_card.rotation = pop * 0.018
-	operand.pivot_offset = Vector2(operand.size.x, operand.size.y * 0.5)
-	var impact: float = sin(clampf((hit_time - transfer_seconds) / 0.28, 0.0, 1.0) * PI)
-	operand.scale = Vector2.ONE * (1.0 + maxf(0.0, impact) * 0.12)
-
-func format_number(value: int) -> String:
-	var raw: String = str(value)
-	var formatted: String = ""
-	for index: int in raw.length():
-		if index > 0 and (raw.length() - index) % 3 == 0:
-			formatted += ","
-		formatted += raw[index]
-	return formatted
-
+func _set_amount(number: ImpactNumber, sign_label: Label, amount: int) -> void:
+	var tint: Color = digits.increase_color if amount > 0 else (digits.decrease_color if amount < 0 else digits.number_color)
+	sign_label.text = "−" if amount < 0 else "+"
+	sign_label.add_theme_color_override("font_color", tint)
+	number.number_color = tint
+	number.reset(absi(amount))

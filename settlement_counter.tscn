@@ -1,206 +1,147 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://games/minigame/gp_auction_master/settlement_counter.gd" id="script"]
-
 [ext_resource type="PackedScene" path="res://core/ui/components/impact_number.tscn" id="number"]
-[ext_resource type="Theme" path="res://core/ui/ambient_reveal/ambient_theme.tres" id="theme"]
 
-[sub_resource type="StyleBoxFlat" id="Frame"]
-bg_color = Color(0.035, 0.055, 0.085, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 5
-border_color = Color(0.29, 0.36, 0.44, 1)
-corner_radius_top_left = 18
-corner_radius_top_right = 18
-corner_radius_bottom_left = 18
-corner_radius_bottom_right = 18
-content_margin_left = 28.0
-content_margin_top = 24.0
-content_margin_right = 28.0
-content_margin_bottom = 24.0
+[sub_resource type="SystemFont" id="SignFont"]
+font_names = PackedStringArray("Arial", "DejaVu Sans")
+font_weight = 900
 
-[sub_resource type="StyleBoxFlat" id="Total"]
-bg_color = Color(0.055, 0.09, 0.135, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 5
-border_color = Color(0.31, 0.43, 0.54, 1)
-corner_radius_top_left = 18
-corner_radius_top_right = 18
-corner_radius_bottom_left = 18
-corner_radius_bottom_right = 18
-content_margin_left = 28.0
-content_margin_top = 24.0
-content_margin_right = 28.0
-content_margin_bottom = 24.0
-
-[sub_resource type="StyleBoxFlat" id="Item"]
-bg_color = Color(0.055, 0.08, 0.12, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 5
-border_color = Color(0.31, 0.43, 0.54, 1)
-corner_radius_top_left = 18
-corner_radius_top_right = 18
-corner_radius_bottom_left = 18
-corner_radius_bottom_right = 18
-content_margin_left = 28.0
-content_margin_top = 24.0
-content_margin_right = 28.0
-content_margin_bottom = 24.0
-
-[sub_resource type="StyleBoxFlat" id="Strip"]
-bg_color = Color(0.025, 0.04, 0.065, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 5
-border_color = Color(0.20, 0.27, 0.34, 1)
-corner_radius_top_left = 18
-corner_radius_top_right = 18
-corner_radius_bottom_left = 18
-corner_radius_bottom_right = 18
-content_margin_left = 28.0
-content_margin_top = 24.0
-content_margin_right = 28.0
-content_margin_bottom = 24.0
-
-[node name="SettlementCounter" type="PanelContainer"]
-custom_minimum_size = Vector2(1240, 700)
-theme = ExtResource("theme")
-theme_override_styles/panel = SubResource("Frame")
+[node name="SettlementCounter" type="Control"]
+custom_minimum_size = Vector2(620, 560)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("script")
 
-[node name="Content" type="VBoxContainer" parent="."]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="Header" type="HBoxContainer" parent="Content"]
-layout_mode = 2
-
-[node name="Title" type="Label" parent="Content/Header"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "仓库清点"
-theme_override_font_sizes/font_size = 32
-size_flags_horizontal = 3
-
-[node name="Counter" type="Label" parent="Content/Header"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "物品  01 / 06"
-theme_override_font_sizes/font_size = 22
-theme_override_colors/font_color = Color(0.75, 0.79, 0.84, 1)
-
-[node name="Body" type="HBoxContainer" parent="Content"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 22
-
-[node name="TotalCard" type="PanelContainer" parent="Content/Body"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("Total")
-
-[node name="Values" type="VBoxContainer" parent="Content/Body/TotalCard"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="Caption" type="Label" parent="Content/Body/TotalCard/Values"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "累计仓库价值"
-theme_override_font_sizes/font_size = 22
-theme_override_colors/font_color = Color(0.75, 0.79, 0.84, 1)
-
-[node name="Digits" parent="Content/Body/TotalCard/Values" instance=ExtResource("number")]
-unique_name_in_owner = true
-layout_mode = 2
-custom_minimum_size = Vector2(0, 160)
-size_flags_vertical = 3
-manual_clock = true
-
-[node name="Operand" type="Label" parent="Content/Body/TotalCard/Values"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "+  100"
-theme_override_font_sizes/font_size = 40
-horizontal_alignment = 2
-theme_override_colors/font_color = Color(0.475, 0.898, 0.678, 1)
-
-[node name="Step" type="Label" parent="Content/Body/TotalCard/Values"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "发现物品 · 准备计入"
-theme_override_font_sizes/font_size = 22
-horizontal_alignment = 2
-theme_override_colors/font_color = Color(0.75, 0.79, 0.84, 1)
-
-[node name="ItemCard" type="PanelContainer" parent="Content/Body"]
-unique_name_in_owner = true
-layout_mode = 2
-custom_minimum_size = Vector2(340, 0)
-theme_override_styles/panel = SubResource("Item")
-
-[node name="ItemContent" type="VBoxContainer" parent="Content/Body/ItemCard"]
-layout_mode = 2
+[node name="Column" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="ItemCaption" type="Label" parent="Content/Body/ItemCard/ItemContent"]
+[node name="BaseRow" type="HBoxContainer" parent="Column"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "本件物品"
-theme_override_font_sizes/font_size = 18
+custom_minimum_size = Vector2(0, 176)
+mouse_filter = 2
+
+[node name="BaseSign" type="Label" parent="Column/BaseRow"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(72, 0)
+mouse_filter = 2
+theme_override_fonts/font = SubResource("SignFont")
+theme_override_font_sizes/font_size = 80
+theme_override_colors/font_color = Color(0.475, 0.898, 0.678, 1)
+text = "+"
 horizontal_alignment = 1
-theme_override_colors/font_color = Color(0.75, 0.79, 0.84, 1)
+vertical_alignment = 1
 
-[node name="ItemIcon" type="TextureRect" parent="Content/Body/ItemCard/ItemContent"]
+[node name="Digits" parent="Column/BaseRow" instance=ExtResource("number")]
 unique_name_in_owner = true
 layout_mode = 2
-custom_minimum_size = Vector2(0, 150)
-size_flags_vertical = 3
-expand_mode = 1
-stretch_mode = 5
+custom_minimum_size = Vector2(0, 176)
+size_flags_horizontal = 3
+font_size = 80
+alignment = 2
+manual_clock = true
+number_color = Color(0.475, 0.898, 0.678, 1)
 
-[node name="ItemName" type="Label" parent="Content/Body/ItemCard/ItemContent"]
+[node name="BonusRow" type="HBoxContainer" parent="Column"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "物品名称"
-theme_override_font_sizes/font_size = 26
+custom_minimum_size = Vector2(0, 112)
+mouse_filter = 2
+modulate = Color(1, 1, 1, 0)
+
+[node name="BonusSign" type="Label" parent="Column/BonusRow"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(72, 0)
+mouse_filter = 2
+theme_override_fonts/font = SubResource("SignFont")
+theme_override_font_sizes/font_size = 64
+theme_override_colors/font_color = Color(0.475, 0.898, 0.678, 1)
+text = "+"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ItemValue" type="Label" parent="Content/Body/ItemCard/ItemContent"]
+[node name="Bonus" parent="Column/BonusRow" instance=ExtResource("number")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "+100"
-theme_override_font_sizes/font_size = 34
+custom_minimum_size = Vector2(0, 112)
+size_flags_horizontal = 3
+font_size = 64
+alignment = 2
+manual_clock = true
+
+[node name="PriceRow" type="HBoxContainer" parent="Column"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 112)
+mouse_filter = 2
+modulate = Color(1, 1, 1, 0)
+
+[node name="PriceSign" type="Label" parent="Column/PriceRow"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(72, 0)
+mouse_filter = 2
+theme_override_fonts/font = SubResource("SignFont")
+theme_override_font_sizes/font_size = 64
+theme_override_colors/font_color = Color(0.475, 0.898, 0.678, 1)
+text = "+"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Equation" type="Label" parent="Content"]
+[node name="Price" parent="Column/PriceRow" instance=ExtResource("number")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "1,000  +  100"
-theme_override_font_sizes/font_size = 32
+custom_minimum_size = Vector2(0, 112)
+size_flags_horizontal = 3
+font_size = 64
+alignment = 2
+manual_clock = true
+
+[node name="Line" type="ColorRect" parent="Column"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 2)
+mouse_filter = 2
+color = Color(0.75, 0.79, 0.84, 1)
+
+[node name="BalanceRow" type="HBoxContainer" parent="Column"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 128)
+mouse_filter = 2
+modulate = Color(1, 1, 1, 0)
+
+[node name="BalanceSign" type="Label" parent="Column/BalanceRow"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(72, 0)
+mouse_filter = 2
+theme_override_fonts/font = SubResource("SignFont")
+theme_override_font_sizes/font_size = 72
+theme_override_colors/font_color = Color(0.475, 0.898, 0.678, 1)
+text = "+"
 horizontal_alignment = 1
-custom_minimum_size = Vector2(0, 48)
+vertical_alignment = 1
 
-[node name="Result" type="Label" parent="Content"]
+[node name="Balance" parent="Column/BalanceRow" instance=ExtResource("number")]
 unique_name_in_owner = true
 layout_mode = 2
-text = ""
-theme_override_font_sizes/font_size = 28
-horizontal_alignment = 1
-custom_minimum_size = Vector2(0, 40)
-
-[node name="LedgerFrame" type="PanelContainer" parent="Content"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("Strip")
-
-[node name="Ledger" type="HBoxContainer" parent="Content/LedgerFrame"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/separation = 16
+custom_minimum_size = Vector2(0, 128)
+size_flags_horizontal = 3
+font_size = 72
+alignment = 2
+manual_clock = true
