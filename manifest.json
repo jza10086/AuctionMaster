@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "core_api_major": 4,
-  "package_version": "1.6.0",
+  "core_api_major": 5,
+  "package_version": "1.6.2",
   "id": "godot_party_default_auction_master",
   "name": "GodotPartyDefault · 竞拍大师",
   "kind": "minigame",
@@ -20,7 +20,7 @@
     "original"
   ],
   "dependencies": {
-    "godot_party_default_protocol": "1.0.4"
+    "godot_party_default_protocol": "1.0.6"
   },
   "adapters": [
     {
@@ -34,20 +34,6 @@
     }
   ],
   "config_schema": "settings.gd",
-  "streams": {
-    "state": {
-      "mode": "reliable",
-      "audience": "instance"
-    },
-    "private_view": {
-      "mode": "reliable",
-      "audience": "instance"
-    },
-    "cursors": {
-      "mode": "ordered",
-      "audience": "instance"
-    }
-  },
   "cover": "assets/preview.png",
   "introduction": "每仓最多 5 轮：每轮一次辅助探查，再密封报价。最高价按规则成交，末轮同价先提交者胜；最终余额最高者获胜。\n赢家亏损按其他玩家报价权重分配。\n普通仓库价格中位数约 46,000（默认配置，仅供估价）。",
   "localization": {

@@ -258,6 +258,9 @@ func advance() -> void:
 				_search_ends = rules.make_search_ends(_appraisals[warehouse].items, _rng)
 			phase = "settlement" if _winner >= 0 else "reveal"
 			time = rules.settlement_seconds if _winner >= 0 else float(rules.conditions.values.unsold_seconds)
+			# Publish the complete payout plan once, before the local settlement animation starts.
+			if _winner >= 0 and _hidden_total() < _price:
+				_calculate_loss(_price - _hidden_total())
 		else:
 			round += 1
 			_begin_round()
@@ -285,8 +288,7 @@ func _apply_profit() -> void:
 	_profit_applied = true
 	var profit: int = _hidden_total() - _price
 	balances[_winner] += profit
-	if profit < 0:
-		_calculate_loss(-profit)
+	# Payouts were fixed when settlement began; presentation and financial commit share that plan.
 
 func _settle() -> void:
 	if _settled:

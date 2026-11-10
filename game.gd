@@ -41,7 +41,13 @@ var assist_colors: Dictionary[String, Color] = {}
 var session: Session = Session.new()
 var private_view: Dictionary = {}
 var public_revision: int = 0
-var private_revision: int = -1
+var _published_public: Dictionary = {}
+var _published_private: Dictionary = {}
+var _private_sequences: Dictionary = {}
+var _received_private_sequence: int = 0
+var _phase_key: String = ""
+var _phase_end_msec: int = 0
+var _phase_start_msec: int = 0
 var draft_bid: int = 0
 var draft_round: String = ""
 var sent_draft_key: String = ""
@@ -112,7 +118,7 @@ func build_game() -> void:
 	_show_item({})
 
 ## Reveal signals follow the displayed host timeline, including rapid consecutive items.
-## Repeated snapshots cannot replay a discovery; no rarity cue plays before it is visible.
+## Repeated events cannot replay a discovery; no rarity cue plays before it is visible.
 func _on_reveal_progress(count: int, total: int) -> void:
 	if warehouse_view.warehouse != _audio_warehouse:
 		_audio_warehouse = warehouse_view.warehouse
@@ -180,7 +186,7 @@ func start_game() -> void:
 func _adjust_bid(amount: int) -> void:
 	if api.input.input_blocked or not _can_bid():
 		return
-	var maximum: int = int(private_view.balances[seat_of(local_id)])
+	var maximum: int = int(view.balances[seat_of(local_id)])
 	draft_bid = clampi(draft_bid + amount, 0, maximum)
 	_show_quote()
 
@@ -198,7 +204,7 @@ func _on_quote_changed(text: String) -> void:
 	quote_valid = digits.is_valid_int()
 	if quote_valid:
 		var amount: int = digits.to_int()
-		quote_valid = amount >= 0 and amount <= int(private_view.balances[seat_of(local_id)]) and (amount == 0 or amount >= int(private_view.minimum_bid))
+		quote_valid = amount >= 0 and amount <= int(view.balances[seat_of(local_id)]) and (amount == 0 or amount >= int(private_view.minimum_bid))
 		if quote_valid:
 			draft_bid = amount
 	if quote_valid:
@@ -230,12 +236,12 @@ func _show_quote() -> void:
 	submit.disabled = not _can_bid() or not quote_valid
 
 func _can_bid() -> bool:
-	return running and not local_id.is_empty() and not private_view.is_empty() and private_view.phase == "bidding" and (private_revision >= int(view.get("_sequence", 0)) or view.phase == "bidding") and not private_view.bidlocked
+	return running and not local_id.is_empty() and not private_view.is_empty() and private_view.phase == "bidding" and _private_matches_phase() and not private_view.bidlocked
 
 func _act(kind: String, assist: String = "") -> void:
 	if api.input.input_blocked or private_view.is_empty():
 		return
-	if kind == "assist" and (private_view.phase != "bidding" or (private_revision < int(view.get("_sequence", 0)) and view.phase != "bidding")):
+	if kind == "assist" and (private_view.phase != "bidding" or not _private_matches_phase()):
 		return
 	if kind == "bid" and (not _can_bid() or not quote_valid):
 		return
@@ -276,56 +282,188 @@ func tick_game(delta: float) -> void:
 	if players.size() - disconnected.size() < minimum_players:
 		finish_rows([], [], "cancelled")
 		return
+	var previous_phase: String = "%d/%d/%s" % [session.warehouse, session.round, session.phase]
+	var previous_balances: Array = session.balances.duplicate()
 	session.tick(delta)
+	if previous_phase != "%d/%d/%s" % [session.warehouse, session.round, session.phase] or previous_balances != session.balances:
+		publish()
+	if not running:
+		return
 	if session.phase == "finished":
 		var scores: Dictionary = {}
 		for index: int in players.size():
 			scores[players[index].player_id] = session.balances[index]
 		finish_scores(scores, {}, [{"key": "score", "title": api.i18n.text(&"result.coins"), "format": "integer"}])
 
-## Private deliveries must succeed before the corresponding public state is broadcast.
-## A failed send cancels this round; no partial publication is retried.
+## Publish only changed public facts and owner-only discoveries. Timelines travel once per phase.
 func publish() -> void:
 	if not running or not api.is_host():
 		return
-	public_revision += 1
+	var phase_key: String = "%d/%d/%s" % [session.warehouse, session.round, session.phase]
+	if phase_key != _phase_key:
+		_phase_key = phase_key
+		_phase_start_msec = api.net.host_time_msec()
+		_phase_end_msec = _phase_start_msec + roundi(session.time * 1000.0)
+	var public_data: Dictionary = session.snapshot(-1)
+	for key: String in ["time", "reveal_elapsed", "settlement_elapsed", "ownbid", "bidlocked", "assist_available", "intel", "minimum_bid"]:
+		public_data.erase(key)
+	public_data["phase_end_msec"] = _phase_end_msec
+	public_data["phase_start_msec"] = _phase_start_msec
+	var changes: Dictionary = _changed_fields(public_data, _published_public)
+	if not changes.is_empty():
+		public_revision += 1
+		changes["revision"] = public_revision
+		var error: Error = api.net.broadcast(&"auction/facts", changes)
+		if error != OK:
+			_fail_publication("facts", error)
+			return
+		_published_public = public_data.duplicate(true)
 	for player: Dictionary in api.get_players():
-		if player.connected:
-			var snap: Dictionary = session.snapshot(seat_of(player.player_id))
-			snap["revision"] = public_revision
-			var error: Error = api.net.send_to_player(player.player_id, &"private_view", snap)
-			if error != OK:
-				_fail_publication("private_view/" + player.player_id, error)
-				return
-	var public_view: Dictionary = make_snapshot()
-	public_view["_sequence"] = public_revision
-	var error: Error = api.net.broadcast_stream(&"state", public_view)
-	if error != OK:
-		_fail_publication("state", error)
+		if not player.connected:
+			continue
+		var source: Dictionary = session.snapshot(seat_of(player.player_id))
+		var personal: Dictionary = {}
+		for key: String in ["warehouse", "round", "phase", "ownbid", "bidlocked", "assist_available", "intel", "minimum_bid"]:
+			personal[key] = source[key]
+		var private_changes: Dictionary = _changed_fields(personal, _published_private.get(player.player_id, {}))
+		if private_changes.is_empty():
+			continue
+		var private_sequence: int = int(_private_sequences.get(player.player_id, 0)) + 1
+		private_changes["revision"] = private_sequence
+		var error: Error = api.net.send_to_player(player.player_id, &"auction/private", private_changes)
+		if error != OK:
+			_fail_publication("private/" + player.player_id, error)
+			return
+		_private_sequences[player.player_id] = private_sequence
+		_published_private[player.player_id] = personal.duplicate(true)
+
+func _changed_fields(current: Dictionary, previous: Dictionary) -> Dictionary:
+	var changes: Dictionary = {}
+	var removed: Array[String] = []
+	var additions: Array = []
+	var intel: Dictionary = {}
+	for key: String in previous:
+		if not current.has(key):
+			removed.append(key)
+	for key: String in current:
+		if previous.has(key) and previous[key] == current[key]:
+			continue
+		if key == "history" and previous.has(key) and current.history.slice(0, previous.history.size()) == previous.history:
+			additions = current.history.slice(previous.history.size())
+		elif key in ["intel", "public_intel"] and previous.has(key) and current.warehouse == previous.warehouse:
+			var updates: Array = []
+			for entry: Dictionary in current[key]:
+				var old: Dictionary = {}
+				for candidate: Dictionary in previous[key]:
+					if candidate.index == entry.index:
+						old = candidate
+						break
+				if entry != old:
+					updates.append(entry)
+			if not updates.is_empty():
+				intel[key] = updates
+		else:
+			changes[key] = current[key]
+	if changes.is_empty() and removed.is_empty() and additions.is_empty() and intel.is_empty():
+		return {}
+	return {"changes": changes, "removed": removed, "history_added": additions, "intel_updates": intel}
+
+func _apply_changes(target: Dictionary, payload: Dictionary) -> bool:
+	if not payload.get("changes") is Dictionary or not payload.get("removed") is Array or not payload.get("history_added") is Array or not payload.get("intel_updates") is Dictionary:
+		return false
+	for key: Variant in payload.removed:
+		if not key is String:
+			return false
+		target.erase(key)
+	for key: String in payload.changes:
+		var value: Variant = payload.changes[key]
+		if key == "phase":
+			if value not in ["briefing", "bidding", "pending", "round_result", "settlement", "reveal", "finished"]:
+				return false
+		elif key in ["warehouse", "round", "phase_start_msec", "phase_end_msec", "warehouses_total", "rounds_total", "ownbid", "minimum_bid", "early_percent", "winner", "price", "total_value", "base_value", "bonus_value"]:
+			if not value is int:
+				return false
+		elif key in ["bidlocked", "assist_available"]:
+			if not value is bool:
+				return false
+		elif key in ["names", "balances", "clues", "history", "locked", "withdrawn", "intel", "public_intel", "special_rules", "assist_counts", "round_bids", "payouts", "rankings", "payout_seats", "items", "search_ends", "tag_groups"]:
+			if not value is Array:
+				return false
+		elif key == "settlement_seconds":
+			if not (value is int or value is float) or not is_finite(float(value)):
+				return false
+		elif key == "outcome":
+			if not value is String:
+				return false
+		else:
+			return false
+	target.merge(payload.changes, true)
+	if not payload.history_added.is_empty():
+		if not target.get("history") is Array:
+			return false
+		target.history.append_array(payload.history_added)
+	for key: String in payload.intel_updates:
+		if key not in ["intel", "public_intel"] or not payload.intel_updates[key] is Array or not target.get(key) is Array:
+			return false
+		for entry: Variant in payload.intel_updates[key]:
+			if not entry is Dictionary or not entry.get("index") is int or entry.index < 0:
+				return false
+			var replaced: bool = false
+			for index: int in target[key].size():
+				if target[key][index].index == entry.index:
+					target[key][index] = entry
+					replaced = true
+					break
+			if not replaced:
+				target[key].append(entry)
+	return true
+
+func _message(sender: Dictionary, topic: StringName, payload: Variant) -> void:
+	if topic not in [&"auction/facts", &"auction/private"]:
+		super._message(sender, topic, payload)
+		return
+	if not running or sender.peer_id != 1 or not payload is Dictionary or not payload.get("changes") is Dictionary:
+		return
+	if topic == &"auction/facts":
+		if not payload.get("revision") is int or payload.revision <= received_sequence:
+			return
+		if not _apply_changes(view, payload):
+			_fail_publication("invalid_facts", ERR_INVALID_DATA)
+			return
+		received_sequence = payload.revision
+		view["_sequence"] = received_sequence
+	else:
+		if not payload.get("revision") is int or payload.revision <= _received_private_sequence:
+			return
+		if not _apply_changes(private_view, payload):
+			_fail_publication("invalid_private", ERR_INVALID_DATA)
+			return
+		_received_private_sequence = payload.revision
+	render_game()
+
+func _private_matches_phase() -> bool:
+	return not view.is_empty() and not private_view.is_empty() and private_view.warehouse == view.warehouse and private_view.round == view.round and private_view.phase == view.phase
 
 func _fail_publication(stream: String, error: Error) -> void:
-	party_stop(&"snapshot_failed")
-	var message: String = "Auction snapshot %s: %s" % [stream, error_string(error)]
-	var failure_error: Error = api.fail("snapshot_failed", message)
+	party_stop(&"publication_failed")
+	var message: String = "Auction publication %s: %s" % [stream, error_string(error)]
+	var failure_error: Error = api.fail("publication_failed", message)
 	if failure_error != OK:
 		push_error("%s; failure report: %s" % [message, error_string(failure_error)])
 
-func make_snapshot() -> Dictionary:
-	var public_view: Dictionary = session.snapshot(-1)
-	return public_view
-
-
-func receive_private(data: Dictionary) -> void:
-	if int(data.get("revision", -1)) <= private_revision:
-		return
-	private_revision = data.revision
-	private_view = data
-	render_game()
-
 func render_game() -> void:
-	var snap: Dictionary = private_view if not local_id.is_empty() and private_revision >= int(view.get("_sequence", 0)) else view
+	var snap: Dictionary = view.duplicate(true)
 	if snap.is_empty():
 		return
+	if _private_matches_phase():
+		snap.merge(private_view, true)
+	else:
+		snap["minimum_bid"] = 0
+	var now: int = api.net.host_time_msec()
+	snap["time"] = maxf(0.0, float(snap.phase_end_msec - now) / 1000.0)
+	var phase_elapsed: float = maxf(0.0, float(now - snap.phase_start_msec) / 1000.0)
+	snap["reveal_elapsed"] = phase_elapsed if snap.phase in ["settlement", "reveal"] else 0.0
+	snap["settlement_elapsed"] = minf(phase_elapsed, float(snap.settlement_seconds)) if snap.phase == "settlement" else 0.0
 	var intel: Array = private_view.intel if not local_id.is_empty() and not private_view.is_empty() and private_view.warehouse == snap.warehouse else snap.public_intel
 	warehouse_view.set_snapshot(snap, intel, not local_id.is_empty())
 	warehouse_view.set_reveal_elapsed(float(snap.reveal_elapsed))
@@ -370,7 +508,7 @@ func render_game() -> void:
 	%Zero.disabled = not can_bid
 	submit.disabled = not can_bid or not quote_valid
 	for button: Button in assist_buttons.get_children():
-		button.disabled = not running or local_id.is_empty() or private_view.is_empty() or snap.phase != "bidding" or not private_view.assist_available
+		button.disabled = not running or local_id.is_empty() or private_view.is_empty() or snap.phase != "bidding" or not _private_matches_phase() or not private_view.assist_available
 	var phase_names: Dictionary[String, StringName] = {
 		"briefing": &"hud.phase_rules",
 		"bidding": &"hud.phase_bid",
@@ -416,13 +554,14 @@ func _show_assist_description(kind: String) -> void:
 	if private_view.is_empty():
 		return
 	var index: int = Session.ASSISTS.find(kind)
-	assist_description.text = "揭示 %s 件物品的%s" % [_format_coins(int(private_view.assist_counts[index])), ["完整信息", "轮廓", "品质", "羁绊标签"][index]]
+	assist_description.text = "揭示 %s 件物品的%s" % [_format_coins(int(view.assist_counts[index])), ["完整信息", "轮廓", "品质", "羁绊标签"][index]]
 
 func _clear_assist_description() -> void:
 	assist_description.text = ""
 
 func player_left(id: String) -> void:
 	session.withdraw_player(seat_of(id))
+	publish()
 
 func _show_item(item: Dictionary) -> void:
 	if item_details == null:

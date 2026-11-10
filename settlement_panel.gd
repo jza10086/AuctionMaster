@@ -56,8 +56,8 @@ func _process(delta: float) -> void:
 	if not is_visible_in_tree():
 		return
 	_since_snapshot += delta
-	# Extrapolate only one publication interval, then hold if the host stops publishing.
-	_render(minf(float(snapshot.settlement_seconds), float(snapshot.settlement_elapsed) + minf(_since_snapshot, 0.1)))
+	# The owner supplies a locally calculated host timeline; animation never waits for packets.
+	_render(minf(float(snapshot.settlement_seconds), float(snapshot.settlement_elapsed) + _since_snapshot))
 
 func _render(elapsed: float) -> void:
 	elapsed = maxf(_display_elapsed, elapsed)
