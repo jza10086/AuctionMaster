@@ -79,4 +79,8 @@ API 4 / manifest 2，普通 standard 排名协议。由原版小游戏轮换大�
 
 独立结算预览：`settlement_counter.tscn` 仅包含基本收入、加成、成交价及横线下的结余数字，无背景、边框、图片或说明文字。基本收入复用 `res://core/ui/components/impact_number.tscn` 逐件冲击累加；随后加成、成交价、最终结余默认每隔 1 秒直接出现，按正绿负红显示。三位及以下不显示千位分隔符。
 
-调用 `start(item_values: Array[int], bonus_value: int, sale_price: int)`，物品数组只含基础价值，加成单独传入（可为负），成交价传正数。最终结余为基础价值之和加上加成再减成交价，完成时发出 `completed(balance)`。物品累计间隔和后续显示间隔可在 Inspector 修改；公共数字组件 API 保持不变。当前仍为独立预制体，未替换正式结算面板。
+调用 `start(item_values: Array[int], bonus_value: int, sale_price: int)`，物品数组只含基础价值，加成单独传入（可为负），成交价传正数。最终结余为基础价值之和加上加成再减成交价，完成时发出 `completed(balance)`。物品累计间隔和后续显示间隔可在 Inspector 修改；公共数字组件 API 保持不变。当前已接入正式结算界面。
+
+正式结算已使用精简数字竖式：白色横线，基础收入随搜索揭示累加，加成仅为特殊规则修改价格产生的差额（含负值）。基础 tag 羁绊倍率暂为 0；总价与亏损分配均使用调整后的估值。
+
+结算声音：基础收入音高按累计金额的对数映射从 0.85 升到 1.85（参考金额 100,000，可在 Inspector 调整）；加成与成交价出现播放短提示；最终结余使用平滑追赶，每 0.075 秒最多播放一次计数声，停稳后收尾。四个播放器经 PartyGameAudio 路由到 SFX 总线；素材为 Kenney Interface Sounds（CC0），许可和逐文件映射见 assets/audio/settlement/。

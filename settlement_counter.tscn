@@ -3,12 +3,18 @@
 [ext_resource type="Script" path="res://games/minigame/gp_auction_master/settlement_counter.gd" id="script"]
 [ext_resource type="PackedScene" path="res://core/ui/components/impact_number.tscn" id="number"]
 
+[ext_resource type="PackedScene" path="res://core/ui/components/tween_number.tscn" id="tween"]
+[ext_resource type="AudioStream" path="res://games/minigame/gp_auction_master/assets/audio/settlement/add.wav" id="add"]
+[ext_resource type="AudioStream" path="res://games/minigame/gp_auction_master/assets/audio/settlement/appear.wav" id="appear"]
+[ext_resource type="AudioStream" path="res://games/minigame/gp_auction_master/assets/audio/settlement/tally.wav" id="tally"]
+[ext_resource type="AudioStream" path="res://games/minigame/gp_auction_master/assets/audio/settlement/finish.wav" id="finish"]
+
 [sub_resource type="SystemFont" id="SignFont"]
 font_names = PackedStringArray("Arial", "DejaVu Sans")
 font_weight = 900
 
 [node name="SettlementCounter" type="Control"]
-custom_minimum_size = Vector2(620, 560)
+custom_minimum_size = Vector2(450, 560)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -116,7 +122,7 @@ manual_clock = true
 layout_mode = 2
 custom_minimum_size = Vector2(0, 2)
 mouse_filter = 2
-color = Color(0.75, 0.79, 0.84, 1)
+color = Color(1, 1, 1, 1)
 
 [node name="BalanceRow" type="HBoxContainer" parent="Column"]
 unique_name_in_owner = true
@@ -137,11 +143,33 @@ text = "+"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Balance" parent="Column/BalanceRow" instance=ExtResource("number")]
+[node name="Balance" parent="Column/BalanceRow" instance=ExtResource("tween")]
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(0, 128)
 size_flags_horizontal = 3
 font_size = 72
+mode = 1
 alignment = 2
+horizontal_padding = 24.0
 manual_clock = true
+
+[node name="AddSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("add")
+volume_db = -18.0
+
+[node name="AppearSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("appear")
+volume_db = -18.0
+
+[node name="TallySound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("tally")
+volume_db = -18.0
+
+[node name="FinishSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("finish")
+volume_db = -18.0

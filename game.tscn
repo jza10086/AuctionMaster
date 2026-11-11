@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://b2cvkqbwm85jy" path="res://games/minigame/gp_auction_master/warehouse_view.gd" id="warehouse"]
 
 [ext_resource type="StyleBox" path="res://core/ui/ambient_reveal/theme/frames/focused.tres" id="button_frame"]
-[ext_resource type="PackedScene" path="res://games/minigame/gp_auction_master/settlement_panel.tscn" id="settlement"]
+[ext_resource type="PackedScene" path="res://games/minigame/gp_auction_master/settlement_counter.tscn" id="settlement"]
 [ext_resource type="PackedScene" path="res://games/minigame/gp_auction_master/conditions_panel.tscn" id="conditions"]
 
 [ext_resource type="PackedScene" path="res://games/protocols/godot_party_default_protocol/audio/game_audio.tscn" id="game_audio"]

@@ -149,6 +149,7 @@ func apply_values(lot: Array, condition: Dictionary, catalog: Array[Dictionary])
 	for item: Dictionary in lot:
 		var boost: bool = ("hot" in ids and condition.hot_tag in item.tags) or ("small" in ids and cells(item) <= int(values.small_cells)) or ("large" in ids and cells(item) >= int(values.large_cells)) or ("common" in ids and int(item.quality) <= int(values.common_quality)) or ("quality" in ids and item.quality == condition.quality) or ("unique" in ids and counts[item.kind] == 1) or ("bulk" in ids and counts[item.kind] >= int(values.bulk_count)) or ("cross" in ids and item.tags.size() >= int(values.cross_tags))
 		var original: int = int(item.value)
+		item["original_value"] = original
 		var reference: float = reference_density(item, catalog) if boost else 0.0
 		if boost:
 			if reference > 0.0:

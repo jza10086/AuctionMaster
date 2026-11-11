@@ -1512,7 +1512,7 @@ static func evaluate(lot: Array) -> Dictionary:
 		var count: int = int(counts.get(tag, 0))
 		if count == 0:
 			continue
-		var percent: int = 30 if count >= 5 else (15 if count >= 3 else 0)
+		var percent: int = 0
 		rates[tag] = percent
 		groups.append({"tag": tag, "count": count, "percent": percent})
 	var records: Array[Dictionary] = []
@@ -1532,8 +1532,9 @@ static func evaluate(lot: Array) -> Dictionary:
 		record["bonus_percent"] = percent
 		record["bonus_value"] = bonus
 		record["effective_value"] = int(record.value) + bonus
-		base_value += int(record.value)
-		bonus_value += bonus
+		var original: int = int(record.get("original_value", record.value))
+		base_value += original
+		bonus_value += int(record.effective_value) - original
 		records.append(record)
 	return {"items": records, "tags": groups, "base_value": base_value, "bonus_value": bonus_value, "total_value": base_value + bonus_value}
 

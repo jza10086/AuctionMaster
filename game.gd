@@ -3,7 +3,7 @@ extends "res://games/protocols/godot_party_default_protocol/ranked_round.gd"
 const WarehouseView: Script = preload("res://games/minigame/gp_auction_master/warehouse_view.gd")
 const Session: Script = preload("res://games/minigame/gp_auction_master/session.gd")
 const PlayerCard: PackedScene = preload("res://games/minigame/gp_auction_master/player_card.tscn")
-const SettlementPanel: Script = preload("res://games/minigame/gp_auction_master/settlement_panel.gd")
+const SettlementPanel: Script = preload("res://games/minigame/gp_auction_master/settlement_counter.gd")
 const ConditionsPanel: Script = preload("res://games/minigame/gp_auction_master/conditions_panel.gd")
 const Catalog: Script = preload("res://games/minigame/gp_auction_master/item_catalog.gd")
 const DiscoveryFlash: Script = preload("res://games/minigame/gp_auction_master/discovery_flash.gd")
@@ -71,6 +71,8 @@ func party_stop(reason: StringName) -> void:
 	discovery_flash.clear()
 
 func build_game() -> void:
+	for player: AudioStreamPlayer in [settlement_panel.add_sound, settlement_panel.appear_sound, settlement_panel.tally_sound, settlement_panel.finish_sound]:
+		game_audio.route_player(player, PartyGameAudio.Category.SFX)
 	assert(search_sound != null and search_sound.validate() == OK)
 	assert(reveal_sounds.size() == 7)
 	for cue: PartyAudioCue in reveal_sounds:
@@ -135,7 +137,7 @@ func _on_reveal_progress(count: int, total: int) -> void:
 		if handle.error != OK:
 			_fail_publication("discovery_audio", handle.error)
 			return
-		var flash_center: Vector2 = settlement_panel.item_box.get_global_rect().position + Vector2(settlement_panel.item_box.size.x * 0.5, settlement_panel.item_icon.custom_minimum_size.y * 0.5)
+		var flash_center: Vector2 = warehouse_view.get_global_rect().get_center()
 		discovery_flash.reveal(quality, flash_center)
 	_heard_count = count
 	if count < total:
