@@ -186,21 +186,22 @@ func start_game() -> void:
 	session.start()
 
 func _adjust_bid(amount: int) -> void:
-	if api.input.input_blocked or not _can_bid():
+	if not _can_bid():
 		return
 	var maximum: int = int(view.balances[seat_of(local_id)])
 	draft_bid = clampi(draft_bid + amount, 0, maximum)
 	_show_quote()
 
 func _reset_bid() -> void:
-	if api.input.input_blocked or not _can_bid():
+	if not _can_bid():
 		return
 	draft_bid = 0
 	_show_quote()
 
+## Native UI must not use input_blocked: text focus itself blocks gameplay shortcuts.
 ## Keep incomplete input editable; only whole-number bids within the balance can be confirmed.
 func _on_quote_changed(text: String) -> void:
-	if api.input.input_blocked or not _can_bid():
+	if not _can_bid():
 		return
 	var digits: String = text.replace(",", "").strip_edges()
 	quote_valid = digits.is_valid_int()
@@ -243,7 +244,7 @@ func _can_bid() -> bool:
 	return running and not local_id.is_empty() and not private_view.is_empty() and private_view.phase == "bidding" and _private_matches_phase() and not private_view.bidlocked
 
 func _act(kind: String, assist: String = "") -> void:
-	if api.input.input_blocked or private_view.is_empty():
+	if private_view.is_empty() or (kind != "bid" and api.input.input_blocked):
 		return
 	if kind == "assist" and (private_view.phase != "bidding" or not _private_matches_phase()):
 		return
@@ -510,7 +511,7 @@ func render_game() -> void:
 		_show_quote()
 	balance_label.text = api.i18n.text(&"bid.balance", {"amount": _format_coins(int(snap.balances[seat_of(local_id)]))}) if not local_id.is_empty() else api.i18n.text(&"hud.spectating")
 	var can_bid: bool = _can_bid()
-	var editable: bool = can_bid and not api.input.input_blocked
+	var editable: bool = can_bid
 	if quote.editable != editable:
 		quote.editable = editable
 	for button: Button in bid_buttons.get_children():
