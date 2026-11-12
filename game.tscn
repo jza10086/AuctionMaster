@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://oqk2l8und8i6"]
 
+[ext_resource type="PackedScene" path="res://games/minigame/gp_auction_master/ui/round_pages.tscn" id="protocol_pages"]
+
 [ext_resource type="Script" uid="uid://dpkh8dcfwyo" path="res://games/minigame/gp_auction_master/game.gd" id="1"]
 [ext_resource type="PackedScene" path="res://games/protocols/godot_party_default_protocol/ranked_round.tscn" id="round"]
 [ext_resource type="Script" uid="uid://b2cvkqbwm85jy" path="res://games/minigame/gp_auction_master/warehouse_view.gd" id="warehouse"]
@@ -69,7 +71,8 @@ corner_radius_top_right = 8
 corner_radius_bottom_left = 8
 corner_radius_bottom_right = 8
 
-[node name="Game" unique_id=2091912236 instance=ExtResource("round")]
+[node name="Game" unique_id=2091912236 instance=ExtResource("round") node_paths=PackedStringArray("pages")]
+pages = NodePath("ProtocolPages")
 layout_mode = 3
 anchors_preset = 15
 grow_horizontal = 2
@@ -484,3 +487,6 @@ tracks = Array[Resource]([ExtResource("music0"), ExtResource("music1"), ExtResou
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
+
+[node name="ProtocolPages" parent="." instance=ExtResource("protocol_pages")]
+unique_name_in_owner = true

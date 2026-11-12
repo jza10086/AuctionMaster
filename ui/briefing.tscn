@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://games/protocols/godot_party_default_protocol/briefing/briefing_page.tscn" id="1"]
+
+[node name="Briefing" instance=ExtResource("1")]
+
+[node name="Title" parent="View/Layout/Center/Content" index="0"]
+text = "GodotPartyDefault · 竞拍大师"
+
+[node name="Introduction" parent="View/Layout/Center/Content/Columns/RightColumn/InformationPanel/InformationMargin/Information/Rules/InformationScroll" index="0"]
+text = "每仓最多 5 轮：每轮一次辅助探查，再密封报价。最高价按规则成交，末轮同价先提交者胜；最终余额最高者获胜。\n赢家亏损按其他玩家报价权重分配。\n普通仓库价格中位数约 46,000（默认配置，仅供估价）。"
+
+[editable path="View"]
