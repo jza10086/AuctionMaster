@@ -2,8 +2,8 @@ extends Control
 ## Presentation-only vertical settlement: item values accumulate, then three static amounts appear.
 signal completed(balance: int)
 
-const TweenNumber = preload("res://core/ui/components/tween_number.gd")
-const ImpactNumber = preload("res://core/ui/components/impact_number.gd")
+const TweenNumber = preload("res://games/assets/godot_party_default_ui/components/tween_number.gd")
+const ImpactNumber = preload("res://games/assets/godot_party_default_ui/components/impact_number.gd")
 @export_range(0.1, 2.0) var item_interval_seconds: float = 0.65
 @export_range(0.1, 5.0) var reveal_interval_seconds: float = 1.0
 @onready var digits: ImpactNumber = %Digits

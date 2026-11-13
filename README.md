@@ -77,7 +77,7 @@ API 4 / manifest 2，普通 standard 排名协议。由原版小游戏轮换大�
 
 `assets/music/` 收录用户提供的四首 Google AI Lyria 生成 BGM，原始 credit.txt 与文件映射随包保留。进入玩法后随机顺序播放，每轮四首各播放一次后重新洗牌，并避免跨轮相邻重复；换仓、搜索和打开图鉴不打断音乐。离开游戏停止播放，音乐受本游戏音乐音量设置控制，默认 Cue 音量为 -18 dB，可在资源中调整。
 
-独立结算预览：`settlement_counter.tscn` 仅包含基本收入、加成、成交价及横线下的结余数字，无背景、边框、图片或说明文字。基本收入复用 `res://core/ui/components/impact_number.tscn` 逐件冲击累加；随后加成、成交价、最终结余默认每隔 1 秒直接出现，按正绿负红显示。三位及以下不显示千位分隔符。
+独立结算预览：`settlement_counter.tscn` 仅包含基本收入、加成、成交价及横线下的结余数字，无背景、边框、图片或说明文字。基本收入复用 `res://games/assets/godot_party_default_ui/components/impact_number.tscn` 逐件冲击累加；随后加成、成交价、最终结余默认每隔 1 秒直接出现，按正绿负红显示。三位及以下不显示千位分隔符。
 
 调用 `start(item_values: Array[int], bonus_value: int, sale_price: int)`，物品数组只含基础价值，加成单独传入（可为负），成交价传正数。最终结余为基础价值之和加上加成再减成交价，完成时发出 `completed(balance)`。物品累计间隔和后续显示间隔可在 Inspector 修改；公共数字组件 API 保持不变。当前已接入正式结算界面。
 

@@ -1,9 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://games/minigame/gp_auction_master/settlement_counter.gd" id="script"]
-[ext_resource type="PackedScene" path="res://core/ui/components/impact_number.tscn" id="number"]
+[ext_resource type="PackedScene" path="res://games/assets/godot_party_default_ui/components/impact_number.tscn" id="number"]
 
-[ext_resource type="PackedScene" path="res://core/ui/components/tween_number.tscn" id="tween"]
+[ext_resource type="PackedScene" path="res://games/assets/godot_party_default_ui/components/tween_number.tscn" id="tween"]
 [ext_resource type="AudioStream" path="res://games/minigame/gp_auction_master/assets/audio/settlement/add.wav" id="add"]
 [ext_resource type="AudioStream" path="res://games/minigame/gp_auction_master/assets/audio/settlement/appear.wav" id="appear"]
 [ext_resource type="AudioStream" path="res://games/minigame/gp_auction_master/assets/audio/settlement/tally.wav" id="tally"]
