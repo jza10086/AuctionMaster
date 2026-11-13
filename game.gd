@@ -1,9 +1,5 @@
 extends "res://games/protocols/godot_party_default_protocol/ranked_round.gd"
 
-## Content-owned gameplay rules, independent of package compatibility.
-static func party_definition() -> Dictionary:
-	return {"player_counts": [1, 2, 3, 4, 5, 6, 7, 8], "tags": ["original"]}
-
 ## Auction entry owns transport and panels; session owns secrets, rules and settlement.
 const WarehouseView: Script = preload("res://games/minigame/gp_auction_master/warehouse_view.gd")
 const Session: Script = preload("res://games/minigame/gp_auction_master/session.gd")
