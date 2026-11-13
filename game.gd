@@ -55,19 +55,34 @@ var sent_draft_amount: int = -1
 var quote_valid: bool = true
 var settlement_item: int = -1
 
+var _stopped: bool = false
+var _audio_prepared: bool = false
+
 func party_setup(value: PartyAPI, config: Dictionary) -> void:
 	super.party_setup(value, config)
 	%GameAudio.prepare_scope()
+	_audio_prepared = true
+	var close_error: Error = api.on_close(party_stop.bind(&"scope_closed"))
+	if close_error != OK:
+		api.fail("close_registration_failed", error_string(close_error))
 
 func godot_party_audio_target() -> PartyGameAudio:
 	return %GameAudio
 
 func party_stop(reason: StringName) -> void:
+	if _stopped:
+		return
+	_stopped = true
 	super.party_stop(reason)
+	if _audio_prepared:
+		%GameAudio.close_scope()
+	if not is_node_ready():
+		return
+	_stop_search_sound()
+	process_mode = Node.PROCESS_MODE_DISABLED
 	warehouse_view.set_process(false)
 	settlement_panel.set_process(false)
 	music_playlist.stop()
-	game_audio.close_scope()
 	discovery_flash.clear()
 
 func build_game() -> void:

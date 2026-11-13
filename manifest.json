@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "core_api_major": 5,
-  "package_version": "1.12.4",
+  "core_api_major": 6,
+  "package_version": "1.12.5",
   "id": "gp_auction_master",
   "name": "GodotPartyDefault · 竞拍大师",
   "kind": "minigame",
@@ -25,8 +25,8 @@
     "original"
   ],
   "dependencies": {
-    "godot_party_default_protocol": "1.0.13",
-    "godot_party_default_ui": "1.0.2"
+    "godot_party_default_protocol": "1.0.14",
+    "godot_party_default_ui": "1.0.3"
   },
   "adapters": [
     {
