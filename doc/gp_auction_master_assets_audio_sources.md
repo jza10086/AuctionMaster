@@ -1,5 +1,7 @@
 # Discovery sound sources
 
+素材文件名与未展开的相对路径以包内 `assets/audio/`为基准。
+
 Equipment Clicks II by LFA, CC0 1.0. Retrieved 2026-11-09.
 Source: https://opengameart.org/content/equipment-clicks-ii
 Original: https://opengameart.org/sites/default/files/equipmentclicks.wav
