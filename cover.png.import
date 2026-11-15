@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/cover.png"
+source_file="res://games/minigame/GP_auction_master/cover.png"
 dest_files=["res://.godot/imported/cover.png-0d70e4758d764793d9f82803987d8281.ctex"]
 
 [params]

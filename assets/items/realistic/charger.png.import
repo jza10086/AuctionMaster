@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/charger.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/charger.png"
 dest_files=["res://.godot/imported/charger.png-b6105c0c7f0fcd698cf12a9f4a58506d.ctex"]
 
 [params]

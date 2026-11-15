@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/robot.svg"
+source_file="res://games/minigame/GP_auction_master/assets/items/robot.svg"
 dest_files=["res://.godot/imported/robot.svg-7f5a5578578cfbebda218c7df30f0d4c.ctex"]
 
 [params]

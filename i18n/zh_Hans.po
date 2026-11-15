@@ -574,3 +574,6 @@ msgstr "结算阶段"
 
 msgid "hud.phase_reveal"
 msgstr "揭示阶段"
+
+msgid "package.name"
+msgstr "GodotPartyDefault · 竞拍大师"

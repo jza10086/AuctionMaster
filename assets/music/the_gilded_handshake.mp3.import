@@ -7,7 +7,7 @@ path="res://.godot/imported/the_gilded_handshake.mp3-f443a04f83887a0364517108a14
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/music/the_gilded_handshake.mp3"
+source_file="res://games/minigame/GP_auction_master/assets/music/the_gilded_handshake.mp3"
 dest_files=["res://.godot/imported/the_gilded_handshake.mp3-f443a04f83887a0364517108a147132f.mp3str"]
 
 [params]

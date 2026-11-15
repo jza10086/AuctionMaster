@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/ring.svg"
+source_file="res://games/minigame/GP_auction_master/assets/items/ring.svg"
 dest_files=["res://.godot/imported/ring.svg-70f705bd7567a4a45c35a2a99f6790dc.ctex"]
 
 [params]

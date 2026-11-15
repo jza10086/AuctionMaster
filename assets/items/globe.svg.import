@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/globe.svg"
+source_file="res://games/minigame/GP_auction_master/assets/items/globe.svg"
 dest_files=["res://.godot/imported/globe.svg-a29c16ff7a59959edcc5ffda12d4b23d.ctex"]
 
 [params]

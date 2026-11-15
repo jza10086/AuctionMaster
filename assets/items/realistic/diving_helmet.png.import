@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/diving_helmet.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/diving_helmet.png"
 dest_files=["res://.godot/imported/diving_helmet.png-1cf1cd003f5b39351e069cfcc2b7a6d0.ctex"]
 
 [params]

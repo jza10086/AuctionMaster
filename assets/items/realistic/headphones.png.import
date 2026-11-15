@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/headphones.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/headphones.png"
 dest_files=["res://.godot/imported/headphones.png-34d98276318b0a05630530625ef98cce.ctex"]
 
 [params]

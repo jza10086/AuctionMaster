@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/tape_roll.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/tape_roll.png"
 dest_files=["res://.godot/imported/tape_roll.png-d6ccb1d22b744c366477a99254d7f88e.ctex"]
 
 [params]

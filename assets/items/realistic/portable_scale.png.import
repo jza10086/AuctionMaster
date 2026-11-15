@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/portable_scale.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/portable_scale.png"
 dest_files=["res://.godot/imported/portable_scale.png-8e0ecff2680f196ea945bedbcf7dd796.ctex"]
 
 [params]

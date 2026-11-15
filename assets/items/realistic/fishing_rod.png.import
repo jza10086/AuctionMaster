@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/fishing_rod.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/fishing_rod.png"
 dest_files=["res://.godot/imported/fishing_rod.png-ba21397538ed9ff0c48fd9ffceaa40e6.ctex"]
 
 [params]

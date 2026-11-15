@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/harp.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/harp.png"
 dest_files=["res://.godot/imported/harp.png-3ed0a6dbc9e9c0c7a8647e41db04bfcb.ctex"]
 
 [params]

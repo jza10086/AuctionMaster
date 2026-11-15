@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/camera.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/camera.png"
 dest_files=["res://.godot/imported/camera.png-345761163a4a1823a9f83e807d0f6669.ctex"]
 
 [params]

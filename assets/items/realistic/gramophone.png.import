@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/gramophone.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/gramophone.png"
 dest_files=["res://.godot/imported/gramophone.png-e774f527a2a7e0460d4554db14e9c254.ctex"]
 
 [params]

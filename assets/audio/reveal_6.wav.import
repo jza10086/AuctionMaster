@@ -7,7 +7,7 @@ path="res://.godot/imported/reveal_6.wav-8bdace865cbe694c538c7a40fe2948a3.sample
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/audio/reveal_6.wav"
+source_file="res://games/minigame/GP_auction_master/assets/audio/reveal_6.wav"
 dest_files=["res://.godot/imported/reveal_6.wav-8bdace865cbe694c538c7a40fe2948a3.sample"]
 
 [params]

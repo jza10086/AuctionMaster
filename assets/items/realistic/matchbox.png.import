@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/matchbox.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/matchbox.png"
 dest_files=["res://.godot/imported/matchbox.png-7d302a0fcce9cb62cea01a69c5f473aa.ctex"]
 
 [params]

@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/ruby.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/ruby.png"
 dest_files=["res://.godot/imported/ruby.png-f350ae8b916eac69ecf11e1d059fb14c.ctex"]
 
 [params]

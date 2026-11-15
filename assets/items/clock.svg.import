@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/clock.svg"
+source_file="res://games/minigame/GP_auction_master/assets/items/clock.svg"
 dest_files=["res://.godot/imported/clock.svg-1ca89b5593b777010123fa341e25fc2e.ctex"]
 
 [params]

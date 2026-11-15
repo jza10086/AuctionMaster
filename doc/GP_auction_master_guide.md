@@ -12,7 +12,7 @@
 - 最终轮最高正数报价成交；同价按主机收到有效报价的先后顺序，由最早提交者成交，不加拍。所有人报价为 0 则流拍。
 - 有玩家成功成交时，10 秒揭示之后进入独立结算阶段，默认 45 秒（含搜索），可在设置中调整为 10–180 秒。默认依次为逐件搜索并累计价格的展示窗口 22.5 秒、基础总价加羁绊增值 4.5 秒、仓库价格 − 成交价 = 盈亏 6.75 秒、亏损分配 9 秒、结果停留 2.25 秒；修改时长后按比例缩放。右侧切换为结算面板，数字逐位垂直滚动并停在准确结果，仓库自动跟随当前物品滚动；成交结算结束后直接进入下一仓或最终排名。
 - 搜索完成才揭示物品和品质；搜索中使用中性扫描动画和持续搜索声，右侧及格内不显示完成进度，仓库跟随当前物品。七档品质基础耗时依次为 0.08 / 0.14 / 0.35 / 0.85 / 1.7 / 2.8 / 4.2 秒，统一叠加 ±15% 随机波动。普通、优良物品各有 5% 概率改为 1.8–4.2 秒长搜索，制造空欢喜；概率、适用品质上限、长搜索范围、各品质耗时和波动幅度均可配置。主机每仓只生成一次时间表，所有玩家使用同一节奏，不显示扰动标记。物品很多或结算时长较短时整体压缩以适应搜索窗口；便宜物品不会被强行拉长，提前搜完则停留展示结果。
-- 揭示时根据真实品质播放七档不同音效：使用 LFA 的 CC0 素材 Equipment Clicks II，剪辑为清脆装备卡扣与复合机械动作，削弱低频并略微提亮；高品质叠加短促机械层次，不使用旋律、和弦或长混响。逐文件来源、剪辑区间及修改见 `doc/gp_auction_master_assets_audio_sources.md`。紫色及以上同时触发一次柔和品质色闪光；低品质长搜索不会提前播放高品质提示。声音通过协议 GameAudio 组件接入本游戏环境音/音效音量设置，全部发现后停止搜索循环，离开或下一仓清理旧播放。音效 Cue 可在场景 Inspector 替换和调音量；闪光最低品质、强度和时长可在 DiscoveryFlash 节点配置。搜索循环为项目原创合成；七档揭示声来自 LFA，均按 CC0-1.0 使用，授权文本随素材提供。
+- 揭示时根据真实品质播放七档不同音效：使用 LFA 的 CC0 素材 Equipment Clicks II，剪辑为清脆装备卡扣与复合机械动作，削弱低频并略微提亮；高品质叠加短促机械层次，不使用旋律、和弦或长混响。逐文件来源、剪辑区间及修改见 `doc/GP_auction_master_assets_audio_sources.md`。紫色及以上同时触发一次柔和品质色闪光；低品质长搜索不会提前播放高品质提示。声音通过协议 GameAudio 组件接入本游戏环境音/音效音量设置，全部发现后停止搜索循环，离开或下一仓清理旧播放。音效 Cue 可在场景 Inspector 替换和调音量；闪光最低品质、强度和时长可在 DiscoveryFlash 节点配置。搜索循环为项目原创合成；七档揭示声来自 LFA，均按 CC0-1.0 使用，授权文本随素材提供。
 - 每发现一件物品，累计价值和暂计盈亏立即更新目标；低品质可连续揭示，数字滚轮保留当前位置继续追赶，不重置、不漏加。大额增加会加快转速，最后停在精确结果；暂计亏损为红色、盈利为绿色。搜索动画与数字只影响展示，不改变物品价值或结算入账时点。
 - 揭示、逐件展示及盈亏滚轮期间保留原余额。盈亏演示结束后，赢家金币变化 = 含羁绊的仓库总值 − 成交价；如亏损，此时按其他在线参赛者的成交轮报价计算并固定全额奖励，分配演示结束后一次性入账，赢家不再额外扣款。0 报价无权重，其他人权重全为 0 或没有亏损时不分配。奖励按整数金币向下取整，余数按小数部分从大到小补齐，同余数按固定席位顺序分配，确保总额恰好等于亏损。动画只展示主机结果，不重复触发任何资金变动。
 - 每人每轮可选择一种辅助操作，免费，主机立即确定探查结果，本人视角经过逐件搜索后显示：随机揭示 1 件物品完整信息、3 件轮廓、2 件品质或 4 件羁绊标签。优先随机选择尚未掌握对应信息的不同物品，剩余可探查数量不足时全部揭示。每件默认搜索 0.65 秒，可在 Warehouse 节点的 assist_search_seconds 调整。搜索期间只显示中性扫描与持续搜索声，完成后才显示新信息和对应揭示声；轮廓或标签操作使用中性提示声，不泄露未知品质。已有信息保留，新获得或升级的信息排队逐件揭示；重复快照不重播，转为观战、开仓或换仓取消未完成搜索。信息在本仓保留，下一仓清空；操作次数每轮重置。
@@ -77,7 +77,7 @@
 
 `assets/music/` 收录用户提供的四首 Google AI Lyria 生成 BGM，原始 credit.txt 与文件映射随包保留。进入玩法后随机顺序播放，每轮四首各播放一次后重新洗牌，并避免跨轮相邻重复；换仓、搜索和打开图鉴不打断音乐。离开游戏停止播放，音乐受本游戏音乐音量设置控制，默认 Cue 音量为 -18 dB，可在资源中调整。
 
-独立结算预览：`settlement_counter.tscn` 仅包含基本收入、加成、成交价及横线下的结余数字，无背景、边框、图片或说明文字。基本收入复用 `res://games/assets/godot_party_default_ui/components/impact_number.tscn` 逐件冲击累加；随后加成、成交价、最终结余默认每隔 1 秒直接出现，按正绿负红显示。三位及以下不显示千位分隔符。
+独立结算预览：`settlement_counter.tscn` 仅包含基本收入、加成、成交价及横线下的结余数字，无背景、边框、图片或说明文字。基本收入复用 `res://games/assets/GP_default_ui/components/impact_number.tscn` 逐件冲击累加；随后加成、成交价、最终结余默认每隔 1 秒直接出现，按正绿负红显示。三位及以下不显示千位分隔符。
 
 调用 `start(item_values: Array[int], bonus_value: int, sale_price: int)`，物品数组只含基础价值，加成单独传入（可为负），成交价传正数。最终结余为基础价值之和加上加成再减成交价，完成时发出 `completed(balance)`。物品累计间隔和后续显示间隔可在 Inspector 修改；公共数字组件 API 保持不变。当前已接入正式结算界面。
 
@@ -91,8 +91,8 @@
 
 未带 `res://` 的源码路径以本包根目录为基准。
 
-- [gp_auction_master_assets_audio_settlement_sources](gp_auction_master_assets_audio_settlement_sources.md)
-- [Discovery sound sources](gp_auction_master_assets_audio_sources.md)
-- [竞拍大师 BGM](gp_auction_master_assets_music_sources.md)
-- [M11 竞拍大师　B　依赖 G01](gp_auction_master_development.md)
-- [gp_auction_master_source](gp_auction_master_source.md)
+- [GP_auction_master_assets_audio_settlement_sources](GP_auction_master_assets_audio_settlement_sources.md)
+- [Discovery sound sources](GP_auction_master_assets_audio_sources.md)
+- [竞拍大师 BGM](GP_auction_master_assets_music_sources.md)
+- [M11 竞拍大师　B　依赖 G01](GP_auction_master_development.md)
+- [GP_auction_master_source](GP_auction_master_source.md)

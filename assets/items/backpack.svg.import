@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/backpack.svg"
+source_file="res://games/minigame/GP_auction_master/assets/items/backpack.svg"
 dest_files=["res://.godot/imported/backpack.svg-3c7e4c9d56d08309cb569be32fe0ed27.ctex"]
 
 [params]

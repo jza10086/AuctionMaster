@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/vinyl.svg"
+source_file="res://games/minigame/GP_auction_master/assets/items/vinyl.svg"
 dest_files=["res://.godot/imported/vinyl.svg-a98b4af12b50566816e35dd8ed9f3566.ctex"]
 
 [params]

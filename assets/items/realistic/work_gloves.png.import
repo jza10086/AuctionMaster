@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/work_gloves.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/work_gloves.png"
 dest_files=["res://.godot/imported/work_gloves.png-de8d84f97f3c0dcace9ba8f547c591a2.ctex"]
 
 [params]

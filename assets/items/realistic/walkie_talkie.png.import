@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/walkie_talkie.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/walkie_talkie.png"
 dest_files=["res://.godot/imported/walkie_talkie.png-6e96a9f5c66bd7e8def394000146567b.ctex"]
 
 [params]

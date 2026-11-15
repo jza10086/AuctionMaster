@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/synth.svg"
+source_file="res://games/minigame/GP_auction_master/assets/items/synth.svg"
 dest_files=["res://.godot/imported/synth.svg-1698f104c824c8ba5624a86f894f49c5.ctex"]
 
 [params]

@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/seal.svg"
+source_file="res://games/minigame/GP_auction_master/assets/items/seal.svg"
 dest_files=["res://.godot/imported/seal.svg-1a94938a915f7ab92aaa4f36b68125fd.ctex"]
 
 [params]

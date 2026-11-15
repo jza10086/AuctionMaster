@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/toolbox.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/toolbox.png"
 dest_files=["res://.godot/imported/toolbox.png-b5ad7a53caf6fd669dfdec8efb780461.ctex"]
 
 [params]

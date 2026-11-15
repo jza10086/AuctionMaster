@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/compass.svg"
+source_file="res://games/minigame/GP_auction_master/assets/items/compass.svg"
 dest_files=["res://.godot/imported/compass.svg-9e15b4fb784fa8ef36701b382c25963b.ctex"]
 
 [params]

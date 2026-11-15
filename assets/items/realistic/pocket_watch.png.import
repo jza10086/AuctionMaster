@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/pocket_watch.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/pocket_watch.png"
 dest_files=["res://.godot/imported/pocket_watch.png-fd8e900caeeccadb7bac7b325e947c5c.ctex"]
 
 [params]

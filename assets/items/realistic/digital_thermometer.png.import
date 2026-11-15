@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/digital_thermometer.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/digital_thermometer.png"
 dest_files=["res://.godot/imported/digital_thermometer.png-e17fb7a42ed7b46cc60a7308adcd19d5.ctex"]
 
 [params]

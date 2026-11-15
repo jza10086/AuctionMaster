@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/caliper.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/caliper.png"
 dest_files=["res://.godot/imported/caliper.png-eb899c68c7cbf1f9155d4e29d8fe9683.ctex"]
 
 [params]

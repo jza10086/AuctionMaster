@@ -7,7 +7,7 @@ path="res://.godot/imported/the_winning_bid.mp3-afd1c9c905c3a029390a36aa476773d4
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/music/the_winning_bid.mp3"
+source_file="res://games/minigame/GP_auction_master/assets/music/the_winning_bid.mp3"
 dest_files=["res://.godot/imported/the_winning_bid.mp3-afd1c9c905c3a029390a36aa476773d4.mp3str"]
 
 [params]

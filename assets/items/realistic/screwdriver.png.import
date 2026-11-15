@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/screwdriver.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/screwdriver.png"
 dest_files=["res://.godot/imported/screwdriver.png-655483e4c394ede30c9040d321b28eda.ctex"]
 
 [params]

@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/console.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/console.png"
 dest_files=["res://.godot/imported/console.png-8f9f937c583860706bd950b9725de5bb.ctex"]
 
 [params]

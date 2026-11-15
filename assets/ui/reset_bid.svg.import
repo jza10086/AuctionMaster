@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/ui/reset_bid.svg"
+source_file="res://games/minigame/GP_auction_master/assets/ui/reset_bid.svg"
 dest_files=["res://.godot/imported/reset_bid.svg-04b3383560629301d883737306528cff.ctex"]
 
 [params]

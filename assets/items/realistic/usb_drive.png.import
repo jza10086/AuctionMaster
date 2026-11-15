@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/realistic/usb_drive.png"
+source_file="res://games/minigame/GP_auction_master/assets/items/realistic/usb_drive.png"
 dest_files=["res://.godot/imported/usb_drive.png-f49b5937120ade85c9d5577302f8394d.ctex"]
 
 [params]

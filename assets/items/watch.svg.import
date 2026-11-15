@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_auction_master/assets/items/watch.svg"
+source_file="res://games/minigame/GP_auction_master/assets/items/watch.svg"
 dest_files=["res://.godot/imported/watch.svg-e6db1383add4f226ce6a85e3b8ac5c0c.ctex"]
 
 [params]
