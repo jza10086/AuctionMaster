@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bnetglbthy3sv"
-path="res://.godot/imported/globe.png-02717bc071c6c60ed72574fc03752191.ctex"
+path="res://.godot/imported/globe.png-4f33ecb3c05f3ad188a1432d6d0fbec8.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/globe.png"
-dest_files=["res://.godot/imported/globe.png-02717bc071c6c60ed72574fc03752191.ctex"]
+dest_files=["res://.godot/imported/globe.png-4f33ecb3c05f3ad188a1432d6d0fbec8.ctex"]
 
 [params]
 

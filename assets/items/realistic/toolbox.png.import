@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://h4famrwdgbg5"
-path="res://.godot/imported/toolbox.png-b5ad7a53caf6fd669dfdec8efb780461.ctex"
+path="res://.godot/imported/toolbox.png-f2456258ef41446435ec04858c089766.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/toolbox.png"
-dest_files=["res://.godot/imported/toolbox.png-b5ad7a53caf6fd669dfdec8efb780461.ctex"]
+dest_files=["res://.godot/imported/toolbox.png-f2456258ef41446435ec04858c089766.ctex"]
 
 [params]
 

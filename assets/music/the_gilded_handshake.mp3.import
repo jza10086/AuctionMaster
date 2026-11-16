@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://b3q0skpo7qrs1"
-path="res://.godot/imported/the_gilded_handshake.mp3-f443a04f83887a0364517108a147132f.mp3str"
+path="res://.godot/imported/the_gilded_handshake.mp3-9350c7f279e5a542c4855772a55e4ca5.mp3str"
 
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/music/the_gilded_handshake.mp3"
-dest_files=["res://.godot/imported/the_gilded_handshake.mp3-f443a04f83887a0364517108a147132f.mp3str"]
+dest_files=["res://.godot/imported/the_gilded_handshake.mp3-9350c7f279e5a542c4855772a55e4ca5.mp3str"]
 
 [params]
 

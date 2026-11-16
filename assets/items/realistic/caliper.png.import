@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1xb7e7n8mtqf"
-path="res://.godot/imported/caliper.png-eb899c68c7cbf1f9155d4e29d8fe9683.ctex"
+path="res://.godot/imported/caliper.png-3967f40fca83374d3381ff6bbe190bb4.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/caliper.png"
-dest_files=["res://.godot/imported/caliper.png-eb899c68c7cbf1f9155d4e29d8fe9683.ctex"]
+dest_files=["res://.godot/imported/caliper.png-3967f40fca83374d3381ff6bbe190bb4.ctex"]
 
 [params]
 

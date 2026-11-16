@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1syxxdaalwio"
-path="res://.godot/imported/fossil_skeleton.png-cb9ae6c700af1ac994fe14e1ce3e03f6.ctex"
+path="res://.godot/imported/fossil_skeleton.png-f59b364845aa961bebfdcbdb0c3b7912.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/fossil_skeleton.png"
-dest_files=["res://.godot/imported/fossil_skeleton.png-cb9ae6c700af1ac994fe14e1ce3e03f6.ctex"]
+dest_files=["res://.godot/imported/fossil_skeleton.png-f59b364845aa961bebfdcbdb0c3b7912.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bbrckf1vr85jj"
-path="res://.godot/imported/playing_cards.png-296cc48299e14aefde225a0152ab13ea.ctex"
+path="res://.godot/imported/playing_cards.png-c563393b3613479be522dfaee5c0f4c8.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/playing_cards.png"
-dest_files=["res://.godot/imported/playing_cards.png-296cc48299e14aefde225a0152ab13ea.ctex"]
+dest_files=["res://.godot/imported/playing_cards.png-c563393b3613479be522dfaee5c0f4c8.ctex"]
 
 [params]
 

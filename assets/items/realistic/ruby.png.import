@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ceb8csfw85dwg"
-path="res://.godot/imported/ruby.png-f350ae8b916eac69ecf11e1d059fb14c.ctex"
+path="res://.godot/imported/ruby.png-93c5b8debe26be410f6a305944efdcdd.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/ruby.png"
-dest_files=["res://.godot/imported/ruby.png-f350ae8b916eac69ecf11e1d059fb14c.ctex"]
+dest_files=["res://.godot/imported/ruby.png-93c5b8debe26be410f6a305944efdcdd.ctex"]
 
 [params]
 

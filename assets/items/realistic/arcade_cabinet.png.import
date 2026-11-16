@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b4rcdtv86solf"
-path="res://.godot/imported/arcade_cabinet.png-027d76d15ebf5b8458922e7ad3cf541e.ctex"
+path="res://.godot/imported/arcade_cabinet.png-5378fa7aee69c6d20cbeac1e394d636c.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/arcade_cabinet.png"
-dest_files=["res://.godot/imported/arcade_cabinet.png-027d76d15ebf5b8458922e7ad3cf541e.ctex"]
+dest_files=["res://.godot/imported/arcade_cabinet.png-5378fa7aee69c6d20cbeac1e394d636c.ctex"]
 
 [params]
 

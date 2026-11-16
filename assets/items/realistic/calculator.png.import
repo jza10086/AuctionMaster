@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b1cdanf0oaoyt"
-path="res://.godot/imported/calculator.png-ad89469f054581475ce94ae21533f771.ctex"
+path="res://.godot/imported/calculator.png-29bf67c683a8bc49554153f8e59123e1.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/calculator.png"
-dest_files=["res://.godot/imported/calculator.png-ad89469f054581475ce94ae21533f771.ctex"]
+dest_files=["res://.godot/imported/calculator.png-29bf67c683a8bc49554153f8e59123e1.ctex"]
 
 [params]
 

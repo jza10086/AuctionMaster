@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bni8kvmyhrk5y"
-path="res://.godot/imported/padlock.png-1b720e74a9b0bad533873dff7aab74db.ctex"
+path="res://.godot/imported/padlock.png-d77e00a85e9286194c2f2607f5791809.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/padlock.png"
-dest_files=["res://.godot/imported/padlock.png-1b720e74a9b0bad533873dff7aab74db.ctex"]
+dest_files=["res://.godot/imported/padlock.png-d77e00a85e9286194c2f2607f5791809.ctex"]
 
 [params]
 

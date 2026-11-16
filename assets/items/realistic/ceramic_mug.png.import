@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bm5td3liqtxqu"
-path="res://.godot/imported/ceramic_mug.png-402478929aa78aa4c8560dfd61b5187e.ctex"
+path="res://.godot/imported/ceramic_mug.png-5868497d50457efbd9225d8202461491.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/ceramic_mug.png"
-dest_files=["res://.godot/imported/ceramic_mug.png-402478929aa78aa4c8560dfd61b5187e.ctex"]
+dest_files=["res://.godot/imported/ceramic_mug.png-5868497d50457efbd9225d8202461491.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://byd1uj1o58dew"
-path="res://.godot/imported/silver_coin.png-57606b045957cf83cb511da587e9ebd8.ctex"
+path="res://.godot/imported/silver_coin.png-0df15894180c2ef4e0817892d6722c98.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/silver_coin.png"
-dest_files=["res://.godot/imported/silver_coin.png-57606b045957cf83cb511da587e9ebd8.ctex"]
+dest_files=["res://.godot/imported/silver_coin.png-0df15894180c2ef4e0817892d6722c98.ctex"]
 
 [params]
 

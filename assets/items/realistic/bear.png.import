@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bt0lppheey254"
-path="res://.godot/imported/bear.png-f8785ea6774426035311b7abcdcb1522.ctex"
+path="res://.godot/imported/bear.png-64f2070aaff6e0197e09d5b672ac3c75.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/bear.png"
-dest_files=["res://.godot/imported/bear.png-f8785ea6774426035311b7abcdcb1522.ctex"]
+dest_files=["res://.godot/imported/bear.png-64f2070aaff6e0197e09d5b672ac3c75.ctex"]
 
 [params]
 

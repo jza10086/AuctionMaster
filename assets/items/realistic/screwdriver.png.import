@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dx0tyfgqnude8"
-path="res://.godot/imported/screwdriver.png-655483e4c394ede30c9040d321b28eda.ctex"
+path="res://.godot/imported/screwdriver.png-c62807facec6c8af1f66b9728d271b9b.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/screwdriver.png"
-dest_files=["res://.godot/imported/screwdriver.png-655483e4c394ede30c9040d321b28eda.ctex"]
+dest_files=["res://.godot/imported/screwdriver.png-c62807facec6c8af1f66b9728d271b9b.ctex"]
 
 [params]
 

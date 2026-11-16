@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bmi1o1nji1o7g"
-path="res://.godot/imported/the_winning_bid.mp3-afd1c9c905c3a029390a36aa476773d4.mp3str"
+path="res://.godot/imported/the_winning_bid.mp3-42b5118da4a5d67cde944aec4a7bf70e.mp3str"
 
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/music/the_winning_bid.mp3"
-dest_files=["res://.godot/imported/the_winning_bid.mp3-afd1c9c905c3a029390a36aa476773d4.mp3str"]
+dest_files=["res://.godot/imported/the_winning_bid.mp3-42b5118da4a5d67cde944aec4a7bf70e.mp3str"]
 
 [params]
 

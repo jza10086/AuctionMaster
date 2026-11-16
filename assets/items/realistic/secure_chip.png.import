@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b38fd2ldetd2h"
-path="res://.godot/imported/secure_chip.png-b0ab07c9ea7b644a2695b179f9f3ccf7.ctex"
+path="res://.godot/imported/secure_chip.png-d97c655213d8dac9cfbc05ac06ccf75f.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/secure_chip.png"
-dest_files=["res://.godot/imported/secure_chip.png-b0ab07c9ea7b644a2695b179f9f3ccf7.ctex"]
+dest_files=["res://.godot/imported/secure_chip.png-d97c655213d8dac9cfbc05ac06ccf75f.ctex"]
 
 [params]
 

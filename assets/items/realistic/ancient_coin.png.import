@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bxwc17pjiihql"
-path="res://.godot/imported/ancient_coin.png-392e7e5ce475433a2050b1ce8507926f.ctex"
+path="res://.godot/imported/ancient_coin.png-b7b013b67cc369f8a86fac632430024c.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/ancient_coin.png"
-dest_files=["res://.godot/imported/ancient_coin.png-392e7e5ce475433a2050b1ce8507926f.ctex"]
+dest_files=["res://.godot/imported/ancient_coin.png-b7b013b67cc369f8a86fac632430024c.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dmnaqe3daxycb"
-path="res://.godot/imported/telescope.png-9c1cda8053070e1d80e53810656090af.ctex"
+path="res://.godot/imported/telescope.png-0ed008b2e69ee42c7a46c995c20ab072.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/telescope.png"
-dest_files=["res://.godot/imported/telescope.png-9c1cda8053070e1d80e53810656090af.ctex"]
+dest_files=["res://.godot/imported/telescope.png-0ed008b2e69ee42c7a46c995c20ab072.ctex"]
 
 [params]
 

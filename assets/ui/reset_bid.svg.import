@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bxmft5uyei4jc"
-path="res://.godot/imported/reset_bid.svg-04b3383560629301d883737306528cff.ctex"
+path="res://.godot/imported/reset_bid.svg-f3136db1cafd915a786c3fb67bcef17d.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/ui/reset_bid.svg"
-dest_files=["res://.godot/imported/reset_bid.svg-04b3383560629301d883737306528cff.ctex"]
+dest_files=["res://.godot/imported/reset_bid.svg-f3136db1cafd915a786c3fb67bcef17d.ctex"]
 
 [params]
 

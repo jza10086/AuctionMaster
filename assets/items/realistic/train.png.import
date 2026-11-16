@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cturym1f5n1lb"
-path="res://.godot/imported/train.png-daf87836b1c58051bb7e47647e5a6563.ctex"
+path="res://.godot/imported/train.png-4d26173c3db4a58bdd37764495abd6c3.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/train.png"
-dest_files=["res://.godot/imported/train.png-daf87836b1c58051bb7e47647e5a6563.ctex"]
+dest_files=["res://.godot/imported/train.png-4d26173c3db4a58bdd37764495abd6c3.ctex"]
 
 [params]
 

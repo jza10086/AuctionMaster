@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ca52xuyu0xtpt"
-path="res://.godot/imported/sculpture.png-882e5ab958c7caa6f60f185dd44429e6.ctex"
+path="res://.godot/imported/sculpture.png-3023f62d21c8e0f9cb690bc0134d8792.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/sculpture.png"
-dest_files=["res://.godot/imported/sculpture.png-882e5ab958c7caa6f60f185dd44429e6.ctex"]
+dest_files=["res://.godot/imported/sculpture.png-3023f62d21c8e0f9cb690bc0134d8792.ctex"]
 
 [params]
 

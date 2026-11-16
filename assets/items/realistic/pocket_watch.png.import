@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dlws6lb5bjtcd"
-path="res://.godot/imported/pocket_watch.png-fd8e900caeeccadb7bac7b325e947c5c.ctex"
+path="res://.godot/imported/pocket_watch.png-b19775b13f49985f9cd5d209410ab04f.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/pocket_watch.png"
-dest_files=["res://.godot/imported/pocket_watch.png-fd8e900caeeccadb7bac7b325e947c5c.ctex"]
+dest_files=["res://.godot/imported/pocket_watch.png-b19775b13f49985f9cd5d209410ab04f.ctex"]
 
 [params]
 

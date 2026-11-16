@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ccry5fjqgq6tw"
-path="res://.godot/imported/jade_pendant.png-eeac84a89dede21ec35994c272bd694d.ctex"
+path="res://.godot/imported/jade_pendant.png-3e31325779827337929a3a63b0e1323b.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/jade_pendant.png"
-dest_files=["res://.godot/imported/jade_pendant.png-eeac84a89dede21ec35994c272bd694d.ctex"]
+dest_files=["res://.godot/imported/jade_pendant.png-3e31325779827337929a3a63b0e1323b.ctex"]
 
 [params]
 

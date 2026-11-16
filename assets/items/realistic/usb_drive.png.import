@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5g4ob2gbn0a7"
-path="res://.godot/imported/usb_drive.png-f49b5937120ade85c9d5577302f8394d.ctex"
+path="res://.godot/imported/usb_drive.png-2bcc7c1b1c1566bc6afa7c065ada1433.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/usb_drive.png"
-dest_files=["res://.godot/imported/usb_drive.png-f49b5937120ade85c9d5577302f8394d.ctex"]
+dest_files=["res://.godot/imported/usb_drive.png-2bcc7c1b1c1566bc6afa7c065ada1433.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dudiiprgtnypm"
-path="res://.godot/imported/console.png-8f9f937c583860706bd950b9725de5bb.ctex"
+path="res://.godot/imported/console.png-0fe40eb30b56d29569dd6a81d5a09148.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/console.png"
-dest_files=["res://.godot/imported/console.png-8f9f937c583860706bd950b9725de5bb.ctex"]
+dest_files=["res://.godot/imported/console.png-0fe40eb30b56d29569dd6a81d5a09148.ctex"]
 
 [params]
 

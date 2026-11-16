@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bduj0iqalkknf"
-path="res://.godot/imported/soldering_iron.png-fff0ef4a1c8fc2fd96b61914020d1d10.ctex"
+path="res://.godot/imported/soldering_iron.png-045845bd140a0fde0af0a5a3378d7ec5.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/soldering_iron.png"
-dest_files=["res://.godot/imported/soldering_iron.png-fff0ef4a1c8fc2fd96b61914020d1d10.ctex"]
+dest_files=["res://.godot/imported/soldering_iron.png-045845bd140a0fde0af0a5a3378d7ec5.ctex"]
 
 [params]
 

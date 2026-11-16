@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ma8fsyxtbvqh"
-path="res://.godot/imported/vase.png-26df485dc2ca481511e2f56e27380e4b.ctex"
+path="res://.godot/imported/vase.png-8d3496d6b882cc6189b5aad4bae350fc.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/vase.png"
-dest_files=["res://.godot/imported/vase.png-26df485dc2ca481511e2f56e27380e4b.ctex"]
+dest_files=["res://.godot/imported/vase.png-8d3496d6b882cc6189b5aad4bae350fc.ctex"]
 
 [params]
 

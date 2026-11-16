@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bjxbgksc3848"
-path="res://.godot/imported/tally.wav-a33b77792e24a60d71f232bc58e7d887.sample"
+path="res://.godot/imported/tally.wav-e72d41327554587b1c3521dd84f955c1.sample"
 
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/audio/settlement/tally.wav"
-dest_files=["res://.godot/imported/tally.wav-a33b77792e24a60d71f232bc58e7d887.sample"]
+dest_files=["res://.godot/imported/tally.wav-e72d41327554587b1c3521dd84f955c1.sample"]
 
 [params]
 

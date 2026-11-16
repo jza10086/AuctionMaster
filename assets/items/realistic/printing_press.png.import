@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c3pfgk56jswfn"
-path="res://.godot/imported/printing_press.png-fffb998d10866593a84690b90ae68dc5.ctex"
+path="res://.godot/imported/printing_press.png-5ab2238bb2656596d78f7a7646582f06.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/printing_press.png"
-dest_files=["res://.godot/imported/printing_press.png-fffb998d10866593a84690b90ae68dc5.ctex"]
+dest_files=["res://.godot/imported/printing_press.png-5ab2238bb2656596d78f7a7646582f06.ctex"]
 
 [params]
 

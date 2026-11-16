@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dbsb3sefqs634"
-path="res://.godot/imported/reveal_0.wav-d335e45e5887980fb7bef01e458d4ed1.sample"
+path="res://.godot/imported/reveal_0.wav-a8c838393746584594e5ceb37df734b9.sample"
 
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/audio/reveal_0.wav"
-dest_files=["res://.godot/imported/reveal_0.wav-d335e45e5887980fb7bef01e458d4ed1.sample"]
+dest_files=["res://.godot/imported/reveal_0.wav-a8c838393746584594e5ceb37df734b9.sample"]
 
 [params]
 

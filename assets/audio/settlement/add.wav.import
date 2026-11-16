@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://be6f7c8r66bam"
-path="res://.godot/imported/add.wav-1204f1fa88f0cedf2909c5e063263ed8.sample"
+path="res://.godot/imported/add.wav-0c7f80107e9403e46c4aa0f4388f5eed.sample"
 
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/audio/settlement/add.wav"
-dest_files=["res://.godot/imported/add.wav-1204f1fa88f0cedf2909c5e063263ed8.sample"]
+dest_files=["res://.godot/imported/add.wav-0c7f80107e9403e46c4aa0f4388f5eed.sample"]
 
 [params]
 

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://djpamh01h0qvf"
-path="res://.godot/imported/cloth_rag.png-7ae9294b6344465b331796d76d292bec.ctex"
+path="res://.godot/imported/cloth_rag.png-0ef3597b80722179a549263a526f47ab.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/cloth_rag.png"
-dest_files=["res://.godot/imported/cloth_rag.png-7ae9294b6344465b331796d76d292bec.ctex"]
+dest_files=["res://.godot/imported/cloth_rag.png-0ef3597b80722179a549263a526f47ab.ctex"]
 
 [params]
 

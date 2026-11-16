@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://daape4dx8alnl"
-path="res://.godot/imported/copper_wire.png-cb14fe02cf3cafc81dc29b1d6ebeeebf.ctex"
+path="res://.godot/imported/copper_wire.png-f4a40aa7683867623bfa015c260c449d.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_auction_master/assets/items/realistic/copper_wire.png"
-dest_files=["res://.godot/imported/copper_wire.png-cb14fe02cf3cafc81dc29b1d6ebeeebf.ctex"]
+dest_files=["res://.godot/imported/copper_wire.png-f4a40aa7683867623bfa015c260c449d.ctex"]
 
 [params]
 
